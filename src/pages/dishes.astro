@@ -1,0 +1,222 @@
+---
+import Layout from "@layouts/Layout.astro";
+import { getCollection } from 'astro:content';
+
+const allDishes = await getCollection('dishes');
+
+// Sort dishes within each category by KarelMustTry first, then by order field
+const sortByOrder = (dishes) => {
+  return dishes.sort((a, b) => {
+    // First sort by KarelMustTry (true comes first)
+    const karelA = a.data.KarelMustTry ?? false;
+    const karelB = b.data.KarelMustTry ?? false;
+    if (karelA !== karelB) {
+      return karelB - karelA; // true (1) comes before false (0)
+    }
+    
+    // Then sort by order field
+    const orderA = a.data.order ?? 999;
+    const orderB = b.data.order ?? 999;
+    return orderA - orderB;
+  });
+};
+
+// Group dishes by category and sort by order
+const dishesByCategory = {
+  'sladký': sortByOrder(allDishes.filter(dish => dish.data.category === 'sladký')),
+  'hlavní jídla': sortByOrder(allDishes.filter(dish => dish.data.category === 'hlavní jídla')),
+  'polívky': sortByOrder(allDishes.filter(dish => dish.data.category === 'polívky')),
+  'snacks': sortByOrder(allDishes.filter(dish => dish.data.category === 'snacks')),
+};
+
+// Category order and names - change this array to reorder categories
+const categoryOrder = [
+  { key: 'polívky', name: 'Soups' },
+  { key: 'hlavní jídla', name: 'Main Dishes' },
+  { key: 'sladký', name: 'Sweet Dishes' },
+  { key: 'snacks', name: 'Snacks & Street Food' }
+];
+
+const categoryNames = {
+  'sladký': 'Sweet Dishes',
+  'hlavní jídla': 'Main Dishes', 
+  'polívky': 'Soups',
+  'snacks': 'Snacks & Street Food'
+};
+
+const meta = {
+  title: "Czech Food Guide - Must-Try Dishes & Drinks",
+  description: "Complete guide to authentic Czech cuisine - traditional dishes, street food, and drinks you must try in Prague",
+};
+---
+
+<Layout meta={meta}>
+  <!-- Sticky Navigation -->
+  <nav class="sticky top-16 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200 py-4">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex gap-6 overflow-x-auto">
+        {categoryOrder.map(({ key: category, name: categoryName }) => (
+          dishesByCategory[category]?.length > 0 && (
+            <a 
+              href={`#${category.replace(' ', '-').replace('í', 'i').replace('ý', 'y')}`} 
+              class="whitespace-nowrap text-sm font-medium text-gray-600 hover:text-red-600 transition"
+            >
+              {categoryName}
+            </a>
+          )
+        ))}
+        <a href="#drinks" class="whitespace-nowrap text-sm font-medium text-gray-600 hover:text-red-600 transition">
+          Drinks
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="min-h-screen bg-gradient-to-b from-amber-50 to-white">
+    <!-- Back Navigation -->
+    <div class="bg-gray-50 py-4">
+      <div class="max-w-6xl mx-auto px-4">
+        <a href="/" class="text-red-600 hover:text-red-700 font-medium">
+          ← Back to Czech Food Guide
+        </a>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="py-16">
+      <div class="max-w-4xl mx-auto px-4 text-center">
+        <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+          Czech Food Guide
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto">
+          Traditional dishes, street food, and drinks that define Czech cuisine - what they are, why they're special, and what people really think
+        </p>
+      </div>
+    </section>
+
+    {categoryOrder.map(({ key: category, name: categoryName }) => (
+      dishesByCategory[category]?.length > 0 && (
+        <section id={category.replace(' ', '-').replace('í', 'i').replace('ý', 'y')} class="py-16">
+          <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12 text-red-600">
+              {categoryName}
+            </h2>
+            
+            <div class="space-y-12">
+              {dishesByCategory[category].map((dish, index) => (
+                <div class={`bg-white rounded-xl shadow-lg overflow-hidden ${index % 2 === 0 ? '' : 'lg:flex-row-reverse'}`}>
+                  <div class="lg:flex">
+                    <div class="lg:w-1/2">
+                      {dish.data.image && (
+                        <img 
+                          src={dish.data.image} 
+                          alt={dish.data.name}
+                          class="w-full h-64 lg:h-full object-cover"
+                        />
+                      )}
+                    </div>
+                    <div class="lg:w-1/2 p-8">
+                      <div class="flex items-center gap-2 mb-4">
+                        {dish.data.KarelMustTry && (
+                          <span class="text-sm font-bold px-3 py-1 rounded-full text-purple-600 bg-purple-100 border border-purple-200">
+                            Karel HIGHLY recommends
+                          </span>
+                        )}
+                        <span class={`text-sm font-medium px-3 py-1 rounded-full ${
+                          category === 'sladký' ? 'text-amber-600 bg-amber-100' :
+                          category === 'hlavní jídla' ? 'text-red-600 bg-red-100' :
+                          category === 'polívky' ? 'text-yellow-600 bg-yellow-100' :
+                          'text-green-600 bg-green-100'
+                        }`}>
+                          {categoryNames[category].slice(0, -1)}
+                        </span>
+                      </div>
+                      <h3 class="text-3xl font-bold text-gray-900 mb-2">
+                        {dish.data.name}
+                      </h3>
+                      <p class="text-gray-600 text-lg mb-4">
+                        {dish.data.description}
+                      </p>
+                      <p class="text-gray-700 mb-6">
+                        {dish.data.whyTry}
+                      </p>
+                      <div class="bg-gray-50 p-4 rounded-lg">
+                        <p class="text-sm text-gray-600 italic">
+                          "{dish.data.quote}" 
+                          <span class="font-medium">- {dish.data.author}</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    ))}
+
+    <!-- Drinks Section -->
+    <section id="drinks" class="py-16 bg-gray-50">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-12 text-red-600">Essential Czech Drinks</h2>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Pilsner Urquell -->
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <img src="https://live.staticflickr.com/5087/5293033730_6cf84b756f_b.jpg" alt="Pilsner Urquell" class="w-full h-48 object-cover">
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xs font-medium text-yellow-600 bg-yellow-100 px-2 py-1 rounded-full">Beer</span>
+                <span class="text-xs font-medium text-blue-600 bg-blue-100 px-2 py-1 rounded-full">Original</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Pilsner Urquell</h3>
+              <p class="text-gray-600 mb-4">The original pilsner beer, invented in 1842 in Plzen. Crisp, hoppy, and served unpasteurized in Prague - the way beer should taste. This is where the pilsner style was born.</p>
+              <div class="bg-gray-50 p-3 rounded text-xs text-gray-600 italic">
+                "Finally understood what beer is supposed to taste like!" - Beer tourist
+              </div>
+            </div>
+          </div>
+
+          <!-- Kozel -->
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Kozelek.jpg" alt="Velkopopovický Kozel" class="w-full h-48 object-cover">
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xs font-medium text-yellow-600 bg-yellow-100 px-2 py-1 rounded-full">Beer</span>
+                <span class="text-xs font-medium text-orange-600 bg-orange-100 px-2 py-1 rounded-full">Smooth</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Velkopopovický Kozel</h3>
+              <p class="text-gray-600 mb-4">The goat beer! Smooth, malty, and less hoppy than Pilsner. Perfect for those who find other Czech beers too bitter. The goat mascot is everywhere in Czech pubs.</p>
+              <div class="bg-gray-50 p-3 rounded text-xs text-gray-600 italic">
+                "Smoother than expected, and I love the goat logo everywhere!" - Pub crawler
+              </div>
+            </div>
+          </div>
+
+          <!-- Kofola -->
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/85/Sklenice_Kofola.jpg" alt="Kofola" class="w-full h-48 object-cover">
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xs font-medium text-red-600 bg-red-100 px-2 py-1 rounded-full">Communist Soda</span>
+                <span class="text-xs font-medium text-purple-600 bg-purple-100 px-2 py-1 rounded-full">Herbal</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Kofola</h3>
+              <p class="text-gray-600 mb-4">Created in 1960s Czechoslovakia as a communist alternative to Coca-Cola, which was banned. Made with natural caffeine from coffee beans and 14 herbal extracts. It became a symbol of Czech identity and survived the fall of communism to become a beloved national drink.</p>
+              <div class="bg-gray-50 p-3 rounded text-xs text-gray-600 italic">
+                "It's like drinking liquid nostalgia - tastes like cola but with this unique herbal twist you can't get anywhere else." - Czech native
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+</style>

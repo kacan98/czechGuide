@@ -29,6 +29,22 @@ const restaurants = defineCollection({
   }),
 });
 
+const dishes = defineCollection({
+  type: 'content',
+  schema: z.object({
+    name: z.string(),
+    category: z.enum(['sladký', 'hlavní jídla', 'polívky', 'snacks']),
+    order: z.number().optional(),
+    KarelMustTry: z.boolean().optional(),
+    description: z.string(),
+    image: z.string().optional(),
+    whyTry: z.string(),
+    quote: z.string(),
+    author: z.string(),
+  }),
+});
+
 export const collections = {
   restaurants,
+  dishes,
 };

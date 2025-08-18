@@ -13,7 +13,7 @@ phone: "775 991 975"
 googleMapsUrl: https://maps.google.com/?q=Sisters+Bistro+Dlouhá+39+Prague
 googleRating: 4.5
 googleReviews: 369
-image: https://www.sistersbistro.cz/user/documents/css/hp.jpg?v=2
+image: https://dynamic-media-cdn.tripadvisor.com/media/photo-o/28/b4/bc/87/bistro-sisters-spalena.jpg?w=900&h=500&s=1
 recommended:
   - name: Hermelínový s brusinkami (Hermelín with Cranberries)
     description: Czech hermelín cheese with sweet cranberries

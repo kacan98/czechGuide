@@ -97,34 +97,53 @@ const addRestaurantMarkers = () => {
   
   props.restaurants.forEach(restaurant => {
     if (restaurant.data?.location?.lat && restaurant.data?.location?.lng) {
+      // Create a simple marker icon with fork and knife
       const marker = L.marker([restaurant.data.location.lat, restaurant.data.location.lng], {
         icon: L.divIcon({
           className: 'restaurant-marker',
           html: `
-            <div class="relative">
-              <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-3 cursor-pointer hover:shadow-xl transition-shadow duration-200 min-w-[200px]">
-                <div class="flex items-start gap-2">
-                  <div class="w-2 h-2 bg-red-600 rounded-full mt-2 flex-shrink-0"></div>
-                  <div>
-                    <h4 class="font-bold text-gray-900 text-sm mb-1">${restaurant.data.name}</h4>
-                    <p class="text-xs text-gray-500">${restaurant.data.cuisine}</p>
-                  </div>
-                </div>
+            <div class="relative cursor-pointer">
+              <div class="w-10 h-10 bg-red-600 rounded-full shadow-lg border-2 border-white flex items-center justify-center hover:scale-110 transition-transform duration-200">
+                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8.1 13.34l2.83-2.83L3.91 3.5a4.008 4.008 0 0 0 0 5.66l4.19 4.18zm6.78-1.81c1.53.71 3.68.21 5.27-1.38 1.91-1.91 2.28-4.65.81-6.12-1.46-1.46-4.2-1.1-6.12.81-1.59 1.59-2.09 3.74-1.38 5.27L3.7 19.87l1.41 1.41L12 14.41l6.88 6.88 1.41-1.41-6.88-6.88 1.37-1.37z"/>
+                </svg>
               </div>
-              <div class="absolute left-1/2 bottom-0 transform -translate-x-1/2 translate-y-full">
-                <div class="w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[12px] border-t-white"></div>
-                <div class="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[10px] border-t-gray-200 absolute left-1/2 transform -translate-x-1/2 -translate-y-[10px]"></div>
-              </div>
-              <div class="absolute left-1/2 bottom-0 transform -translate-x-1/2 translate-y-[10px] w-3 h-3 bg-red-600 rounded-full border-2 border-white shadow-md"></div>
             </div>
           `,
-          iconSize: [200, 100],
-          iconAnchor: [100, 90]
+          iconSize: [40, 40],
+          iconAnchor: [20, 20]
         })
       }).addTo(map)
       
-      marker.on('click', () => {
-        emit('restaurant-selected', restaurant)
+      // Create popup content
+      const popupContent = `
+        <div class="text-center">
+          <h3 class="font-bold text-lg text-gray-900 mb-1">${restaurant.data.name}</h3>
+          <p class="text-sm text-gray-600 mb-2">${restaurant.data.cuisine}</p>
+          <p class="text-xs text-gray-500 mb-3">${restaurant.data.address}</p>
+          <button class="visit-restaurant bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-700 transition" data-slug="${restaurant.slug}">
+            Visit Restaurant
+          </button>
+        </div>
+      `
+      
+      marker.bindPopup(popupContent, {
+        maxWidth: 250,
+        closeButton: true
+      })
+      
+      // Handle popup button clicks
+      marker.on('popupopen', () => {
+        const popup = marker.getPopup()
+        const popupElement = popup.getElement()
+        const visitButton = popupElement.querySelector('.visit-restaurant')
+        
+        if (visitButton) {
+          visitButton.addEventListener('click', () => {
+            const slug = visitButton.getAttribute('data-slug')
+            window.location.href = `/restaurant/${slug}/`
+          })
+        }
       })
       
       restaurantMarkers.push(marker)

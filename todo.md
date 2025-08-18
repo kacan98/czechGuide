@@ -1,5 +1,8 @@
 - restaurant page
     - remove the about and whatever details section. Noone cares
+- home page
+    - it should be possible to go to "recommended dishes" or to the map
+    - fix the "Tradisitonal dishes" to say "Recommended dishes" and lead to a nice and simple food guide with my favorite dishes
 - add restaurants
     - antastiska kakor och kafé i centrum: https://www.werichovavila.cz 
     - https://lokal-dlouha.ambi.cz/cz/
@@ -10,8 +13,32 @@
     - Karlštejn 
 - add a general food guide with pictures with my favorite dishes
     - sladký
+        - buchtičky s krémem
+        - makový koláč
+        - trdelník
+        - ovocné knedlíky
+        - švestkové knedlíky
+            - s mákem
+            - s tvarohem
     - hlavní jídla
+        - svíčková
+        - guláš
+        - vepřo knedlo zelo
+        - kachna
+        - bramboračka
+        - česnečka se sýrem
     - polívky
+        - bramboračka
+        - houbová polévka
+        - česnečka
     - snacks
+        - bramborák
+        - smažený sýr
+        - tatranka
+        - fidorka
 - fix the map. It should ALWAYS focus on Prague
+- add swedish
+- map on main page
+    - add filtering so that either restaurants or places to visit can be visible
+    - make it zoom out exactly so that all places are visible
 
