@@ -2,6 +2,7 @@
 name: Lokál Dlouhááá
 description: Historically the first and literally longest Lokál – serves traditional Czech pub fare from 12 beer tanks
 cuisine: Traditional Czech Pub
+category: restaurant
 priceRange: $$
 address: Dlouhá 33, Prague 1
 location:

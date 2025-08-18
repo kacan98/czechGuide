@@ -67,7 +67,7 @@ const description = meta?.description || "Discover the best traditional Czech re
   </head>
   <body class="min-h-screen bg-light text-light-foreground">
     <!-- Navigation -->
-    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
+    <header class="sticky top-0 z-[9999] bg-white/95 backdrop-blur-sm border-b border-gray-100">
       <nav class="content-grid py-4">
         <div class="flex justify-between items-center">
           <a href="/" class="flex items-center gap-3 group">
@@ -81,6 +81,16 @@ const description = meta?.description || "Discover the best traditional Czech re
             <a href="/#restaurants" class="font-medium hover:text-primary transition">Restaurants</a>
             <a href="/#map" class="font-medium hover:text-primary transition">Map</a>
             <a href="/dishes" class="font-medium hover:text-primary transition">Recommended Dishes</a>
+            
+            <!-- Language Toggle -->
+            <div class="flex items-center gap-2 ml-4 border-l border-gray-300 pl-4">
+              <button id="lang-en" class="px-3 py-1 text-sm rounded-lg font-medium transition bg-red-600 text-white">
+                🇬🇧 EN
+              </button>
+              <button id="lang-sv" class="px-3 py-1 text-sm rounded-lg font-medium transition bg-gray-200 text-gray-700 hover:bg-gray-300">
+                🇸🇪 SV
+              </button>
+            </div>
           </div>
           
           <!-- Mobile menu button -->
@@ -99,36 +109,48 @@ const description = meta?.description || "Discover the best traditional Czech re
     <!-- Footer -->
     <footer class="bg-dark text-dark-foreground mt-20">
       <div class="content-grid py-16">
-        <div class="grid md:grid-cols-3 gap-12">
+        <div class="grid md:grid-cols-4 gap-8">
           <div>
             <h3 class="font-heading text-2xl mb-4">Czech Food Guide</h3>
-            <p class="text-dark-foreground/80">
-              Your comprehensive guide to authentic Czech cuisine and the best restaurants in Prague.
+            <p class="text-dark-foreground/80 text-sm">
+              Discover authentic Czech cuisine with Karel's personal recommendations. From traditional restaurants to modern bistros and historic attractions in Prague.
             </p>
           </div>
           
           <div>
-            <h4 class="font-heading text-xl mb-4">Quick Links</h4>
-            <ul class="space-y-2 text-dark-foreground/80">
-              <li><a href="/#restaurants" class="hover:text-white transition">Restaurants</a></li>
+            <h4 class="font-heading text-lg mb-4">Explore</h4>
+            <ul class="space-y-2 text-dark-foreground/80 text-sm">
+              <li><a href="/#restaurants" class="hover:text-white transition">Featured Restaurants</a></li>
               <li><a href="/#map" class="hover:text-white transition">Interactive Map</a></li>
-              <li><a href="/dishes" class="hover:text-white transition">Recommended Dishes</a></li>
+              <li><a href="/dishes" class="hover:text-white transition">Must-Try Dishes</a></li>
             </ul>
           </div>
           
           <div>
-            <h4 class="font-heading text-xl mb-4">Popular Dishes</h4>
-            <ul class="space-y-2 text-dark-foreground/80">
-              <li>Svíčková (Beef Sirloin)</li>
-              <li>Goulash</li>
-              <li>Trdelník</li>
-              <li>Smažený sýr (Fried Cheese)</li>
+            <h4 class="font-heading text-lg mb-4">Categories</h4>
+            <ul class="space-y-2 text-dark-foreground/80 text-sm">
+              <li><a href="/restaurant/lokal-dlouha" class="hover:text-white transition">🍽️ Full Restaurants</a></li>
+              <li><a href="/restaurant/u-cerneho-vola" class="hover:text-white transition">🍺 Pubs & Beer Halls</a></li>
+              <li><a href="/restaurant/sisters-bistro" class="hover:text-white transition">🥪 Bistros & Snacks</a></li>
+              <li><a href="/restaurant/werichova-vila" class="hover:text-white transition">☕ Cafés & Culture</a></li>
+              <li><a href="/#map" class="hover:text-white transition">🏛️ Prague Attractions</a></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h4 class="font-heading text-lg mb-4">Karel's Favorites</h4>
+            <ul class="space-y-2 text-dark-foreground/80 text-sm">
+              <li><a href="/dishes#polivky" class="hover:text-white transition">🥄 Kulajda (Dill Soup)</a></li>
+              <li><a href="/dishes#hlavni-jidla" class="hover:text-white transition">🥩 Svíčková (National Dish)</a></li>
+              <li><a href="/dishes#snacks" class="hover:text-white transition">🥪 Chlebíčky (Art Sandwiches)</a></li>
+              <li><a href="/dishes#drinks" class="hover:text-white transition">🥤 Kofola (Communist Cola)</a></li>
+              <li><a href="/#map" class="hover:text-white transition">🏰 Prague Castle Tours</a></li>
             </ul>
           </div>
         </div>
         
         <div class="border-t border-dark-foreground/20 mt-12 pt-8 text-center text-dark-foreground/60">
-          <p>© 2024 Czech Food Guide. Made with ❤️ in Prague</p>
+          <p class="text-sm">© 2024 Czech Food Guide. Your authentic Prague food companion. Made with ❤️ for food lovers</p>
         </div>
       </div>
     </footer>

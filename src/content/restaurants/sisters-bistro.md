@@ -2,6 +2,7 @@
 name: Sisters Bistro
 description: Modern Czech bistro specializing in chlebíčky - traditional open-faced sandwiches with creative toppings
 cuisine: Czech Bistro
+category: bistro
 priceRange: $
 address: Dlouhá 39, Prague 1
 location:

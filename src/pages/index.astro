@@ -1,13 +1,19 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import Map from "@components/Map.vue";
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
 
-const restaurants = await getCollection('restaurants');
+const restaurants = await getCollection("restaurants");
+const attractions = await getCollection("attractions");
+const allDishes = await getCollection("dishes");
+
+// Get Karel's must-try dishes
+const karelMustTryDishes = allDishes.filter(dish => dish.data.KarelMustTry === true);
 
 const meta = {
-  title: "Czech Food Guide - Prague Restaurant Recommendations",
-  description: "Discover the best traditional Czech restaurants and dishes in Prague",
+  title: "Karel's Czechia Guide - Prague Restaurant Recommendations",
+  description:
+    "Discover the best traditional Czech restaurants and dishes in Prague",
 };
 ---
 
@@ -15,67 +21,172 @@ const meta = {
   <main>
     <div class="min-h-screen bg-gradient-to-b from-amber-50 to-white">
       <!-- Hero Section -->
-      <section class="relative h-[60vh] flex items-center justify-center text-center px-4">
-        <div class="max-w-4xl mx-auto">
-          <h1 class="text-5xl md:text-7xl font-bold text-gray-900 mb-6">
-            Czech Food Guide
+      <section
+        class="relative flex h-[60vh] items-center justify-center px-4 text-center"
+      >
+        <div class="mx-auto max-w-4xl">
+          <h1 class="mb-6 text-5xl font-bold text-gray-900 md:text-7xl">
+            Hey, I'm Karel!
           </h1>
-          <p class="text-xl md:text-2xl text-gray-600 mb-8">
-            Discover the best traditional Czech cuisine in Prague
+          <p class="mb-8 text-xl text-gray-600 md:text-2xl">
+            Let me show you what I would go for in Prague - no tourist traps, just the real deal
           </p>
-          <div class="flex gap-4 justify-center">
-            <a href="#restaurants" class="px-8 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
-              View Restaurants
+          <div class="flex flex-wrap justify-center gap-4">
+            <a
+              href="#restaurants"
+              class="rounded-lg bg-red-600 px-8 py-3 text-white transition hover:bg-red-700"
+            >
+              My Favorite Spots
             </a>
-            <a href="#map" class="px-8 py-3 bg-white text-gray-900 border-2 border-gray-900 rounded-lg hover:bg-gray-100 transition">
-              Explore Map
+            <a
+              href="#must-try"
+              class="rounded-lg bg-purple-600 px-8 py-3 text-white transition hover:bg-purple-700"
+            >
+              You HAVE to Try This
+            </a>
+            <a
+              href="/dishes"
+              class="rounded-lg bg-amber-600 px-8 py-3 text-white transition hover:bg-amber-700"
+            >
+              What to Order
+            </a>
+            <a
+              href="#map"
+              class="rounded-lg border-2 border-gray-900 bg-white px-8 py-3 text-gray-900 transition hover:bg-gray-100"
+            >
+              Where Everything Is
             </a>
           </div>
         </div>
       </section>
 
       <!-- Restaurant Section -->
-      <section id="restaurants" class="py-20 px-4">
-        <div class="max-w-6xl mx-auto">
-          <h2 class="text-4xl font-bold text-center mb-12">Featured Restaurants</h2>
-          
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {restaurants.map((restaurant) => (
-              <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
-                <div class="h-48 bg-gray-300 relative">
-                  {restaurant.data.image && (
-                    <img 
-                      src={restaurant.data.image} 
-                      alt={restaurant.data.name}
-                      class="w-full h-full object-cover"
-                    />
-                  )}
-                </div>
-                <div class="p-6">
-                  <h3 class="text-xl font-bold mb-2">{restaurant.data.name}</h3>
-                  <p class="text-gray-600 mb-4 line-clamp-2">{restaurant.data.description}</p>
-                  <div class="flex justify-between items-center">
-                    <span class="text-amber-600 font-semibold text-lg">{restaurant.data.priceRange}</span>
-                    <a 
-                      href={`/restaurant/${restaurant.slug}`}
-                      class="text-red-600 hover:text-red-700 font-medium"
-                    >
-                      View Details →
-                    </a>
+      <section id="restaurants" class="px-4 py-20">
+        <div class="mx-auto max-w-6xl">
+          <h2 class="mb-12 text-center text-4xl font-bold">
+            Places that me and my family like
+          </h2>
+
+          <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {
+              restaurants.map((restaurant) => (
+                <div class="overflow-hidden rounded-xl bg-white shadow-lg transition hover:shadow-xl">
+                  <div class="relative h-48 bg-gray-300">
+                    {restaurant.data.image && (
+                      <img
+                        src={restaurant.data.image}
+                        alt={restaurant.data.name}
+                        class="h-full w-full object-cover"
+                      />
+                    )}
+                  </div>
+                  <div class="p-6">
+                    <h3 class="mb-2 text-xl font-bold">
+                      {restaurant.data.name}
+                    </h3>
+                    <p class="mb-4 text-gray-600">
+                      {restaurant.data.description}
+                    </p>
+                    <div class="flex items-center justify-between">
+                      <span class="text-lg font-semibold text-amber-600">
+                        {restaurant.data.priceRange}
+                      </span>
+                      <a
+                        href={`/restaurant/${restaurant.slug}`}
+                        class="font-medium text-red-600 hover:text-red-700"
+                      >
+                        View Details →
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <!-- Karel's Must-Try Dishes Section -->
+      <section id="must-try" class="px-4 py-20">
+        <div class="mx-auto max-w-6xl">
+          <div class="text-center mb-12">
+            <h2 class="mb-4 text-center text-4xl font-bold text-red-600">
+              Seriously, You HAVE to Try These
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+              Look, I've been eating Czech food my whole life, and these dishes? They're the real deal. 
+              Trust me on this - your trip isn't complete without trying at least a few of these.
+            </p>
+          </div>
+
+          <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {
+              karelMustTryDishes.slice(0, 6).map((dish) => (
+                <div class="overflow-hidden rounded-xl bg-white shadow-lg border-2 border-purple-200 transition hover:shadow-xl">
+                  <div class="relative h-48 bg-gray-300">
+                    {dish.data.image && (
+                      <img
+                        src={dish.data.image}
+                        alt={dish.data.name}
+                        class="h-full w-full object-cover"
+                      />
+                    )}
+                    <div class="absolute top-3 left-3">
+                      <span class="text-xs font-bold px-3 py-1 rounded-full text-purple-600 bg-purple-100 border border-purple-200">
+                        Karel HIGHLY recommends
+                      </span>
+                    </div>
+                  </div>
+                  <div class="p-6">
+                    <div class="flex items-center gap-2 mb-3">
+                      <span class={`text-xs font-medium px-2 py-1 rounded-full ${
+                        dish.data.category === 'sladký' ? 'text-amber-600 bg-amber-100' :
+                        dish.data.category === 'hlavní jídla' ? 'text-red-600 bg-red-100' :
+                        dish.data.category === 'polívky' ? 'text-yellow-600 bg-yellow-100' :
+                        'text-green-600 bg-green-100'
+                      }`}>
+                        {dish.data.category === 'sladký' ? 'Sweet' :
+                         dish.data.category === 'hlavní jídla' ? 'Main Dish' :
+                         dish.data.category === 'polívky' ? 'Soup' :
+                         'Snack'}
+                      </span>
+                    </div>
+                    <h3 class="mb-2 text-xl font-bold text-gray-900">
+                      {dish.data.name}
+                    </h3>
+                    <p class="mb-4 text-gray-600">
+                      {dish.data.whyTry}
+                    </p>
+                    {dish.data.whereToGet && (
+                      <p class="text-xs text-purple-600 mb-3">
+                        <strong>Where to get it:</strong> {dish.data.whereToGet}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+
+          <div class="text-center mt-12">
+            <a
+              href="/dishes"
+              class="inline-block rounded-lg bg-purple-600 px-8 py-3 text-white font-medium transition hover:bg-purple-700"
+            >
+              Show me everything you recommend, Karel →
+            </a>
           </div>
         </div>
       </section>
 
       <!-- Map Section -->
-      <section id="map" class="py-20 px-4 bg-gray-50">
-        <div class="max-w-6xl mx-auto">
-          <h2 class="text-4xl font-bold text-center mb-12">Prague Restaurant Map</h2>
-          <div class="bg-white rounded-xl shadow-lg p-4">
-            <Map restaurants={restaurants} client:only="vue" />
+      <section id="map" class="bg-gray-50 px-4 py-20">
+        <div class="mx-auto max-w-6xl">
+          <h2 class="mb-12 text-center text-4xl font-bold">
+            Map of My Favorite Places
+          </h2>
+          <div class="rounded-xl bg-white p-4 shadow-lg">
+            <Map restaurants={restaurants} attractions={attractions} client:only="vue" />
           </div>
         </div>
       </section>
@@ -84,10 +195,10 @@ const meta = {
 
   <script>
     // Handle restaurant selection from map
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener("DOMContentLoaded", () => {
       const map = document.querySelector('astro-island[component-url*="Map"]');
       if (map) {
-        map.addEventListener('restaurant-selected', (event) => {
+        map.addEventListener("restaurant-selected", (event) => {
           const restaurant = event.detail;
           if (restaurant?.slug) {
             window.location.href = `/restaurant/${restaurant.slug}`;

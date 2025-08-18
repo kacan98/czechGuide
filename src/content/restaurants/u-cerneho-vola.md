@@ -2,6 +2,7 @@
 name: U Černého Vola
 description: Authentic Prague beerhall from 1965 serving Velkopopovický Kozel beer near Prague Castle
 cuisine: Traditional Czech Pub
+category: pub
 priceRange: $
 address: Loretánské náměstí 107/1, Prague 1
 location:
@@ -16,12 +17,10 @@ image: https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/d7/e3/ba/great
 recommended:
   - name: Velkopopovický Kozel Draft Beer
     description: Excellent Czech beer on tap - one of the few places serving this brand
-  - name: Traditional Czech Goulash
+  - name: Traditional Czech Guláš
     description: Hearty beef goulash with bread dumplings
   - name: Smažený sýr
     description: Classic fried cheese with tartar sauce
-  - name: Klobása s chlebem
-    description: Czech sausage with fresh bread
 ---
 
 ## About U Černého Vola
