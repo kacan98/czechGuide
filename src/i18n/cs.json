@@ -1,0 +1,31 @@
+{
+  "nav": {
+    "restaurants": "Restaurace",
+    "map": "Mapa",
+    "dishes": "Tradiční jídla"
+  },
+  "hero": {
+    "title": "Průvodce českou kuchyní",
+    "subtitle": "Objevte nejlepší tradiční českou kuchyni v Praze",
+    "viewRestaurants": "Zobrazit restaurace",
+    "exploreMap": "Prozkoumat mapu"
+  },
+  "sections": {
+    "featuredRestaurants": "Doporučené restaurace",
+    "restaurantMap": "Mapa restaurací v Praze",
+    "popularDishes": "Oblíbená jídla"
+  },
+  "dishes": {
+    "svickova": "Svíčková na smetaně",
+    "goulash": "Guláš",
+    "trdelnik": "Trdelník",
+    "smazeny_syr": "Smažený sýr",
+    "knedlo_zelo_vepro": "Knedlo zelo vepřo",
+    "pork_knee": "Pečené koleno"
+  },
+  "footer": {
+    "description": "Váš průvodce autentickou českou kuchyní a nejlepšími restauracemi v Praze.",
+    "quickLinks": "Rychlé odkazy",
+    "copyright": "© 2024 Průvodce českou kuchyní. Vytvořeno s ❤️ v Praze"
+  }
+}

@@ -1,0 +1,108 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Map from "@components/Map.vue";
+import { getCollection } from 'astro:content';
+
+const restaurants = await getCollection('restaurants');
+
+const meta = {
+  title: "Czech Food Guide - Prague Restaurant Recommendations",
+  description: "Discover the best traditional Czech restaurants and dishes in Prague",
+};
+---
+
+<Layout meta={meta}>
+  <main>
+    <div class="min-h-screen bg-gradient-to-b from-amber-50 to-white">
+      <!-- Hero Section -->
+      <section class="relative h-[60vh] flex items-center justify-center text-center px-4">
+        <div class="max-w-4xl mx-auto">
+          <h1 class="text-5xl md:text-7xl font-bold text-gray-900 mb-6">
+            Czech Food Guide
+          </h1>
+          <p class="text-xl md:text-2xl text-gray-600 mb-8">
+            Discover the best traditional Czech cuisine in Prague
+          </p>
+          <div class="flex gap-4 justify-center">
+            <a href="#restaurants" class="px-8 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+              View Restaurants
+            </a>
+            <a href="#map" class="px-8 py-3 bg-white text-gray-900 border-2 border-gray-900 rounded-lg hover:bg-gray-100 transition">
+              Explore Map
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Restaurant Section -->
+      <section id="restaurants" class="py-20 px-4">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="text-4xl font-bold text-center mb-12">Featured Restaurants</h2>
+          
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {restaurants.map((restaurant) => (
+              <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
+                <div class="h-48 bg-gray-300 relative">
+                  {restaurant.data.image && (
+                    <img 
+                      src={restaurant.data.image} 
+                      alt={restaurant.data.name}
+                      class="w-full h-full object-cover"
+                    />
+                  )}
+                </div>
+                <div class="p-6">
+                  <h3 class="text-xl font-bold mb-2">{restaurant.data.name}</h3>
+                  <p class="text-gray-600 mb-4 line-clamp-2">{restaurant.data.description}</p>
+                  <div class="flex justify-between items-center">
+                    <span class="text-amber-600 font-semibold text-lg">{restaurant.data.priceRange}</span>
+                    <a 
+                      href={`/restaurant/${restaurant.slug}`}
+                      class="text-red-600 hover:text-red-700 font-medium"
+                    >
+                      View Details →
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- Map Section -->
+      <section id="map" class="py-20 px-4 bg-gray-50">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="text-4xl font-bold text-center mb-12">Prague Restaurant Map</h2>
+          <div class="bg-white rounded-xl shadow-lg p-4">
+            <Map restaurants={restaurants} client:only="vue" />
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    // Handle restaurant selection from map
+    document.addEventListener('DOMContentLoaded', () => {
+      const map = document.querySelector('astro-island[component-url*="Map"]');
+      if (map) {
+        map.addEventListener('restaurant-selected', (event) => {
+          const restaurant = event.detail;
+          if (restaurant?.slug) {
+            window.location.href = `/restaurant/${restaurant.slug}`;
+          }
+        });
+      }
+    });
+  </script>
+</Layout>
+
+<style>
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+</style>

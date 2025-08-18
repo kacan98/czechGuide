@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Half-liter beer glass (půllitr) -->
+  <path d="M7 20h8c0.5 0 1-0.5 1-1V10c0-0.5-0.5-1-1-1H7c-0.5 0-1 0.5-1 1v9c0 0.5 0.5 1 1 1z"/>
+  <!-- Glass handle -->
+  <path d="M16 11v4c0 1.1 0.9 2 2 2s2-0.9 2-2v-2c0-1.1-0.9-2-2-2"/>
+  <!-- Beer foam head -->
+  <path d="M7 9c0-1 1-2 2-2s2 1 2 2"/>
+  <path d="M11 9c0-1 1-2 2-2s2 1 2 2"/>
+  <path d="M15 9c0-0.5 0.5-1 1-1"/>
+  <!-- Beer measurement mark (0.5L) -->
+  <path d="M6.5 12h1" stroke-width="1"/>
+</svg>

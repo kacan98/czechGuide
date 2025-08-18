@@ -1,0 +1,17 @@
+- restaurant page
+    - remove the about and whatever details section. Noone cares
+- add restaurants
+    - antastiska kakor och kafé i centrum: https://www.werichovavila.cz 
+    - https://lokal-dlouha.ambi.cz/cz/
+    - pivo u černého vola: https://www.pivoucernyvol.cz/
+    - explain why these places are worth visiting
+- add non-restaurant things to visit
+    - Trip: Hrad -> Nerudovou ulicí dolû na Karlův most, Orloj, Petřín… dobrý je taky Nový svět, Židovský hřbitov…. 
+    - Karlštejn 
+- add a general food guide with pictures with my favorite dishes
+    - sladký
+    - hlavní jídla
+    - polívky
+    - snacks
+- fix the map. It should ALWAYS focus on Prague
+

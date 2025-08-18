@@ -1,0 +1,186 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Map from "@components/Map.vue";
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const restaurants = await getCollection('restaurants');
+  return restaurants.map((restaurant) => ({
+    params: { slug: restaurant.slug },
+    props: { restaurant },
+  }));
+}
+
+type Props = {
+  restaurant: CollectionEntry<'restaurants'>;
+};
+
+const { restaurant } = Astro.props;
+const { Content } = await restaurant.render();
+
+const meta = {
+  title: `${restaurant.data.name} - Czech Food Guide`,
+  description: restaurant.data.description,
+};
+---
+
+<Layout meta={meta}>
+  <main class="min-h-screen bg-white">
+    <!-- Back Navigation -->
+    <div class="bg-gray-50 py-4">
+      <div class="max-w-4xl mx-auto px-4">
+        <a href="/" class="text-red-600 hover:text-red-700 font-medium">
+          ← Back to Restaurant Guide
+        </a>
+      </div>
+    </div>
+
+    <!-- Restaurant Header -->
+    <section class="py-12">
+      <div class="max-w-4xl mx-auto px-4">
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+          <div>
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              {restaurant.data.name}
+            </h1>
+            <p class="text-xl text-gray-600 mb-6">
+              {restaurant.data.description}
+            </p>
+            <div class="flex flex-wrap gap-4 mb-6">
+              <span class="px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-sm font-medium">
+                {restaurant.data.cuisine}
+              </span>
+              <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                {restaurant.data.priceRange}
+              </span>
+              {restaurant.data.googleRating && (
+                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                  ⭐ {restaurant.data.googleRating} ({restaurant.data.googleReviews} reviews)
+                </span>
+              )}
+            </div>
+          </div>
+          
+          {restaurant.data.image && (
+            <div class="rounded-xl overflow-hidden shadow-lg">
+              <img 
+                src={restaurant.data.image} 
+                alt={restaurant.data.name}
+                class="w-full h-64 object-cover"
+              />
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+
+    <!-- Restaurant Details -->
+    <section class="py-12 bg-gray-50">
+      <div class="max-w-4xl mx-auto px-4">
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Contact Info -->
+          <div class="bg-white rounded-lg p-6 shadow-md">
+            <h3 class="text-lg font-bold mb-4">Contact & Location</h3>
+            <div class="space-y-3">
+              <div>
+                <span class="font-medium text-gray-700">Address:</span>
+                <p class="text-gray-600">{restaurant.data.address}</p>
+              </div>
+              {restaurant.data.phone && (
+                <div>
+                  <span class="font-medium text-gray-700">Phone:</span>
+                  <p class="text-gray-600">{restaurant.data.phone}</p>
+                </div>
+              )}
+              <div>
+                <span class="font-medium text-gray-700">Hours:</span>
+                <p class="text-gray-600">{restaurant.data.hours}</p>
+              </div>
+              {restaurant.data.website && (
+                <div>
+                  <a 
+                    href={restaurant.data.website} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center text-red-600 hover:text-red-700"
+                  >
+                    Visit Website →
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <!-- Map -->
+          <div class="md:col-span-2 bg-white rounded-lg p-6 shadow-md">
+            <h3 class="text-lg font-bold mb-4">Location</h3>
+            <div class="h-96 overflow-hidden rounded-lg">
+              <Map restaurants={[restaurant]} client:only="vue" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recommended Dishes -->
+    {restaurant.data.recommended && restaurant.data.recommended.length > 0 && (
+      <section class="py-12">
+        <div class="max-w-4xl mx-auto px-4">
+          <h2 class="text-3xl font-bold text-center mb-12">Recommended Dishes</h2>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {restaurant.data.recommended.map((dish) => (
+              <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                {dish.image && (
+                  <img 
+                    src={dish.image} 
+                    alt={dish.name}
+                    class="w-full h-32 object-cover"
+                  />
+                )}
+                <div class="p-4">
+                  <h3 class="font-bold text-gray-900 mb-2">{dish.name}</h3>
+                  <p class="text-gray-600 text-sm">{dish.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Restaurant Content -->
+    <section class="py-12 bg-gray-50">
+      <div class="max-w-4xl mx-auto px-4">
+        <div class="prose prose-lg max-w-none">
+          <Content />
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .prose h2 {
+    @apply text-2xl font-bold text-gray-900 mt-8 mb-4;
+  }
+  
+  .prose h3 {
+    @apply text-xl font-bold text-gray-900 mt-6 mb-3;
+  }
+  
+  .prose p {
+    @apply text-gray-700 mb-4;
+  }
+  
+  .prose ul {
+    @apply list-disc list-inside space-y-2 text-gray-700;
+  }
+  
+  .prose ol {
+    @apply list-decimal list-inside space-y-2 text-gray-700;
+  }
+  
+  .prose strong {
+    @apply font-bold text-gray-900;
+  }
+</style>
