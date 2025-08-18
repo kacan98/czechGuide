@@ -50,7 +50,7 @@
           activeFilter === null ? 'bg-blue-100 text-blue-700 border border-blue-300' : 'bg-gray-200 text-gray-500'
         ]"
       >
-        🏛️ Attractions ({{ attractions.length }})
+        🏛️ Places to See ({{ attractions.length }})
       </button>
     </div>
     <div ref="mapContainer" class="w-full h-[600px] rounded-lg shadow-lg"></div>
@@ -87,7 +87,29 @@ const activeFilter = ref(null)
 
 // Helper function to get restaurants by category
 const getRestaurantsByCategory = (category) => {
-  return props.restaurants.filter(r => r.data?.category === category)
+  console.log('=== DEBUGGING RESTAURANT FILTERING ===')
+  console.log('Filtering restaurants for category:', category)
+  console.log('Total restaurants received:', props.restaurants?.length)
+  
+  // Try multiple approaches to access category
+  props.restaurants?.forEach((r, index) => {
+    console.log(`Restaurant ${index} - ${r.data?.name}:`)
+    console.log('  r.data?.category:', r.data?.category)
+    console.log('  r.data.category:', r.data.category)
+    console.log('  category in r.data:', 'category' in (r.data || {}))
+    console.log('  r.data keys:', Object.keys(r.data || {}))
+    console.log('  r.data values:', Object.values(r.data || {}))
+    
+    // Check if category exists anywhere in the object
+    const dataStr = JSON.stringify(r.data)
+    console.log('  contains "pub":', dataStr.includes('"pub"'))
+    console.log('  contains "restaurant":', dataStr.includes('"restaurant"'))
+  })
+  
+  const filtered = props.restaurants.filter(r => r.data?.category === category)
+  console.log('Filtered results for', category, ':', filtered.length)
+  console.log('=== END DEBUGGING ===')
+  return filtered
 }
 
 onMounted(async () => {

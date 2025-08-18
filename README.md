@@ -1,106 +1,46 @@
-# Astrorante | Astro + Storyblok CMS
+# Czech Food Guide
 
-[![License: CC BY-ND 4.0](https://img.shields.io/badge/License-CC_BY--ND_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nd/4.0/)
+A personal Prague travel guide featuring authentic restaurants, traditional dishes, and must-see attractions. Built as a simple, no-nonsense resource for first-time visitors to Prague.
 
-## 📝 1. Setting up the .env file
+## What's Included
 
-rename the `env.txt` to `.env` and fill in your details.
+- **Restaurant recommendations** with categories (full restaurants, pubs, bistros, cafés)
+- **Traditional Czech dishes** with photos, descriptions, and where to find them
+- **Interactive map** with restaurant locations and Prague attractions
+- **Karel's personal picks** - dishes and drinks that locals actually enjoy
 
-_Make sure you add your Storyblok space region `eu, us, ap, ca, cn`_
+## Features
 
-```sh
-STORYBLOK_PREVIEW_TOKEN=XXX
-STORYBLOK_PERSONAL_TOKEN=XXX
-STORYBLOK_SPACE_ID=000000
-STORYBLOK_REGION=eu
-LOCALE=en-US
-CURRENCY=USD
-SITE_LANG=en
-```
+- 🗺️ Interactive map with filter categories
+- 📱 Responsive design for mobile and desktop
+- 🖼️ Image galleries with navigation
+- 🇨🇿 Authentic Czech content and recommendations
+- 📍 Google Maps integration for navigation
 
-Also add this to your netlify/vercel deploy settings.
+## Tech Stack
 
-### 🧰 2. Install dependencies
+- **Astro 5** - Static site generator
+- **Vue 3** - Interactive components
+- **TailwindCSS** - Styling
+- **TypeScript** - Type safety
+- **Leaflet.js** - Interactive maps
+
+## Getting Started
 
 ```bash
+# Install dependencies
 npm install
-```
 
-### 🛠️ 3. Start Development server
-
-```bash
+# Start development server
 npm run dev
 ```
 
-### 🔄 4. Sync your Storyblok Space
+Visit `http://localhost:4321` to see the guide.
 
-open `https://localhost:4321/setup`
+## Live Site
 
-And sync your Datasources, Components, and stories. it is best to first delete before syncing.
+Check out the live version: [Czech Food Guide](https://czech-guide-lpzbrsixe-karel-cancaras-projects.vercel.app)
 
-![Astrorante](https://astrorante.unfolding.io/screenshots/sync.png)
+---
 
-### ⚙️ 5. Add your site to the astro.config and set your adapter (vercel or netlify)
-
-```javascript
-
-export default defineConfig({
-    site: 'https://your-website.com',
-    adapter: vercel(), // vercel() or netlify()
-
-    ....
-
-```
-
-### 🚀 6. Deploy to Vercel or Netlify
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Funfolding-io%2FAstrorante&env=STORYBLOK_PREVIEW_TOKEN,STORYBLOK_PERSONAL_TOKEN,STORYBLOK_SPACE_ID,LOCALE,CURRENCY,SITE_LANG&envDescription=Configure%20your%20site%3A&envLink=https%3A%2F%2Fastrorante.unfolding.io%2Fnews%2Fgetting-started%2F)
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/unfolding-io/Astrorante)
-
-## 🛸 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| ------------------------- | ------------------------------------------------ |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CL                      |
-
-## 👀 Want to learn more about Astro?
-
-Check out [Astro documentation](https://docs.astro.build) or jump into Astro's
-[Discord server](https://astro.build/chat).
-
-## 📚 Tech Stack
-
-Astro, Storyblok CMS, Vue, TailwindCSS
-
-## 🛟 Support
-
-If you encounter any issues or bugs, we encourage you to open an issue in the repository. To help us
-quickly address the problem, please provide detailed information about the bug and steps to
-reproduce it.
-
-For those seeking priority assistance, we offer premium support services. Feel free to reach out to
-us by email at [hello@unfolding.io.](mailto:hello@unfolding.io.) We're here to help!
-
-## ☕️ Want to Caffeinate your Developer?
-
-By [caffeinating](https://www.buymeacoffee.com/unfolding.io) your developer, you're not just getting
-the best out of them; you're also ensuring a cheerful and energetic work environment.😊
-
-[![buymeacoffee](https://starfunnel.unfolding.io/screenshots/bymeacoffee.webp)](https://www.buymeacoffee.com/unfolding.io)
-
-## 📸 Screenshots
-
-![Astrorante](https://astrorante.unfolding.io/screenshots/Screenshot_0.png)
-![Astrorante](https://astrorante.unfolding.io/screenshots/Screenshot_1.png)
-![Astrorante](https://astrorante.unfolding.io/screenshots/Screenshot_2.png)
-![Astrorante](https://astrorante.unfolding.io/screenshots/Screenshot_3.png)
-![Astrorante](https://astrorante.unfolding.io/screenshots/Screenshot_4.png)
-![Astrorante](https://astrorante.unfolding.io/screenshots/Screenshot_5.png)
-![Astrorante](https://astrorante.unfolding.io/screenshots/sync.png)
+*A straightforward guide to Prague's food scene - no endless lists, just the essentials.*
