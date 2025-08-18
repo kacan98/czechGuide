@@ -18,7 +18,7 @@ image: https://pct-wp-prod.storage.googleapis.com/2024/03/13101503/7-5.jpg
 recommended:
   - name: Svíčková na smetaně
     description: Classic Czech beef sirloin in cream sauce with bread dumplings
-  - name: Goulash s knedlíky
+  - name: Guláš s knedlíky
     description: Traditional beef goulash with bread dumplings
   - name: Smažený sýr
     description: Fried cheese with tartar sauce and potatoes

@@ -346,7 +346,7 @@ const addAttractionMarkers = () => {
           <p class="text-sm text-gray-600 mb-2">${attraction.data.type}</p>
           <p class="text-xs text-gray-500 mb-3">${attraction.data.address}</p>
           ${attraction.data.entryFee ? `<p class="text-xs text-gray-500 mb-2">Entry: ${attraction.data.entryFee}</p>` : ''}
-          <button class="visit-attraction bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition" data-slug="${attraction.slug}">
+          <button class="visit-attraction bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition" data-website="${attraction.data.website || ''}">
             Learn More
           </button>
         </div>
@@ -355,6 +355,22 @@ const addAttractionMarkers = () => {
       marker.bindPopup(popupContent, {
         maxWidth: 250,
         closeButton: true
+      })
+      
+      // Handle attraction popup button clicks
+      marker.on('popupopen', () => {
+        const popup = marker.getPopup()
+        const popupElement = popup.getElement()
+        const visitButton = popupElement.querySelector('.visit-attraction')
+        
+        if (visitButton) {
+          visitButton.addEventListener('click', () => {
+            const website = visitButton.getAttribute('data-website')
+            if (website) {
+              window.open(website, '_blank')
+            }
+          })
+        }
       })
       
       attractionMarkers.push(marker)

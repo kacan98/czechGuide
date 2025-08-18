@@ -14,19 +14,24 @@ interface Props {
 }
 
 const { meta } = Astro.props;
-const title = meta?.title || "Czech Food Guide - Prague Restaurant Recommendations";
-const description = meta?.description || "Discover the best traditional Czech restaurants and dishes in Prague";
+const title = meta?.title || "Karel's Czechia Guide";
+const description =
+  meta?.description ||
+  "Discover the best traditional Czech restaurants and dishes in Prague";
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
-          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" 
-          crossorigin="" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
     <SEO
       title={title}
       description={description}
@@ -35,16 +40,16 @@ const description = meta?.description || "Discover the best traditional Czech re
           title: title,
           type: "website",
           image: meta?.image || "/og-image.jpg",
-        }
+        },
       }}
     />
     <style>
       :root {
-        --font-body: 'neo-grotesque', system-ui, sans-serif;
-        --font-heading: 'transitional', Georgia, serif;
+        --font-body: "neo-grotesque", system-ui, sans-serif;
+        --font-heading: "transitional", Georgia, serif;
         --font-weight-body: 400;
         --font-weight-heading: 700;
-        
+
         --primary-bg: 185 28 28; /* red-700 */
         --primary-fg: 255 255 255;
         --secondary-bg: 251 146 60; /* orange-400 */
@@ -55,10 +60,10 @@ const description = meta?.description || "Discover the best traditional Czech re
         --dark-fg: 255 255 255;
         --light-bg: 255 255 255;
         --light-fg: 17 24 39;
-        
+
         --radius: 0.5rem;
         --border: 214.3 31.8% 91.4%;
-        
+
         --content-max-width: 72rem;
         --breakout-max-width: 80rem;
         --padding-inline: 1rem;
@@ -67,35 +72,38 @@ const description = meta?.description || "Discover the best traditional Czech re
   </head>
   <body class="min-h-screen bg-light text-light-foreground">
     <!-- Navigation -->
-    <header class="sticky top-0 z-[9999] bg-white/95 backdrop-blur-sm border-b border-gray-100">
+    <header
+      class="sticky top-0 z-[9999] border-b border-gray-100 bg-white/95 backdrop-blur-sm"
+    >
       <nav class="content-grid py-4">
-        <div class="flex justify-between items-center">
-          <a href="/" class="flex items-center gap-3 group">
-            <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center group-hover:bg-primary/90 transition">
-              <Icon name="beer" class="w-6 h-6 text-white" />
+        <div class="flex items-center justify-between">
+          <a href="/" class="group flex items-center gap-3">
+            <div
+              class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary transition group-hover:bg-primary/90"
+            >
+              🍺
             </div>
-            <span class="font-heading text-2xl font-bold">Czech Food Guide</span>
+            <span class="font-heading text-2xl font-bold"
+              >Karel's Czechia Guide</span
+            >
           </a>
-          
-          <div class="hidden md:flex items-center gap-8">
-            <a href="/#restaurants" class="font-medium hover:text-primary transition">Restaurants</a>
-            <a href="/#map" class="font-medium hover:text-primary transition">Map</a>
-            <a href="/dishes" class="font-medium hover:text-primary transition">Recommended Dishes</a>
-            
-            <!-- Language Toggle -->
-            <div class="flex items-center gap-2 ml-4 border-l border-gray-300 pl-4">
-              <button id="lang-en" class="px-3 py-1 text-sm rounded-lg font-medium transition bg-red-600 text-white">
-                🇬🇧 EN
-              </button>
-              <button id="lang-sv" class="px-3 py-1 text-sm rounded-lg font-medium transition bg-gray-200 text-gray-700 hover:bg-gray-300">
-                🇸🇪 SV
-              </button>
-            </div>
+
+          <div class="hidden items-center gap-8 md:flex">
+            <a
+              href="/#restaurants"
+              class="font-medium transition hover:text-primary">Restaurants</a
+            >
+            <a href="/#map" class="font-medium transition hover:text-primary"
+              >Map</a
+            >
+            <a href="/dishes" class="font-medium transition hover:text-primary"
+              >Recommended Dishes</a
+            >
           </div>
-          
+
           <!-- Mobile menu button -->
-          <button class="md:hidden p-2">
-            <Icon name="menu" class="w-6 h-6" />
+          <button class="p-2 md:hidden">
+            <Icon name="menu" class="h-6 w-6" />
           </button>
         </div>
       </nav>
@@ -107,50 +115,116 @@ const description = meta?.description || "Discover the best traditional Czech re
     </main>
 
     <!-- Footer -->
-    <footer class="bg-dark text-dark-foreground mt-20">
+    <footer class="mt-20 bg-dark text-dark-foreground">
       <div class="content-grid py-16">
-        <div class="grid md:grid-cols-4 gap-8">
+        <div class="grid gap-8 md:grid-cols-4">
           <div>
-            <h3 class="font-heading text-2xl mb-4">Czech Food Guide</h3>
-            <p class="text-dark-foreground/80 text-sm">
-              Discover authentic Czech cuisine with Karel's personal recommendations. From traditional restaurants to modern bistros and historic attractions in Prague.
+            <h3 class="font-heading mb-4 text-2xl">Karel's Czechia Guide</h3>
+            <p class="text-sm text-dark-foreground/80">
+              Yeah, fine… I’m from Brno, not Prague. Which means I should
+              probably say Brno is better (and it is, of course). But let’s be
+              fair—Prague is a stunning city and definitely worth a visit. So
+              here’s a short, no-nonsense guide to the essentials: what I’d eat,
+              where I’d go, and the things you really shouldn’t miss if it’s
+              your first time in Prague. Quick, simple, and hopefully
+              useful—without drowning you in “top 100” lists.
             </p>
           </div>
-          
+
           <div>
-            <h4 class="font-heading text-lg mb-4">Explore</h4>
-            <ul class="space-y-2 text-dark-foreground/80 text-sm">
-              <li><a href="/#restaurants" class="hover:text-white transition">Featured Restaurants</a></li>
-              <li><a href="/#map" class="hover:text-white transition">Interactive Map</a></li>
-              <li><a href="/dishes" class="hover:text-white transition">Must-Try Dishes</a></li>
+            <h4 class="font-heading mb-4 text-lg">Explore</h4>
+            <ul class="space-y-2 text-sm text-dark-foreground/80">
+              <li>
+                <a href="/#restaurants" class="transition hover:text-white"
+                  >Featured Restaurants</a
+                >
+              </li>
+              <li>
+                <a href="/#map" class="transition hover:text-white"
+                  >Interactive Map</a
+                >
+              </li>
+              <li>
+                <a href="/dishes" class="transition hover:text-white"
+                  >Must-Try Dishes</a
+                >
+              </li>
             </ul>
           </div>
-          
+
           <div>
-            <h4 class="font-heading text-lg mb-4">Categories</h4>
-            <ul class="space-y-2 text-dark-foreground/80 text-sm">
-              <li><a href="/restaurant/lokal-dlouha" class="hover:text-white transition">🍽️ Full Restaurants</a></li>
-              <li><a href="/restaurant/u-cerneho-vola" class="hover:text-white transition">🍺 Pubs & Beer Halls</a></li>
-              <li><a href="/restaurant/sisters-bistro" class="hover:text-white transition">🥪 Bistros & Snacks</a></li>
-              <li><a href="/restaurant/werichova-vila" class="hover:text-white transition">☕ Cafés & Culture</a></li>
-              <li><a href="/#map" class="hover:text-white transition">🏛️ Prague Attractions</a></li>
+            <h4 class="font-heading mb-4 text-lg">Categories</h4>
+            <ul class="space-y-2 text-sm text-dark-foreground/80">
+              <li>
+                <a
+                  href="/restaurant/lokal-dlouha"
+                  class="transition hover:text-white">🍽️ Full Restaurants</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/restaurant/u-cerneho-vola"
+                  class="transition hover:text-white">🍺 Pubs & Beer Halls</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/restaurant/sisters-bistro"
+                  class="transition hover:text-white">🥪 Bistros & Snacks</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/restaurant/werichova-vila"
+                  class="transition hover:text-white">☕ Cafés & Culture</a
+                >
+              </li>
+              <li>
+                <a href="/#map" class="transition hover:text-white"
+                  >🏛️ Prague Attractions</a
+                >
+              </li>
             </ul>
           </div>
-          
+
           <div>
-            <h4 class="font-heading text-lg mb-4">Karel's Favorites</h4>
-            <ul class="space-y-2 text-dark-foreground/80 text-sm">
-              <li><a href="/dishes#polivky" class="hover:text-white transition">🥄 Kulajda (Dill Soup)</a></li>
-              <li><a href="/dishes#hlavni-jidla" class="hover:text-white transition">🥩 Svíčková (National Dish)</a></li>
-              <li><a href="/dishes#snacks" class="hover:text-white transition">🥪 Chlebíčky (Art Sandwiches)</a></li>
-              <li><a href="/dishes#drinks" class="hover:text-white transition">🥤 Kofola (Communist Cola)</a></li>
-              <li><a href="/#map" class="hover:text-white transition">🏰 Prague Castle Tours</a></li>
+            <h4 class="font-heading mb-4 text-lg">Karel's Favorites</h4>
+            <ul class="space-y-2 text-sm text-dark-foreground/80">
+              <li>
+                <a href="/dishes#polivky" class="transition hover:text-white"
+                  >🥄 Kulajda (Dill Soup)</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/dishes#hlavni-jidla"
+                  class="transition hover:text-white"
+                  >🥩 Svíčková (National Dish)</a
+                >
+              </li>
+              <li>
+                <a href="/dishes#snacks" class="transition hover:text-white"
+                  >🥪 Chlebíčky (Art Sandwiches)</a
+                >
+              </li>
+              <li>
+                <a href="/dishes#drinks" class="transition hover:text-white"
+                  >🥤 Kofola (Communist Cola)</a
+                >
+              </li>
+              <li>
+                <a href="/#map" class="transition hover:text-white"
+                  >🏰 Prague Castle Tours</a
+                >
+              </li>
             </ul>
           </div>
         </div>
-        
-        <div class="border-t border-dark-foreground/20 mt-12 pt-8 text-center text-dark-foreground/60">
-          <p class="text-sm">© 2024 Czech Food Guide. Your authentic Prague food companion. Made with ❤️ for food lovers</p>
+
+        <div
+          class="mt-12 border-t border-dark-foreground/20 pt-8 text-center text-dark-foreground/60"
+        >
+          <p class="text-sm">Karel Čančara &copy; {new Date().getFullYear()}</p>
         </div>
       </div>
     </footer>

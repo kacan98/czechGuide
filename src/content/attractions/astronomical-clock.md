@@ -10,6 +10,7 @@ image: "https://upload.wikimedia.org/wikipedia/commons/e/ec/Prague_Astronomical_
 visitDuration: "30 minutes"
 entryFee: "Free (viewing), Tower: 250 CZK"
 openingHours: "Hourly show 9:00-23:00"
+website: "https://www.prague.eu/en/object/places/93/astronomical-clock-orloj"
 highlights:
   - "Hourly procession of the Twelve Apostles"
   - "Medieval astronomical dial"

@@ -9,6 +9,7 @@ address: "Charles Bridge, Prague 1, Czech Republic"
 image: "https://upload.wikimedia.org/wikipedia/commons/8/85/Prague_-_Charles_Bridge_-_Karluv_most.jpg"
 visitDuration: "1-2 hours"
 entryFee: "Free"
+website: "https://en.wikipedia.org/wiki/Charles_Bridge"
 highlights:
   - "30 baroque statues along the bridge"
   - "Street artists and musicians"

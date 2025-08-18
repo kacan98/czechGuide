@@ -10,6 +10,7 @@ image: "https://upload.wikimedia.org/wikipedia/commons/4/44/Petrin_Tower_Prague.
 visitDuration: "2-3 hours"
 entryFee: "Tower: 150 CZK adults, Hill: Free"
 openingHours: "Tower: Daily 10:00-22:00 (summer), 10:00-20:00 (winter)"
+website: "https://www.prague.eu/en/object/places/187/petrin-lookout-tower"
 highlights:
   - "Petřín Lookout Tower (mini Eiffel Tower)"
   - "Rose Garden and Observatory"

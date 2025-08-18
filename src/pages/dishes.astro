@@ -1,17 +1,39 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+// Type aliases for better readability
+type DishEntry = CollectionEntry<'dishes'>;
+type DrinkEntry = CollectionEntry<'drinks'>;
 
 const allDishes = await getCollection('dishes');
+const allDrinks = await getCollection('drinks');
 
 // Sort dishes within each category by KarelMustTry first, then by order field
-const sortByOrder = (dishes) => {
+const sortDishesByOrder = (dishes: DishEntry[]): DishEntry[] => {
   return dishes.sort((a, b) => {
     // First sort by KarelMustTry (true comes first)
     const karelA = a.data.KarelMustTry ?? false;
     const karelB = b.data.KarelMustTry ?? false;
     if (karelA !== karelB) {
-      return karelB - karelA; // true (1) comes before false (0)
+      return  + karelB - +karelA; // true (1) comes before false (0)
+    }
+    
+    // Then sort by order field
+    const orderA = a.data.order ?? 999;
+    const orderB = b.data.order ?? 999;
+    return orderA - orderB;
+  });
+};
+
+// Sort drinks by KarelMustTry first, then by order field
+const sortDrinksByOrder = (drinks: DrinkEntry[]): DrinkEntry[] => {
+  return drinks.sort((a, b) => {
+    // First sort by KarelMustTry (true comes first)
+    const karelA = a.data.KarelMustTry ?? false;
+    const karelB = b.data.KarelMustTry ?? false;
+    if (karelA !== karelB) {
+      return +karelB - +karelA; // true (1) comes before false (0)
     }
     
     // Then sort by order field
@@ -22,12 +44,15 @@ const sortByOrder = (dishes) => {
 };
 
 // Group dishes by category and sort by order
-const dishesByCategory = {
-  'sladký': sortByOrder(allDishes.filter(dish => dish.data.category === 'sladký')),
-  'hlavní jídla': sortByOrder(allDishes.filter(dish => dish.data.category === 'hlavní jídla')),
-  'polívky': sortByOrder(allDishes.filter(dish => dish.data.category === 'polívky')),
-  'snacks': sortByOrder(allDishes.filter(dish => dish.data.category === 'snacks')),
+const dishesByCategory: Record<string, DishEntry[]> = {
+  'sladký': sortDishesByOrder(allDishes.filter(dish => dish.data.category === 'sladký')),
+  'hlavní jídla': sortDishesByOrder(allDishes.filter(dish => dish.data.category === 'hlavní jídla')),
+  'polívky': sortDishesByOrder(allDishes.filter(dish => dish.data.category === 'polívky')),
+  'snacks': sortDishesByOrder(allDishes.filter(dish => dish.data.category === 'snacks')),
 };
+
+// Sort drinks by KarelMustTry first, then by order field
+const sortedDrinks: DrinkEntry[] = sortDrinksByOrder(allDrinks);
 
 // Category order and names - change this array to reorder categories
 const categoryOrder = [
@@ -37,7 +62,7 @@ const categoryOrder = [
   { key: 'snacks', name: 'Snacks & Street Food' }
 ];
 
-const categoryNames = {
+const categoryNames: Record<string, string> = {
   'sladký': 'Sweet Dishes',
   'hlavní jídla': 'Main Dishes', 
   'polívky': 'Soups',
@@ -86,7 +111,7 @@ const meta = {
     <section class="py-16">
       <div class="max-w-4xl mx-auto px-4 text-center">
         <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-          Czech Food Guide
+          Karel's Czechia Guide
         </h1>
         <p class="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto">
           Traditional dishes, street food, and drinks that define Czech cuisine - what they are, why they're special, and what people really think
@@ -131,7 +156,7 @@ const meta = {
                           category === 'polívky' ? 'text-yellow-600 bg-yellow-100' :
                           'text-green-600 bg-green-100'
                         }`}>
-                          {categoryNames[category].slice(0, -1)}
+                          {categoryNames[category]}
                         </span>
                       </div>
                       <h3 class="text-3xl font-bold text-gray-900 mb-2">
@@ -180,57 +205,68 @@ const meta = {
       <div class="max-w-6xl mx-auto px-4">
         <h2 class="text-4xl font-bold text-center mb-12 text-red-600">Essential Czech Drinks</h2>
         
-        <div class="grid md:grid-cols-3 gap-8">
-          <!-- Pilsner Urquell -->
-          <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-            <img src="https://live.staticflickr.com/5087/5293033730_6cf84b756f_b.jpg" alt="Pilsner Urquell" class="w-full h-48 object-cover">
-            <div class="p-6">
-              <div class="flex items-center gap-2 mb-3">
-                <span class="text-xs font-medium text-yellow-600 bg-yellow-100 px-2 py-1 rounded-full">Beer</span>
-                <span class="text-xs font-medium text-blue-600 bg-blue-100 px-2 py-1 rounded-full">Original</span>
-              </div>
-              <h3 class="text-xl font-bold mb-2">Pilsner Urquell</h3>
-              <p class="text-gray-600 mb-4">The original pilsner beer, invented in 1842 in Plzen. Crisp, hoppy, and served unpasteurized in Prague - the way beer should taste. This is where the pilsner style was born.</p>
-              <div class="bg-gray-50 p-3 rounded text-xs text-gray-600 italic">
-                "Finally understood what beer is supposed to taste like!" - Beer tourist
+        <div class="space-y-12">
+          {sortedDrinks.map((drink, index) => (
+            <div class={`bg-white rounded-xl shadow-lg overflow-hidden max-w-4xl mx-auto ${index % 2 === 0 ? '' : 'lg:flex-row-reverse'}`}>
+              <div class="lg:flex">
+                <div class="lg:w-1/2">
+                  {drink.data.image && (
+                    <img 
+                      src={drink.data.image} 
+                      alt={drink.data.name}
+                      class="w-full h-64 lg:h-full object-cover cursor-pointer hover:opacity-90 transition drink-image"
+                      data-image={drink.data.image}
+                      data-name={drink.data.name}
+                      data-description={drink.data.whyTry}
+                    />
+                  )}
+                </div>
+                <div class="lg:w-1/2 p-8">
+                  <div class="flex items-center gap-2 mb-4">
+                    {drink.data.KarelMustTry && (
+                      <span class="text-sm font-bold px-3 py-1 rounded-full text-purple-600 bg-purple-100 border border-purple-200">
+                        Karel HIGHLY recommends
+                      </span>
+                    )}
+                    <span class={`text-sm font-medium px-3 py-1 rounded-full ${
+                      drink.data.type === 'beer' ? 'text-yellow-600 bg-yellow-100' :
+                      drink.data.type === 'soda' ? 'text-purple-600 bg-purple-100' :
+                      drink.data.type === 'spirit' ? 'text-orange-600 bg-orange-100' :
+                      'text-red-600 bg-red-100'
+                    }`}>
+                      {drink.data.type === 'beer' ? '🍺 Beer' :
+                       drink.data.type === 'soda' ? '🥤 Soda' :
+                       drink.data.type === 'spirit' ? '🥃 Spirit' :
+                       '🍷 Wine'}
+                    </span>
+                  </div>
+                  <h3 class="text-3xl font-bold text-gray-900 mb-2">
+                    {drink.data.name}
+                  </h3>
+                  <p class="text-gray-600 text-lg mb-4">
+                    {drink.data.description}
+                  </p>
+                  <p class="text-gray-700 mb-6">
+                    {drink.data.whyTry}
+                  </p>
+                  <div class="bg-gray-50 p-4 rounded-lg">
+                    <p class="text-sm text-gray-600 italic">
+                      "{drink.data.quote}" 
+                      <span class="font-medium">- {drink.data.author}</span>
+                    </p>
+                  </div>
+                  
+                  {drink.data.whereToGet && (
+                    <div class="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                      <p class="text-sm text-blue-800">
+                        <strong>Where to get it:</strong> {drink.data.whereToGet}
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-
-          <!-- Kofola - Karel's Recommendation -->
-          <div class="bg-white rounded-xl shadow-lg overflow-hidden border-2 border-purple-200">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/85/Sklenice_Kofola.jpg" alt="Kofola" class="w-full h-48 object-cover">
-            <div class="p-6">
-              <div class="flex items-center gap-2 mb-3">
-                <span class="text-xs font-bold text-purple-600 bg-purple-100 px-2 py-1 rounded-full border border-purple-200">Karel HIGHLY recommends</span>
-              </div>
-              <div class="flex items-center gap-2 mb-3">
-                <span class="text-xs font-medium text-red-600 bg-red-100 px-2 py-1 rounded-full">Communist Soda</span>
-                <span class="text-xs font-medium text-purple-600 bg-purple-100 px-2 py-1 rounded-full">Herbal</span>
-              </div>
-              <h3 class="text-xl font-bold mb-2">Kofola</h3>
-              <p class="text-gray-600 mb-4">Created in 1960s Czechoslovakia as a communist alternative to Coca-Cola, which was banned. Made with natural caffeine from coffee beans and 14 herbal extracts. It became a symbol of Czech identity and survived the fall of communism to become a beloved national drink.</p>
-              <div class="bg-gray-50 p-3 rounded text-xs text-gray-600 italic">
-                "It's like drinking liquid nostalgia - tastes like cola but with this unique herbal twist you can't get anywhere else." - Czech native
-              </div>
-            </div>
-          </div>
-
-          <!-- Kozel -->
-          <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Kozelek.jpg" alt="Velkopopovický Kozel" class="w-full h-48 object-cover">
-            <div class="p-6">
-              <div class="flex items-center gap-2 mb-3">
-                <span class="text-xs font-medium text-yellow-600 bg-yellow-100 px-2 py-1 rounded-full">Beer</span>
-                <span class="text-xs font-medium text-orange-600 bg-orange-100 px-2 py-1 rounded-full">Smooth</span>
-              </div>
-              <h3 class="text-xl font-bold mb-2">Velkopopovický Kozel</h3>
-              <p class="text-gray-600 mb-4">The goat beer! Smooth, malty, and less hoppy than Pilsner. Perfect for those who find other Czech beers too bitter. The goat mascot is everywhere in Czech pubs.</p>
-              <div class="bg-gray-50 p-3 rounded text-xs text-gray-600 italic">
-                "Smoother than expected, and I love the goat logo everywhere!" - Pub crawler
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
@@ -280,17 +316,28 @@ const meta = {
 </Layout>
 
 <script>
-  let allDishes = [];
+  let allDishes: Array<{image: string, name: string, description: string}> = [];
   let currentImageIndex = 0;
 
   document.addEventListener('DOMContentLoaded', function() {
-    // Collect all dish data
+    // Collect all dish and drink data
     const dishImages = document.querySelectorAll('.dish-image');
-    allDishes = Array.from(dishImages).map(img => ({
-      image: img.getAttribute('data-image'),
-      name: img.getAttribute('data-name'),
-      description: img.getAttribute('data-description')
+    const drinkImages = document.querySelectorAll('.drink-image');
+    
+    const dishData = Array.from(dishImages).map(img => ({
+      image: img.getAttribute('data-image') ?? '',
+      name: img.getAttribute('data-name') ?? '',
+      description: img.getAttribute('data-description') ?? ''
     }));
+    
+    const drinkData = Array.from(drinkImages).map(img => ({
+      image: img.getAttribute('data-image') ?? '',
+      name: img.getAttribute('data-name') ?? '',
+      description: img.getAttribute('data-description') ?? ''
+    }));
+    
+    // Combine all image data
+    allDishes = [...dishData, ...drinkData];
 
     // Add click listeners to all dish images
     dishImages.forEach((img, index) => {
@@ -299,10 +346,20 @@ const meta = {
         openImageModal();
       });
     });
+    
+    // Add click listeners to all drink images
+    drinkImages.forEach((img, index) => {
+      img.addEventListener('click', function() {
+        currentImageIndex = dishData.length + index; // Offset by dish count
+        openImageModal();
+      });
+    });
   });
 
   function openImageModal() {
     const modal = document.getElementById('imageModal');
+    if (!modal) return;
+    
     updateModalContent();
     modal.classList.remove('hidden');
     
@@ -319,25 +376,27 @@ const meta = {
   
   function updateModalContent() {
     const dish = allDishes[currentImageIndex];
-    const modalImage = document.getElementById('modalImage');
+    const modalImage = document.getElementById('modalImage') as HTMLImageElement;
     const modalCaption = document.getElementById('modalCaption');
     const modalDescription = document.getElementById('modalDescription');
     const imageCounter = document.getElementById('imageCounter');
     
-    modalImage.src = dish.image;
-    modalImage.alt = dish.name;
-    modalCaption.textContent = dish.name;
-    modalDescription.textContent = dish.description;
-    imageCounter.textContent = `${currentImageIndex + 1} / ${allDishes.length}`;
+    if (modalImage) {
+      modalImage.src = dish.image;
+      modalImage.alt = dish.name;
+    }
+    if (modalCaption) modalCaption.textContent = dish.name;
+    if (modalDescription) modalDescription.textContent = dish.description;
+    if (imageCounter) imageCounter.textContent = `${currentImageIndex + 1} / ${allDishes.length}`;
     
     // Show/hide navigation buttons
-    const prevButton = document.getElementById('prevButton');
-    const nextButton = document.getElementById('nextButton');
-    prevButton.style.display = currentImageIndex > 0 ? 'flex' : 'none';
-    nextButton.style.display = currentImageIndex < allDishes.length - 1 ? 'flex' : 'none';
+    const prevButton = document.getElementById('prevButton') as HTMLElement;
+    const nextButton = document.getElementById('nextButton') as HTMLElement;
+    if (prevButton) prevButton.style.display = currentImageIndex > 0 ? 'flex' : 'none';
+    if (nextButton) nextButton.style.display = currentImageIndex < allDishes.length - 1 ? 'flex' : 'none';
   }
   
-  function navigateImage(direction) {
+  function navigateImage(direction: number) {
     const newIndex = currentImageIndex + direction;
     if (newIndex >= 0 && newIndex < allDishes.length) {
       currentImageIndex = newIndex;
@@ -345,7 +404,7 @@ const meta = {
     }
   }
   
-  function handleKeyboard(event) {
+  function handleKeyboard(event: KeyboardEvent) {
     switch(event.key) {
       case 'Escape':
         closeImageModal();
@@ -361,7 +420,9 @@ const meta = {
   
   function closeImageModal() {
     const modal = document.getElementById('imageModal');
-    modal.classList.add('hidden');
+    if (modal) {
+      modal.classList.add('hidden');
+    }
     document.removeEventListener('keydown', handleKeyboard);
   }
 </script>

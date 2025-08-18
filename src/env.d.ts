@@ -2,6 +2,13 @@
 /// <reference path="../.astro/env.d.ts" />
 /// <reference types="astro/client" />
 /// <reference types="@storyblok/astro" />
+
+// Vue single file component declarations
+declare module '*.vue' {
+  import { DefineComponent } from 'vue'
+  const component: DefineComponent<{}, {}, any>
+  export default component
+}
 interface SpaceData {
   id: number;
   name: string;

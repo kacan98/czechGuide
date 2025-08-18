@@ -1,16 +1,37 @@
 ---
 import Layout from "@layouts/Layout.astro";
+// @ts-ignore
 import Map from "@components/Map.vue";
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
+
+// Type aliases for better readability
+type DishEntry = CollectionEntry<"dishes">;
+type DrinkEntry = CollectionEntry<"drinks">;
 
 const restaurants = await getCollection("restaurants");
 const attractions = await getCollection("attractions");
 const allDishes = await getCollection("dishes");
+const allDrinks = await getCollection("drinks");
 
-// Get Karel's must-try dishes
-const karelMustTryDishes = allDishes.filter(
+// Get Karel's must-try dishes and drinks
+const karelMustTryDishes: DishEntry[] = allDishes.filter(
   (dish) => dish.data.KarelMustTry === true
 );
+const karelMustTryDrinks: DrinkEntry[] = allDrinks.filter(
+  (drink) => drink.data.KarelMustTry === true
+);
+
+// Type guards
+const isDish = (item: DishEntry | DrinkEntry): item is DishEntry =>
+  "category" in item.data;
+const isDrink = (item: DishEntry | DrinkEntry): item is DrinkEntry =>
+  "type" in item.data;
+
+// Combine dishes and drinks
+const karelMustTryItems: (DishEntry | DrinkEntry)[] = [
+  ...karelMustTryDishes,
+  ...karelMustTryDrinks,
+];
 
 const meta = {
   title: "Karel's Czechia Guide - Prague Restaurant Recommendations",
@@ -28,11 +49,11 @@ const meta = {
       >
         <div class="mx-auto max-w-4xl">
           <h1 class="mb-6 text-5xl font-bold text-gray-900 md:text-7xl">
-            Hey, I'm Karel!
+            Visiting Prague for the First Time?
           </h1>
           <p class="mb-8 text-xl text-gray-600 md:text-2xl">
-            Let me show you what I would go for in Prague - if it was my first
-            time
+            A short and simple guide to what to eat, see, and do—just the
+            essentials, no endless lists.
           </p>
           <div class="flex flex-wrap justify-center gap-4">
             <a
@@ -58,6 +79,114 @@ const meta = {
               class="rounded-lg border-2 border-gray-900 bg-white px-8 py-3 text-gray-900 transition hover:bg-gray-100"
             >
               Where Everything Is
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Karel's Must-Try Dishes Section -->
+      <section id="must-try" class="px-4 py-20">
+        <div class="mx-auto max-w-6xl">
+          <div class="mb-12 text-center">
+            <h2 class="mb-4 text-center text-4xl font-bold text-red-600">
+              Seriously, You HAVE to Try These
+            </h2>
+            <p class="mx-auto max-w-3xl text-xl text-gray-600">
+              Look, I've been eating Czech food my whole life, and these dishes?
+              They're the real deal. Trust me on this - your trip isn't complete
+              without trying at least a few of these.
+            </p>
+          </div>
+
+          <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {
+              karelMustTryItems.slice(0, 6).map((item) => (
+                <div class="overflow-hidden rounded-xl border-2 border-purple-200 bg-white shadow-lg transition hover:shadow-xl">
+                  <div class="relative h-48 bg-gray-300">
+                    {item.data.image && (
+                      <img
+                        src={item.data.image}
+                        alt={item.data.name}
+                        class="h-full w-full object-cover"
+                      />
+                    )}
+                    <div class="absolute left-3 top-3">
+                      <span class="rounded-full border border-purple-200 bg-purple-100 px-3 py-1 text-xs font-bold text-purple-600">
+                        Karel HIGHLY recommends
+                      </span>
+                    </div>
+                  </div>
+                  <div class="p-6">
+                    <div class="mb-3 flex items-center gap-2">
+                      <span
+                        class={`rounded-full px-2 py-1 text-xs font-medium ${
+                          // Handle dishes
+                          isDish(item) && item.data.category === "sladký"
+                            ? "bg-amber-100 text-amber-600"
+                            : isDish(item) &&
+                                item.data.category === "hlavní jídla"
+                              ? "bg-red-100 text-red-600"
+                              : isDish(item) && item.data.category === "polívky"
+                                ? "bg-yellow-100 text-yellow-600"
+                                : isDish(item) &&
+                                    item.data.category === "snacks"
+                                  ? "bg-green-100 text-green-600"
+                                  : // Handle drinks
+                                    isDrink(item) && item.data.type === "beer"
+                                    ? "bg-yellow-100 text-yellow-600"
+                                    : isDrink(item) && item.data.type === "soda"
+                                      ? "bg-purple-100 text-purple-600"
+                                      : isDrink(item) &&
+                                          item.data.type === "spirit"
+                                        ? "bg-orange-100 text-orange-600"
+                                        : "bg-red-100 text-red-600"
+                        }`}
+                      >
+                        {
+                          // Handle dishes
+                          isDish(item) && item.data.category === "sladký"
+                            ? "Sweet"
+                            : isDish(item) &&
+                                item.data.category === "hlavní jídla"
+                              ? "Main Dish"
+                              : isDish(item) && item.data.category === "polívky"
+                                ? "Soup"
+                                : isDish(item) &&
+                                    item.data.category === "snacks"
+                                  ? "Snack"
+                                  : // Handle drinks
+                                    isDrink(item) && item.data.type === "beer"
+                                    ? "🍺 Beer"
+                                    : isDrink(item) && item.data.type === "soda"
+                                      ? "🥤 Drink"
+                                      : isDrink(item) &&
+                                          item.data.type === "spirit"
+                                        ? "🥃 Spirit"
+                                        : "🍷 Drink"
+                        }
+                      </span>
+                    </div>
+                    <h3 class="mb-2 text-xl font-bold text-gray-900">
+                      {item.data.name}
+                    </h3>
+                    <p class="mb-4 text-gray-600">{item.data.whyTry}</p>
+                    {item.data.whereToGet && (
+                      <p class="mb-3 text-xs text-purple-600">
+                        <strong>Where to get it:</strong> {item.data.whereToGet}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+
+          <div class="mt-12 text-center">
+            <a
+              href="/dishes"
+              class="inline-block rounded-lg bg-purple-600 px-8 py-3 font-medium text-white transition hover:bg-purple-700"
+            >
+              Show me everything you recommend, Karel →
             </a>
           </div>
         </div>
@@ -109,91 +238,11 @@ const meta = {
         </div>
       </section>
 
-      <!-- Karel's Must-Try Dishes Section -->
-      <section id="must-try" class="px-4 py-20">
-        <div class="mx-auto max-w-6xl">
-          <div class="mb-12 text-center">
-            <h2 class="mb-4 text-center text-4xl font-bold text-red-600">
-              Seriously, You HAVE to Try These
-            </h2>
-            <p class="mx-auto max-w-3xl text-xl text-gray-600">
-              Look, I've been eating Czech food my whole life, and these dishes?
-              They're the real deal. Trust me on this - your trip isn't complete
-              without trying at least a few of these.
-            </p>
-          </div>
-
-          <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {
-              karelMustTryDishes.slice(0, 6).map((dish) => (
-                <div class="overflow-hidden rounded-xl border-2 border-purple-200 bg-white shadow-lg transition hover:shadow-xl">
-                  <div class="relative h-48 bg-gray-300">
-                    {dish.data.image && (
-                      <img
-                        src={dish.data.image}
-                        alt={dish.data.name}
-                        class="h-full w-full object-cover"
-                      />
-                    )}
-                    <div class="absolute left-3 top-3">
-                      <span class="rounded-full border border-purple-200 bg-purple-100 px-3 py-1 text-xs font-bold text-purple-600">
-                        Karel HIGHLY recommends
-                      </span>
-                    </div>
-                  </div>
-                  <div class="p-6">
-                    <div class="mb-3 flex items-center gap-2">
-                      <span
-                        class={`rounded-full px-2 py-1 text-xs font-medium ${
-                          dish.data.category === "sladký"
-                            ? "bg-amber-100 text-amber-600"
-                            : dish.data.category === "hlavní jídla"
-                              ? "bg-red-100 text-red-600"
-                              : dish.data.category === "polívky"
-                                ? "bg-yellow-100 text-yellow-600"
-                                : "bg-green-100 text-green-600"
-                        }`}
-                      >
-                        {dish.data.category === "sladký"
-                          ? "Sweet"
-                          : dish.data.category === "hlavní jídla"
-                            ? "Main Dish"
-                            : dish.data.category === "polívky"
-                              ? "Soup"
-                              : "Snack"}
-                      </span>
-                    </div>
-                    <h3 class="mb-2 text-xl font-bold text-gray-900">
-                      {dish.data.name}
-                    </h3>
-                    <p class="mb-4 text-gray-600">{dish.data.whyTry}</p>
-                    {dish.data.whereToGet && (
-                      <p class="mb-3 text-xs text-purple-600">
-                        <strong>Where to get it:</strong> {dish.data.whereToGet}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              ))
-            }
-          </div>
-
-          <div class="mt-12 text-center">
-            <a
-              href="/dishes"
-              class="inline-block rounded-lg bg-purple-600 px-8 py-3 font-medium text-white transition hover:bg-purple-700"
-            >
-              Show me everything you recommend, Karel →
-            </a>
-          </div>
-        </div>
-      </section>
-
       <!-- Map Section -->
       <section id="map" class="bg-gray-50 px-4 py-20">
         <div class="mx-auto max-w-6xl">
           <h2 class="mb-12 text-center text-4xl font-bold">
-            Map of My Favorite Places
+            Map of Mentioned Places
           </h2>
           <div class="rounded-xl bg-white p-4 shadow-lg">
             <Map
@@ -213,7 +262,7 @@ const meta = {
       const map = document.querySelector('astro-island[component-url*="Map"]');
       if (map) {
         map.addEventListener("restaurant-selected", (event) => {
-          const restaurant = event.detail;
+          const restaurant = (event as CustomEvent).detail;
           if (restaurant?.slug) {
             window.location.href = `/restaurant/${restaurant.slug}`;
           }
