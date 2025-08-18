@@ -8,7 +8,9 @@ const attractions = await getCollection("attractions");
 const allDishes = await getCollection("dishes");
 
 // Get Karel's must-try dishes
-const karelMustTryDishes = allDishes.filter(dish => dish.data.KarelMustTry === true);
+const karelMustTryDishes = allDishes.filter(
+  (dish) => dish.data.KarelMustTry === true
+);
 
 const meta = {
   title: "Karel's Czechia Guide - Prague Restaurant Recommendations",
@@ -29,7 +31,8 @@ const meta = {
             Hey, I'm Karel!
           </h1>
           <p class="mb-8 text-xl text-gray-600 md:text-2xl">
-            Let me show you what I would go for in Prague - no tourist traps, just the real deal
+            Let me show you what I would go for in Prague - if it was my first
+            time
           </p>
           <div class="flex flex-wrap justify-center gap-4">
             <a
@@ -109,20 +112,21 @@ const meta = {
       <!-- Karel's Must-Try Dishes Section -->
       <section id="must-try" class="px-4 py-20">
         <div class="mx-auto max-w-6xl">
-          <div class="text-center mb-12">
+          <div class="mb-12 text-center">
             <h2 class="mb-4 text-center text-4xl font-bold text-red-600">
               Seriously, You HAVE to Try These
             </h2>
-            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-              Look, I've been eating Czech food my whole life, and these dishes? They're the real deal. 
-              Trust me on this - your trip isn't complete without trying at least a few of these.
+            <p class="mx-auto max-w-3xl text-xl text-gray-600">
+              Look, I've been eating Czech food my whole life, and these dishes?
+              They're the real deal. Trust me on this - your trip isn't complete
+              without trying at least a few of these.
             </p>
           </div>
 
           <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {
               karelMustTryDishes.slice(0, 6).map((dish) => (
-                <div class="overflow-hidden rounded-xl bg-white shadow-lg border-2 border-purple-200 transition hover:shadow-xl">
+                <div class="overflow-hidden rounded-xl border-2 border-purple-200 bg-white shadow-lg transition hover:shadow-xl">
                   <div class="relative h-48 bg-gray-300">
                     {dish.data.image && (
                       <img
@@ -131,34 +135,40 @@ const meta = {
                         class="h-full w-full object-cover"
                       />
                     )}
-                    <div class="absolute top-3 left-3">
-                      <span class="text-xs font-bold px-3 py-1 rounded-full text-purple-600 bg-purple-100 border border-purple-200">
+                    <div class="absolute left-3 top-3">
+                      <span class="rounded-full border border-purple-200 bg-purple-100 px-3 py-1 text-xs font-bold text-purple-600">
                         Karel HIGHLY recommends
                       </span>
                     </div>
                   </div>
                   <div class="p-6">
-                    <div class="flex items-center gap-2 mb-3">
-                      <span class={`text-xs font-medium px-2 py-1 rounded-full ${
-                        dish.data.category === 'sladký' ? 'text-amber-600 bg-amber-100' :
-                        dish.data.category === 'hlavní jídla' ? 'text-red-600 bg-red-100' :
-                        dish.data.category === 'polívky' ? 'text-yellow-600 bg-yellow-100' :
-                        'text-green-600 bg-green-100'
-                      }`}>
-                        {dish.data.category === 'sladký' ? 'Sweet' :
-                         dish.data.category === 'hlavní jídla' ? 'Main Dish' :
-                         dish.data.category === 'polívky' ? 'Soup' :
-                         'Snack'}
+                    <div class="mb-3 flex items-center gap-2">
+                      <span
+                        class={`rounded-full px-2 py-1 text-xs font-medium ${
+                          dish.data.category === "sladký"
+                            ? "bg-amber-100 text-amber-600"
+                            : dish.data.category === "hlavní jídla"
+                              ? "bg-red-100 text-red-600"
+                              : dish.data.category === "polívky"
+                                ? "bg-yellow-100 text-yellow-600"
+                                : "bg-green-100 text-green-600"
+                        }`}
+                      >
+                        {dish.data.category === "sladký"
+                          ? "Sweet"
+                          : dish.data.category === "hlavní jídla"
+                            ? "Main Dish"
+                            : dish.data.category === "polívky"
+                              ? "Soup"
+                              : "Snack"}
                       </span>
                     </div>
                     <h3 class="mb-2 text-xl font-bold text-gray-900">
                       {dish.data.name}
                     </h3>
-                    <p class="mb-4 text-gray-600">
-                      {dish.data.whyTry}
-                    </p>
+                    <p class="mb-4 text-gray-600">{dish.data.whyTry}</p>
                     {dish.data.whereToGet && (
-                      <p class="text-xs text-purple-600 mb-3">
+                      <p class="mb-3 text-xs text-purple-600">
                         <strong>Where to get it:</strong> {dish.data.whereToGet}
                       </p>
                     )}
@@ -168,10 +178,10 @@ const meta = {
             }
           </div>
 
-          <div class="text-center mt-12">
+          <div class="mt-12 text-center">
             <a
               href="/dishes"
-              class="inline-block rounded-lg bg-purple-600 px-8 py-3 text-white font-medium transition hover:bg-purple-700"
+              class="inline-block rounded-lg bg-purple-600 px-8 py-3 font-medium text-white transition hover:bg-purple-700"
             >
               Show me everything you recommend, Karel →
             </a>
@@ -186,7 +196,11 @@ const meta = {
             Map of My Favorite Places
           </h2>
           <div class="rounded-xl bg-white p-4 shadow-lg">
-            <Map restaurants={restaurants} attractions={attractions} client:only="vue" />
+            <Map
+              restaurants={restaurants}
+              attractions={attractions}
+              client:only="vue"
+            />
           </div>
         </div>
       </section>
