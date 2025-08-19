@@ -66,7 +66,7 @@ const meta = {
           </p>
           <div class="flex flex-wrap justify-center gap-4">
             <a
-              href="/dishes"
+              href={getLocalizedUrl("dishes", lang)}
               class="rounded-lg bg-amber-600 px-8 py-3 text-white transition hover:bg-amber-700"
             >
               {t("buttons.whatToOrder")}
@@ -262,7 +262,7 @@ const meta = {
         map.addEventListener("restaurant-selected", (event) => {
           const restaurant = (event as CustomEvent).detail;
           if (restaurant?.slug) {
-            window.location.href = `/restaurant/${restaurant.slug}`;
+            window.location.href = `/sv/restaurant/${restaurant.slug}`;
           }
         });
       }

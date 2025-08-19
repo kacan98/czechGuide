@@ -1,0 +1,311 @@
+---
+import Layout from "@layouts/Layout.astro";
+// @ts-ignore
+import Map from "@components/Map.vue";
+import { getCollection, type CollectionEntry } from "astro:content";
+import { useTranslations, getLangFromUrl, getLocalizedUrl } from "@/util/translate";
+
+export async function getStaticPaths() {
+  // Get Swedish restaurants only
+  const allRestaurants = await getCollection("restaurants");
+  const restaurants = allRestaurants.filter(({ id }) => id.startsWith("sv/"));
+  
+  return restaurants.map((restaurant) => ({
+    params: { slug: restaurant.slug },
+    props: { restaurant, allRestaurants: restaurants },
+  }));
+}
+
+type Props = {
+  restaurant: CollectionEntry<"restaurants">;
+  allRestaurants: CollectionEntry<"restaurants">[];
+};
+
+const { restaurant, allRestaurants } = Astro.props;
+
+// Get current language from URL
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Filter out the current restaurant to show other restaurants
+const otherRestaurants = allRestaurants.filter(
+  (r) => r.slug !== restaurant.slug
+);
+
+const meta = {
+  title: `${restaurant.data.name} - ${t("site.title")}`,
+  description: restaurant.data.description,
+};
+---
+
+<Layout meta={meta}>
+  <main class="min-h-screen bg-white">
+    <!-- Back Navigation -->
+    <div class="bg-gray-50 py-4">
+      <div class="mx-auto max-w-4xl px-4">
+        <a href={getLocalizedUrl("", lang)} class="font-medium text-red-600 hover:text-red-700">
+          ← Tillbaka till restaurangguide
+        </a>
+      </div>
+    </div>
+
+    <!-- Restaurant Header -->
+    <section class="py-12">
+      <div class="mx-auto max-w-4xl px-4">
+        <!-- Action Buttons at Top -->
+        <div class="mb-8 flex justify-center gap-4">
+          {
+            restaurant.data.googleMapsUrl && (
+              <a
+                href={restaurant.data.googleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="rounded-lg bg-red-600 px-6 py-3 text-white transition hover:bg-red-700"
+              >
+                📍 Navigera med Google Maps
+              </a>
+            )
+          }
+          {
+            restaurant.data.website && (
+              <a
+                href={restaurant.data.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="rounded-lg border-2 border-gray-900 bg-white px-6 py-3 text-gray-900 transition hover:bg-gray-100"
+              >
+                🌐 Besök webbplats
+              </a>
+            )
+          }
+        </div>
+
+        <div class="grid items-center gap-8 md:grid-cols-2">
+          <div>
+            <h1 class="mb-4 text-4xl font-bold text-gray-900 md:text-5xl">
+              {restaurant.data.name}
+            </h1>
+            <p class="mb-6 text-xl text-gray-600">
+              {restaurant.data.description}
+            </p>
+            <div class="mb-6 flex flex-wrap gap-4">
+              <span
+                class="rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-amber-800"
+              >
+                {restaurant.data.cuisine}
+              </span>
+              <span
+                class="rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800"
+              >
+                {restaurant.data.priceRange}
+              </span>
+              {
+                restaurant.data.googleRating && (
+                  <span class="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800">
+                    ⭐ {restaurant.data.googleRating} (
+                    {restaurant.data.googleReviews} recensioner)
+                  </span>
+                )
+              }
+            </div>
+          </div>
+
+          {
+            restaurant.data.image && (
+              <div class="overflow-hidden rounded-xl shadow-lg">
+                <img
+                  src={restaurant.data.image}
+                  alt={restaurant.data.name}
+                  class="h-64 w-full object-cover"
+                />
+              </div>
+            )
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Restaurant Details -->
+    <section class="bg-gray-50 py-12">
+      <div class="mx-auto max-w-4xl px-4">
+        <div class="grid gap-8 md:grid-cols-3">
+          <!-- Contact Info -->
+          <div class="rounded-lg bg-white p-6 shadow-md">
+            <h3 class="mb-4 text-lg font-bold">Kontakt & plats</h3>
+            <div class="space-y-3">
+              <div>
+                <span class="font-medium text-gray-700">Adress:</span>
+                <p class="text-gray-600">{restaurant.data.address}</p>
+              </div>
+              {
+                restaurant.data.phone && (
+                  <div>
+                    <span class="font-medium text-gray-700">Telefon:</span>
+                    <p class="text-gray-600">{restaurant.data.phone}</p>
+                  </div>
+                )
+              }
+              {
+                restaurant.data.website && (
+                  <div>
+                    <a
+                      href={restaurant.data.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex items-center text-red-600 hover:text-red-700"
+                    >
+                      Besök webbplats →
+                    </a>
+                  </div>
+                )
+              }
+            </div>
+          </div>
+
+          <!-- Map -->
+          <div class="rounded-lg bg-white p-6 shadow-md md:col-span-2">
+            <h3 class="mb-4 text-lg font-bold">Plats</h3>
+            <div class="h-96 overflow-hidden rounded-lg">
+              <Map restaurants={[restaurant]} client:only="vue" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recommended Dishes -->
+    {
+      restaurant.data.recommended && restaurant.data.recommended.length > 0 && (
+        <section class="py-12">
+          <div class="mx-auto max-w-4xl px-4">
+            <h2 class="mb-12 text-center text-3xl font-bold">
+              Rekommenderade rätter
+            </h2>
+            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {restaurant.data.recommended.map((dish) => (
+                <div class="overflow-hidden rounded-lg bg-white shadow-md">
+                  {dish.image && (
+                    <img
+                      src={dish.image}
+                      alt={dish.name}
+                      class="h-32 w-full object-cover"
+                    />
+                  )}
+                  <div class="p-4">
+                    <h3 class="mb-2 font-bold text-gray-900">{dish.name}</h3>
+                    <p class="text-sm text-gray-600">{dish.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- Other Restaurants -->
+    <section class="bg-gray-50 py-12">
+      <div class="mx-auto max-w-6xl px-4">
+        <h2 class="mb-12 text-center text-3xl font-bold">
+          Andra restauranger att prova
+        </h2>
+        <div class="mb-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {
+            otherRestaurants.map((otherRestaurant) => (
+              <div class="overflow-hidden rounded-xl bg-white shadow-lg transition hover:shadow-xl">
+                <div class="relative h-48 bg-gray-300">
+                  {otherRestaurant.data.image && (
+                    <img
+                      src={otherRestaurant.data.image}
+                      alt={otherRestaurant.data.name}
+                      class="h-full w-full object-cover"
+                    />
+                  )}
+                </div>
+                <div class="p-6">
+                  <div class="mb-3 flex items-center gap-2">
+                    <span
+                      class={`rounded-full px-2 py-1 text-xs font-medium ${
+                        otherRestaurant.data.category === "restaurant"
+                          ? "bg-red-100 text-red-600"
+                          : otherRestaurant.data.category === "pub"
+                            ? "bg-orange-100 text-orange-600"
+                            : otherRestaurant.data.category === "bistro"
+                              ? "bg-amber-100 text-amber-600"
+                              : "bg-green-100 text-green-600"
+                      }`}
+                    >
+                      {otherRestaurant.data.category === "restaurant"
+                        ? "🍽️ Restaurang"
+                        : otherRestaurant.data.category === "pub"
+                          ? "🍺 Pub"
+                          : otherRestaurant.data.category === "bistro"
+                            ? "🥪 Bistro"
+                            : "☕ Café"}
+                    </span>
+                    <span class="text-xs text-gray-500">
+                      {otherRestaurant.data.priceRange}
+                    </span>
+                  </div>
+                  <h3 class="mb-2 text-xl font-bold">
+                    {otherRestaurant.data.name}
+                  </h3>
+                  <p class="mb-4 text-gray-600">
+                    {otherRestaurant.data.description}
+                  </p>
+                  <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-500">
+                      {otherRestaurant.data.cuisine}
+                    </span>
+                    <a
+                      href={getLocalizedUrl(`restaurant/${otherRestaurant.slug}`, lang)}
+                      class="text-sm font-medium text-red-600 hover:text-red-700"
+                    >
+                      Besök →
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="flex justify-center gap-4">
+          <a
+            href={getLocalizedUrl("", lang)}
+            class="rounded-lg bg-gray-600 px-6 py-3 text-white transition hover:bg-gray-700"
+          >
+            ← Visa alla restauranger
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .prose h2 {
+    @apply mb-4 mt-8 text-2xl font-bold text-gray-900;
+  }
+
+  .prose h3 {
+    @apply mb-3 mt-6 text-xl font-bold text-gray-900;
+  }
+
+  .prose p {
+    @apply mb-4 text-gray-700;
+  }
+
+  .prose ul {
+    @apply list-inside list-disc space-y-2 text-gray-700;
+  }
+
+  .prose ol {
+    @apply list-inside list-decimal space-y-2 text-gray-700;
+  }
+
+  .prose strong {
+    @apply font-bold text-gray-900;
+  }
+</style>

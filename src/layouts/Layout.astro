@@ -2,6 +2,12 @@
 import "@styles/globals.css";
 import { Icon } from "astro-icon/components";
 import { SEO } from "astro-seo";
+import LanguageSelector from "@components/LanguageSelector.vue";
+import { useTranslations, getLangFromUrl, getLocalizedUrl } from "@/util/translate";
+
+// Get current language from URL
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 interface Meta {
   title?: string;
@@ -14,10 +20,9 @@ interface Props {
 }
 
 const { meta } = Astro.props;
-const title = meta?.title || "Karel's Czechia Guide";
+const title = meta?.title || t("site.title");
 const description =
-  meta?.description ||
-  "Discover the best traditional Czech restaurants and dishes in Prague";
+  meta?.description || t("hero.subtitle");
 ---
 
 <!doctype html>
@@ -77,28 +82,29 @@ const description =
     >
       <nav class="content-grid py-4">
         <div class="flex items-center justify-between">
-          <a href="/" class="group flex items-center gap-3">
+          <a href={getLocalizedUrl("", lang)} class="group flex items-center gap-3">
             <div
               class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary transition group-hover:bg-primary/90"
             >
               🍺
             </div>
             <span class="font-heading text-2xl font-bold"
-              >Karel's Czechia Guide</span
+              >{t("site.title")}</span
             >
           </a>
 
           <div class="hidden items-center gap-8 md:flex">
-            <a href="/dishes" class="font-medium transition hover:text-primary"
-              >What to Order</a
+            <a href={getLocalizedUrl("dishes", lang)} class="font-medium transition hover:text-primary"
+              >{t("buttons.whatToOrder")}</a
             >
-            <a href="/#must-try" class="font-medium transition hover:text-primary"
-              >My Recommendations</a
+            <a href={`${getLocalizedUrl("", lang)}#must-try`} class="font-medium transition hover:text-primary"
+              >{t("buttons.myRecommendations")}</a
             >
             <a
-              href="/#restaurants"
-              class="font-medium transition hover:text-primary">My Favorite Spots</a
+              href={`${getLocalizedUrl("", lang)}#restaurants`}
+              class="font-medium transition hover:text-primary">{t("buttons.myFavoriteSpots")}</a
             >
+            <LanguageSelector currentPath={Astro.url.pathname} client:load />
           </div>
 
           <!-- Mobile menu button -->
@@ -120,9 +126,12 @@ const description =
           </button>
         </div>
         <nav class="p-4 space-y-4">
-          <a href="/dishes" class="block font-medium py-2 transition hover:text-primary">What to Order</a>
-          <a href="/#must-try" class="block font-medium py-2 transition hover:text-primary">My Personal Recommendations</a>
-          <a href="/#restaurants" class="block font-medium py-2 transition hover:text-primary">My Favorite Spots</a>
+          <a href={getLocalizedUrl("dishes", lang)} class="block font-medium py-2 transition hover:text-primary">{t("buttons.whatToOrder")}</a>
+          <a href={`${getLocalizedUrl("", lang)}#must-try`} class="block font-medium py-2 transition hover:text-primary">{t("buttons.myRecommendations")}</a>
+          <a href={`${getLocalizedUrl("", lang)}#restaurants`} class="block font-medium py-2 transition hover:text-primary">{t("buttons.myFavoriteSpots")}</a>
+          <div class="pt-4 border-t border-gray-200">
+            <LanguageSelector currentPath={Astro.url.pathname} client:load />
+          </div>
         </nav>
       </div>
     </div>
@@ -137,102 +146,96 @@ const description =
       <div class="content-grid py-16">
         <div class="grid gap-8 md:grid-cols-4">
           <div>
-            <h3 class="font-heading mb-4 text-2xl">Karel's Czechia Guide</h3>
+            <h3 class="font-heading mb-4 text-2xl">{t("site.title")}</h3>
             <p class="text-sm text-dark-foreground/80">
-              Yeah, fine… I’m from Brno, not Prague. Which means I should
-              probably say Brno is better (and it is, of course). But let’s be
-              fair—Prague is a stunning city and definitely worth a visit. So
-              here’s a short, no-nonsense guide to the essentials: what I’d eat,
-              where I’d go, and the things you really shouldn’t miss if it’s
-              your first time in Prague. Quick, simple, and hopefully
-              useful—without drowning you in “top 100” lists.
+              {t("footer.description")}
             </p>
           </div>
 
           <div>
-            <h4 class="font-heading mb-4 text-lg">Explore</h4>
+            <h4 class="font-heading mb-4 text-lg">{t("footer.explore")}</h4>
             <ul class="space-y-2 text-sm text-dark-foreground/80">
               <li>
-                <a href="/#restaurants" class="transition hover:text-white"
-                  >Featured Restaurants</a
+                <a href={`${getLocalizedUrl("", lang)}#restaurants`} class="transition hover:text-white"
+                  >{t("footer.featuredRestaurants")}</a
                 >
               </li>
               <li>
-                <a href="/#map" class="transition hover:text-white"
-                  >Interactive Map</a
+                <a href={`${getLocalizedUrl("", lang)}#map`} class="transition hover:text-white"
+                  >{t("footer.interactiveMap")}</a
                 >
               </li>
               <li>
-                <a href="/dishes" class="transition hover:text-white"
-                  >Must-Try Dishes</a
+                <a href={getLocalizedUrl("dishes", lang)} class="transition hover:text-white"
+                  >{t("footer.mustTryDishes")}</a
                 >
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 class="font-heading mb-4 text-lg">Categories</h4>
+            <h4 class="font-heading mb-4 text-lg">{t("footer.categories")}</h4>
             <ul class="space-y-2 text-sm text-dark-foreground/80">
               <li>
                 <a
-                  href="/restaurant/lokal-dlouha"
-                  class="transition hover:text-white">🍽️ Full Restaurants</a
+                  href={getLocalizedUrl("restaurant/lokal-dlouha", lang)}
+                  class="transition hover:text-white">{t("footer.fullRestaurants")}</a
                 >
               </li>
               <li>
                 <a
-                  href="/restaurant/u-cerneho-vola"
-                  class="transition hover:text-white">🍺 Pubs & Beer Halls</a
+                  href={getLocalizedUrl("restaurant/u-cerneho-vola", lang)}
+                  class="transition hover:text-white">{t("footer.pubsBeerHalls")}</a
                 >
               </li>
               <li>
                 <a
-                  href="/restaurant/sisters-bistro"
-                  class="transition hover:text-white">🥪 Bistros & Snacks</a
+                  href={getLocalizedUrl("restaurant/sisters-bistro", lang)}
+                  class="transition hover:text-white">{t("footer.bistrosSnacks")}</a
                 >
               </li>
               <li>
                 <a
-                  href="/restaurant/werichova-vila"
-                  class="transition hover:text-white">☕ Cafés & Culture</a
+                  href={getLocalizedUrl("restaurant/werichova-vila", lang)}
+                  class="transition hover:text-white">{t("footer.cafesCulture")}</a
                 >
               </li>
               <li>
                 <a href="/#map" class="transition hover:text-white"
-                  >🏛️ Prague Attractions</a
+                  >{t("footer.pragueAttractions")}</a
                 >
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 class="font-heading mb-4 text-lg">Karel's Favorites</h4>
+            <h4 class="font-heading mb-4 text-lg">{t("footer.karelFavorites")}</h4>
             <ul class="space-y-2 text-sm text-dark-foreground/80">
               <li>
-                <a href="/dishes#polivky" class="transition hover:text-white"
-                  >🥄 Kulajda (Dill Soup)</a
+                <a href={`${getLocalizedUrl("dishes", lang)}#polivky`} class="transition hover:text-white"
+                  >{t("footer.kulajda")}</a
                 >
               </li>
               <li>
                 <a
-                  href="/dishes#hlavni-jidla"
+                  href={`${getLocalizedUrl("dishes", lang)}#hlavni-jidla`}
                   class="transition hover:text-white"
-                  >🥩 Svíčková (National Dish)</a
+                  >{t("footer.svickova")}</a
                 >
               </li>
               <li>
-                <a href="/dishes#snacks" class="transition hover:text-white"
-                  >🥪 Chlebíčky (Art Sandwiches)</a
+                <a href={`${getLocalizedUrl("dishes", lang)}#snacks`} class="transition hover:text-white"
+                  >{t("footer.chlebicky")}</a
                 >
               </li>
               <li>
-                <a href="/dishes#drinks" class="transition hover:text-white"
-                  >🥤 Kofola (Communist Cola)</a
+                <a href={`${getLocalizedUrl("dishes", lang)}#drinks`} class="transition hover:text-white"
+                  >{t("footer.kofola")}</a
                 >
               </li>
               <li>
-                <a href="/#map" class="transition hover:text-white"
-                  >🏰 Prague Castle Tours</a
+                <a href={`${getLocalizedUrl("", lang)}#map`} class="transition hover:text-white"
+                  >{t("footer.pragueCastle")}</a
                 >
               </li>
             </ul>
@@ -242,7 +245,7 @@ const description =
         <div
           class="mt-12 border-t border-dark-foreground/20 pt-8 text-center text-dark-foreground/60"
         >
-          <p class="text-sm">Karel Čančara &copy; {new Date().getFullYear()}</p>
+          <p class="text-sm">{t("footer.copyright").replace("{year}", new Date().getFullYear().toString())}</p>
         </div>
       </div>
     </footer>

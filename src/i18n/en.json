@@ -1,32 +1,104 @@
 {
-  "back_to_home": "Back to Home",
-  "page_not_found": "Page not found",
-  "or_not_saved": "or not saved",
-  "hello": "Hello",
-  "closed": "Closed",
-  "close": "Close",
-  "menu": "Menu",
-  "next": "Next",
-  "previous": "Previous",
-  "label.fish": "Fish",
-  "label.soy": "Soy",
-  "label.molluscs": "Molluscs",
-  "label.peanut": "Peanut",
-  "label.milk": "Milk",
-  "label.sulphurdioxide": "Sulphur Dioxide",
-  "label.mustard": "Mustard",
-  "label.lupin": "Lupin",
-  "label.crustacens": "Crustaceans",
-  "label.celery": "Celery",
-  "label.eggs": "Eggs",
-  "label.sesame": "Sesame",
-  "label.treenut": "Tree Nut",
-  "label.wheat": "wheat",
-  "label.organic": "organic",
-  "label.low-carb": "Low Carb",
-  "label.local": "Local",
-  "label.vegan": "Vegan",
-  "label.raw": "Raw",
-  "label.vegetarian": "Vegetarian",
-  "label.bio": "Bio"
+  "nav": {
+    "restaurants": "Restaurants",
+    "map": "Map",
+    "dishes": "Traditional Dishes"
+  },
+  "hero": {
+    "title": "Prague Food Guide",
+    "subtitle": "Discover the best traditional Czech restaurants and dishes in Prague",
+    "viewRestaurants": "View Restaurants",
+    "exploreMap": "Explore Map"
+  },
+  "sections": {
+    "featuredRestaurants": "Featured Restaurants",
+    "restaurantMap": "Prague Restaurant Map",
+    "popularDishes": "Popular Dishes"
+  },
+  "dishes": {
+    "svickova": "Svíčková na smetaně",
+    "goulash": "Goulash",
+    "trdelnik": "Trdelník",
+    "smazeny_syr": "Fried Cheese",
+    "knedlo_zelo_vepro": "Knedlo Zelo Vepřo",
+    "pork_knee": "Roast Pork Knee"
+  },
+  "footer": {
+    "description": "Yeah, fine… I'm from Brno, not Prague. Which means I should probably say Brno is better (and it is, of course). But let's be fair—Prague is a stunning city and definitely worth a visit. So here's a short, no-nonsense guide to the essentials: what I'd eat, where I'd go, and the things you really shouldn't miss if it's your first time in Prague. Quick, simple, and hopefully useful—without drowning you in \"top 100\" lists.",
+    "explore": "Explore",
+    "categories": "Categories",
+    "karelFavorites": "Karel's Favorites",
+    "featuredRestaurants": "Featured Restaurants",
+    "interactiveMap": "Interactive Map",
+    "mustTryDishes": "Must-Try Dishes",
+    "fullRestaurants": "🍽️ Full Restaurants",
+    "pubsBeerHalls": "🍺 Pubs & Beer Halls",
+    "bistrosSnacks": "🥪 Bistros & Snacks",
+    "cafesCulture": "☕ Cafés & Culture",
+    "pragueAttractions": "🏛️ Prague Attractions",
+    "kulajda": "🥄 Kulajda (Dill Soup)",
+    "svickova": "🥩 Svíčková (National Dish)",
+    "chlebicky": "🥪 Chlebíčky (Art Sandwiches)",
+    "kofola": "🥤 Kofola (Communist Cola)",
+    "pragueCastle": "🏰 Prague Castle Tours",
+    "copyright": "Karel Čančara © {year}"
+  },
+  "site": {
+    "title": "Karel's Czechia Guide",
+    "tagline": "A short guide with some places I'd recommend to visit in Prague."
+  },
+  "buttons": {
+    "whatToOrder": "What to Order",
+    "myRecommendations": "My Personal Recommendations",
+    "myFavoriteSpots": "My Favorite Spots",
+    "showMeEverything": "Show me everything you recommend, Karel →",
+    "viewDetails": "View Details →"
+  },
+  "sections": {
+    "mustTryTitle": "What I'd Definitely Recommend",
+    "mustTrySubtitle": "I've been eating Czech food my whole life, and these are the dishes that really stand out to me. If you're curious about authentic Czech flavors, these would be my top picks to try.",
+    "restaurantsTitle": "Places that me and my family like",
+    "karelHighlyRecommends": "Karel HIGHLY recommends"
+  },
+  "categories": {
+    "sweet": "Sweet",
+    "mainDish": "Main Dish", 
+    "soup": "Soup",
+    "snack": "Snack",
+    "beer": "🍺 Beer",
+    "drink": "🥤 Drink",
+    "spirit": "🥃 Spirit",
+    "wine": "🍷 Drink"
+  },
+  "labels": {
+    "whereToGet": "Where to get it:"
+  },
+  "restaurants": {
+    "lokal-dlouha": {
+      "description": "Historically the first and literally longest Lokál – serves traditional Czech pub fare from 12 beer tanks",
+      "cuisine": "Traditional Czech Pub",
+      "recommended": {
+        "svickova": "Classic Czech beef sirloin in cream sauce with bread dumplings",
+        "gulas": "Traditional beef goulash with bread dumplings", 
+        "smazeny-syr": "Fried cheese with tartar sauce and potatoes",
+        "beer": "Fresh beer from 12 different tanks - try the Pilsner Urquell"
+      },
+      "about": "Lokál Dlouhááá is the original location of Prague's beloved Lokál restaurant chain. At 69.78 meters long, it's literally the longest Lokál and serves around 1,300 guests daily. This bustling Czech pub is famous for its authentic atmosphere and exceptional beer service from 12 tanks.",
+      "specialties": [
+        "Historic significance: The first Lokál restaurant that started the chain",
+        "Beer paradise: 12 different beer tanks serving the freshest draft beer in Prague", 
+        "Authentic atmosphere: Traditional Czech pub environment with communal tables",
+        "Central location: Right in the heart of Prague's Old Town on Dlouhá Street",
+        "Local favorite: Popular with both tourists and Prague locals"
+      ],
+      "perfectFor": [
+        "Experiencing authentic Czech pub culture",
+        "Best draft beer in Prague", 
+        "Traditional Czech comfort food",
+        "Group dining and socializing",
+        "Central Prague location for sightseeing"
+      ],
+      "whyVisit": "Lokál Dlouhááá represents the essence of Czech pub culture. The restaurant's commitment to serving the freshest beer from multiple tanks, combined with hearty traditional cuisine, makes it an essential Prague dining experience. The bustling atmosphere and communal seating create the perfect environment to meet locals and fellow travelers."
+    }
+  }
 }

@@ -1,0 +1,76 @@
+{
+  "nav": {
+    "restaurants": "Restauranger",
+    "map": "Karta",
+    "dishes": "Traditionell mat"
+  },
+  "hero": {
+    "title": "Prag matguide",
+    "subtitle": "Upptäck den bästa traditionella tjeckiska maten i Prag",
+    "viewRestaurants": "Visa restauranger",
+    "exploreMap": "Utforska kartan"
+  },
+  "sections": {
+    "featuredRestaurants": "Rekommenderade restauranger",
+    "restaurantMap": "Restaurangkarta över Prag",
+    "popularDishes": "Populära rätter"
+  },
+  "dishes": {
+    "svickova": "Svíčková na smetaně",
+    "goulash": "Gulasch",
+    "trdelnik": "Trdelník",
+    "smazeny_syr": "Stekt ost",
+    "knedlo_zelo_vepro": "Knedlo zelo vepřo",
+    "pork_knee": "Grillad fläskknoge"
+  },
+  "footer": {
+    "description": "Okej, visst… jag kommer från Brno, inte Prag. Det betyder att jag förmodligen borde säga att Brno är bättre (och det är det, naturligtvis). Men låt oss vara rättvisa—Prag är en fantastisk stad och definitivt värd ett besök. Så här är en kort, rak guide till det väsentliga: vad jag skulle äta, var jag skulle gå, och de saker du verkligen inte borde missa om det är första gången i Prag. Snabb, enkel och förhoppningsvis användbar—utan att dränka dig i \"topp 100\"-listor.",
+    "explore": "Utforska",
+    "categories": "Kategorier",
+    "karelFavorites": "Karels favoriter",
+    "featuredRestaurants": "Utvalda restauranger",
+    "interactiveMap": "Interaktiv karta",
+    "mustTryDishes": "Måste-prova rätter",
+    "fullRestaurants": "🍽️ Fullständiga restauranger",
+    "pubsBeerHalls": "🍺 Pubar & ölsalar",
+    "bistrosSnacks": "🥪 Bistroer & snacks",
+    "cafesCulture": "☕ Kaféer & kultur",
+    "pragueAttractions": "🏛️ Prags attraktioner",
+    "kulajda": "🥄 Kulajda (dillsoppa)",
+    "svickova": "🥩 Svíčková (nationalrätt)",
+    "chlebicky": "🥪 Chlebíčky (konstsmörgåsar)",
+    "kofola": "🥤 Kofola (kommunist-cola)",
+    "pragueCastle": "🏰 Pragslott-turer",
+    "copyright": "Karel Čančara © {year}"
+  },
+  "site": {
+    "title": "Karels Tjeckien-guide",
+    "tagline": "En kort guide med några platser jag skulle rekommendera att besöka i Prag."
+  },
+  "buttons": {
+    "whatToOrder": "Vad man ska beställa",
+    "myRecommendations": "Mina personliga rekommendationer",
+    "myFavoriteSpots": "Mina favoritplatser",
+    "showMeEverything": "Visa mig allt du rekommenderar, Karel →",
+    "viewDetails": "Visa detaljer →"
+  },
+  "sections": {
+    "mustTryTitle": "Vad jag definitivt skulle rekommendera",
+    "mustTrySubtitle": "Jag har ätit tjeckisk mat hela mitt liv, och det här är rätterna som verkligen sticker ut för mig. Om du är nyfiken på autentiska tjeckiska smaker, skulle det här vara mina toppval att prova.",
+    "restaurantsTitle": "Platser som jag och min familj gillar",
+    "karelHighlyRecommends": "Karel rekommenderar STARKT"
+  },
+  "categories": {
+    "sweet": "Söt",
+    "mainDish": "Huvudrätt",
+    "soup": "Soppa", 
+    "snack": "Snacks",
+    "beer": "🍺 Öl",
+    "drink": "🥤 Dryck",
+    "spirit": "🥃 Sprit",
+    "wine": "🍷 Dryck"
+  },
+  "labels": {
+    "whereToGet": "Var man kan få det:"
+  }
+}

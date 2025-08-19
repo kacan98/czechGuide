@@ -1,8 +1,5 @@
 import en from "@/i18n/en.json";
-import de from "@/i18n/de.json";
-import es from "@/i18n/es.json";
-import nl from "@/i18n/nl.json";
-import fr from "@/i18n/fr.json";
+import sv from "@/i18n/sv.json";
 
 // Default values for internationalization
 const SITE_LANG = "en";
@@ -11,16 +8,23 @@ const LOCALE = "en-US";
 
 const translations: Record<string, Locale> = {
   en,
-  de,
-  es,
-  nl,
-  fr,
+  sv,
 };
 
 export function useTranslations(lang: string) {
   return function t(key: string) {
     if (!translations[lang]) return key;
-    return translations[lang][key] || translations[SITE_LANG][key] || key;
+    
+    // Handle nested keys like "hero.title"
+    const getNestedValue = (obj: any, path: string) => {
+      return path.split('.').reduce((current, prop) => current?.[prop], obj);
+    };
+    
+    const value = getNestedValue(translations[lang], key) || 
+                  getNestedValue(translations[SITE_LANG], key) || 
+                  key;
+    
+    return value;
   };
 }
 
@@ -99,6 +103,19 @@ export function mergeOpeningHours(days: OpeningHourStoryblok[], lang: string) {
   });
 
   return merged;
+}
+
+export function getLocalizedUrl(path: string, lang: string = SITE_LANG): string {
+  // Remove leading slash if present
+  const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+  
+  // For default language (English), no prefix needed
+  if (lang === SITE_LANG) {
+    return `/${cleanPath}`;
+  }
+  
+  // For other languages, add language prefix
+  return `/${lang}/${cleanPath}`;
 }
 
 export const formatPrice = function (price: string) {
