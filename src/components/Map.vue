@@ -127,7 +127,10 @@ const t = (key) => {
 
 // Helper function to get restaurants by category
 const getRestaurantsByCategory = (category) => {
-  return props.restaurants.filter(r => r.data?.category === category)
+  return props.restaurants.filter(r => {
+    const sharedData = props.sharedRestaurantData[r.data?.sharedData];
+    return sharedData?.category === category || r.data?.category === category;
+  });
 }
 
 onMounted(async () => {
@@ -176,7 +179,9 @@ const updateMarkerVisibility = () => {
   restaurantMarkers.forEach(marker => {
     const restaurant = marker._restaurant
     if (restaurant) {
-      if (activeFilter.value === null || activeFilter.value === restaurant.data.category) {
+      const sharedData = props.sharedRestaurantData[restaurant.data?.sharedData];
+      const category = sharedData?.category || restaurant.data?.category;
+      if (activeFilter.value === null || activeFilter.value === category) {
         map.addLayer(marker)
       } else {
         map.removeLayer(marker)
@@ -277,7 +282,10 @@ const addRestaurantMarkers = () => {
   restaurantMarkers = []
   
   props.restaurants.forEach(restaurant => {
-    if (restaurant.data?.location?.lat && restaurant.data?.location?.lng) {
+    // Get shared data for this restaurant
+    const sharedData = props.sharedRestaurantData[restaurant.data.sharedData] || restaurant.data;
+    
+    if (sharedData?.location?.lat && sharedData?.location?.lng) {
       // Get color based on restaurant category
       const getCategoryColor = (category) => {
         switch(category) {
@@ -289,10 +297,10 @@ const addRestaurantMarkers = () => {
         }
       }
       
-      const categoryColor = getCategoryColor(restaurant.data.category)
+      const categoryColor = getCategoryColor(sharedData.category)
       
       // Create a marker icon with category-specific color
-      const marker = L.marker([restaurant.data.location.lat, restaurant.data.location.lng], {
+      const marker = L.marker([sharedData.location.lat, sharedData.location.lng], {
         icon: L.divIcon({
           className: 'restaurant-marker',
           html: `
@@ -320,11 +328,8 @@ const addRestaurantMarkers = () => {
         }
       }
       
-      const buttonText = getButtonText(restaurant.data.category)
+      const buttonText = getButtonText(sharedData.category)
       const buttonColor = categoryColor.replace('bg-', 'bg-').replace('600', '600')
-      
-      // Get shared data for this restaurant
-      const sharedData = props.sharedRestaurantData[restaurant.data.sharedData] || restaurant.data;
       
       // Create popup content with image
       const popupContent = `

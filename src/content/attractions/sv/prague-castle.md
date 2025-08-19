@@ -9,7 +9,6 @@ highlights:
   - "Gamla kungliga palatset"
   - "Gyllene gränden med små hus"
   - "Panoramautsikter över Prag"
-lang: sv
 ---
 
 Prague Castle (Pražský hrad) är världens största forntida slottkomplex och har varit säte för tjeckiska härskare i över 1 000 år. Denna UNESCO-världsarvsplats dominerar Prags horisont och erbjuder hisnande vyer över staden nedanför.

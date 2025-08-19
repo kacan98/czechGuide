@@ -6,6 +6,8 @@ const SITE_LANG = "en";
 const CURRENCY = "USD";
 const LOCALE = "en-US";
 
+type Locale = typeof en;
+
 const translations: Record<string, Locale> = {
   en,
   sv,
@@ -16,8 +18,14 @@ export function useTranslations(lang: string) {
     if (!translations[lang]) return key;
     
     // Handle nested keys like "hero.title"
-    const getNestedValue = (obj: any, path: string) => {
-      return path.split('.').reduce((current, prop) => current?.[prop], obj);
+    const getNestedValue = (obj: Record<string, unknown>, path: string): string => {
+      const result = path.split('.').reduce((current: unknown, prop: string) => 
+        current && typeof current === 'object' && prop in current 
+          ? (current as Record<string, unknown>)[prop] 
+          : undefined, 
+        obj
+      );
+      return typeof result === 'string' ? result : '';
     };
     
     const value = getNestedValue(translations[lang], key) || 

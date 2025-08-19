@@ -9,7 +9,6 @@ highlights:
   - "Medeltida astronomiska urtavla"
   - "Klättra upp i tornet för utsikt"
   - "Vackra Gamla stadens torg-miljö"
-lang: sv
 ---
 
 Den Pragska astronomiska klockan (Pražský orloj) är en av världens äldsta fungerande astronomiska klockor, från 1410. Belägen på Gamla stadens torg lockar den folkmassor varje timme för att se processionen av de tolv apostlarna och andra rörliga figurer.

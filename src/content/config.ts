@@ -6,14 +6,15 @@ const restaurants = defineCollection({
     name: z.string(),
     description: z.string(),
     cuisine: z.string(),
-    category: z.enum(['restaurant', 'pub', 'cafe', 'bistro']),
-    priceRange: z.enum(['$', '$$', '$$$', '$$$$']),
-    address: z.string(),
+    // These fields are now optional since they can come from shared data
+    category: z.enum(['restaurant', 'pub', 'cafe', 'bistro']).optional(),
+    priceRange: z.enum(['$', '$$', '$$$', '$$$$']).optional(),
+    address: z.string().optional(),
     location: z.object({
       lat: z.number(),
       lng: z.number(),
-    }),
-    hours: z.string(),
+    }).optional(),
+    hours: z.string().optional(),
     website: z.string().optional(),
     phone: z.string().optional(),
     image: z.string().optional(),
@@ -21,6 +22,9 @@ const restaurants = defineCollection({
     googleMapsUrl: z.string().optional(),
     googleRating: z.number().optional(),
     googleReviews: z.number().optional(),
+    // New fields for shared data approach
+    sharedData: z.string().optional(),
+    lang: z.enum(['en', 'sv']).optional(),
     recommended: z.array(z.object({
       name: z.string(),
       description: z.string(),
@@ -52,18 +56,22 @@ const attractions = defineCollection({
   schema: z.object({
     name: z.string(),
     description: z.string(),
-    type: z.enum(['castle', 'bridge', 'square', 'park', 'museum', 'neighborhood', 'church', 'tower']),
+    // These fields are now optional since they can come from shared data
+    type: z.enum(['castle', 'bridge', 'square', 'park', 'museum', 'neighborhood', 'church', 'tower']).optional(),
     location: z.object({
       lat: z.number(),
       lng: z.number(),
-    }),
-    address: z.string(),
+    }).optional(),
+    address: z.string().optional(),
     image: z.string().optional(),
     gallery: z.array(z.string()).optional(),
     visitDuration: z.string().optional(),
     entryFee: z.string().optional(),
     openingHours: z.string().optional(),
     website: z.string().optional(),
+    // New fields for shared data approach
+    sharedData: z.string().optional(),
+    lang: z.enum(['en', 'sv']).optional(),
     highlights: z.array(z.string()).optional(),
   }),
 });

@@ -6,9 +6,11 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import { useTranslations, getLangFromUrl, getLocalizedUrl } from "@/util/translate";
 import { sharedRestaurantData, type RestaurantId } from "@/data/shared-restaurant-data";
 
+type RestaurantEntry = CollectionEntry<"restaurants">;
+
 export async function getStaticPaths() {
   const restaurants = await getCollection("restaurants");
-  const restaurantPairs = new globalThis.Map();
+  const restaurantPairs = new globalThis.Map<string, { en: RestaurantEntry | null; sv: RestaurantEntry | null }>();
   
   // Group restaurants by their clean slug (e.g., "lokal-dlouha")
   restaurants.forEach((restaurant) => {
@@ -17,11 +19,16 @@ export async function getStaticPaths() {
       restaurantPairs.set(cleanSlug, { en: null, sv: null });
     }
     const lang = restaurant.id.startsWith('sv/') ? 'sv' : 'en';
-    restaurantPairs.get(cleanSlug)[lang] = restaurant;
+    const versions = restaurantPairs.get(cleanSlug)!;
+    versions[lang] = restaurant;
   });
   
-  // Create paths for both languages
-  const paths = [];
+  // Create paths for both languages  
+  const paths: Array<{
+    params: { rest: string };
+    props: Props;
+  }> = [];
+  
   Array.from(restaurantPairs.entries()).forEach(([cleanSlug, versions]) => {
     // English path: /restaurant/u-cerneho-vola
     paths.push({
@@ -48,9 +55,9 @@ export async function getStaticPaths() {
 }
 
 type Props = {
-  enRestaurant: CollectionEntry<"restaurants"> | null;
-  svRestaurant: CollectionEntry<"restaurants"> | null;
-  allRestaurants: CollectionEntry<"restaurants">[];
+  enRestaurant: RestaurantEntry | null;
+  svRestaurant: RestaurantEntry | null;
+  allRestaurants: RestaurantEntry[];
 };
 
 const { enRestaurant, svRestaurant, allRestaurants } = Astro.props;
@@ -76,7 +83,7 @@ const restaurant = lang === 'sv' ? svRestaurant : enRestaurant;
 
 // Create unified data object by merging shared data with restaurant data
 const sharedDataKey = restaurant?.data.sharedData as RestaurantId;
-const sharedData = sharedDataKey ? sharedRestaurantData[sharedDataKey] : {};
+const sharedData = sharedDataKey ? sharedRestaurantData[sharedDataKey] : null;
 
 // Merge shared data (technical details) with restaurant data (translatable content)
 const restaurantData = {
@@ -87,23 +94,23 @@ const restaurantData = {
   recommended: restaurant?.data.recommended,
   
   // Technical data from shared source, with fallbacks to restaurant data
-  address: sharedData.address || restaurant?.data.address,
-  location: sharedData.location || restaurant?.data.location,
-  hours: sharedData.hours || restaurant?.data.hours,
-  website: sharedData.website || restaurant?.data.website,
-  phone: sharedData.phone || restaurant?.data.phone,
-  googleMapsUrl: sharedData.googleMapsUrl || restaurant?.data.googleMapsUrl,
-  googleRating: sharedData.googleRating || restaurant?.data.googleRating,
-  googleReviews: sharedData.googleReviews || restaurant?.data.googleReviews,
-  image: sharedData.image || restaurant?.data.image,
-  category: sharedData.category || restaurant?.data.category,
-  priceRange: sharedData.priceRange || restaurant?.data.priceRange
+  address: sharedData?.address || restaurant?.data.address,
+  location: sharedData?.location || restaurant?.data.location,
+  hours: sharedData?.hours || restaurant?.data.hours,
+  website: sharedData?.website || restaurant?.data.website,
+  phone: sharedData?.phone || restaurant?.data.phone,
+  googleMapsUrl: sharedData?.googleMapsUrl || restaurant?.data.googleMapsUrl,
+  googleRating: sharedData?.googleRating || restaurant?.data.googleRating,
+  googleReviews: sharedData?.googleReviews || restaurant?.data.googleReviews,
+  image: sharedData?.image || restaurant?.data.image,
+  category: sharedData?.category || restaurant?.data.category,
+  priceRange: sharedData?.priceRange || restaurant?.data.priceRange
 };
 
 // Filter restaurants by current language and exclude current restaurant
-const languageRestaurants = allRestaurants.filter(({ id }) => id.startsWith(`${lang}/`));
+const languageRestaurants = allRestaurants.filter((restaurant: RestaurantEntry) => restaurant.id.startsWith(`${lang}/`));
 const otherRestaurants = languageRestaurants.filter(
-  (r) => r.slug !== restaurant?.slug
+  (r: RestaurantEntry) => r.slug !== restaurant?.slug
 );
 
 // Handle case where restaurant doesn't exist for current language
@@ -266,7 +273,7 @@ const meta = {
               {t("restaurant.recommendedDishes")}
             </h2>
             <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {restaurantData.recommended.map((dish) => (
+              {restaurantData.recommended?.map((dish: { name: string; description: string; image?: string }) => (
                 <div class="overflow-hidden rounded-lg bg-white shadow-md">
                   {dish.image && (
                     <img
@@ -295,7 +302,7 @@ const meta = {
         </h2>
         <div class="mb-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {
-            otherRestaurants.map((otherRestaurant) => (
+            otherRestaurants.map((otherRestaurant: RestaurantEntry) => (
               <div class="overflow-hidden rounded-xl bg-white shadow-lg transition hover:shadow-xl">
                 <div class="relative h-48 bg-gray-300">
                   {otherRestaurant.data.image && (

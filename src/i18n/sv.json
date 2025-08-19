@@ -13,7 +13,11 @@
   "sections": {
     "featuredRestaurants": "Rekommenderade restauranger",
     "restaurantMap": "Restaurangkarta över Prag",
-    "popularDishes": "Populära rätter"
+    "popularDishes": "Populära rätter",
+    "mustTryTitle": "Vad jag definitivt skulle rekommendera",
+    "mustTrySubtitle": "Jag har ätit tjeckisk mat hela mitt liv, och det här är rätterna som verkligen sticker ut för mig. Om du är nyfiken på autentiska tjeckiska smaker, skulle det här vara mina toppval att prova.",
+    "restaurantsTitle": "Platser som jag och min familj gillar",
+    "karelHighlyRecommends": "Karel rekommenderar STARKT"
   },
   "dishes": {
     "svickova": "Svíčková na smetaně",
@@ -24,7 +28,7 @@
     "pork_knee": "Grillad fläskknoge"
   },
   "footer": {
-    "description": "Okej, visst… jag kommer från Brno, inte Prag. Det betyder att jag förmodligen borde säga att Brno är bättre (och det är det, naturligtvis). Men låt oss vara rättvisa—Prag är en fantastisk stad och definitivt värd ett besök. Så här är en kort, rak guide till det väsentliga: vad jag skulle äta, var jag skulle gå, och de saker du verkligen inte borde missa om det är första gången i Prag. Snabb, enkel och förhoppningsvis användbar—utan att dränka dig i \"topp 100\"-listor.",
+    "description": "Jag kommer från Brno, inte Prag. Det betyder att jag egentligen borde säga att Brno är bättre (och det är det, förstås). Men för att vara rättvis—Prag är en fantastisk stad och helt klart värd ett besök. Så här är en kort och rak guide till det viktigaste: vad jag skulle äta, vart jag skulle gå och vad du absolut inte får missa om det är första gången i Prag. Snabb, enkel och förhoppningsvis användbar—utan att dränka dig i topp 100-listor.",
     "explore": "Utforska",
     "categories": "Kategorier",
     "karelFavorites": "Karels favoriter",
@@ -54,12 +58,6 @@
     "showMeEverything": "Visa mig allt du rekommenderar, Karel →",
     "viewDetails": "Visa detaljer →"
   },
-  "sections": {
-    "mustTryTitle": "Vad jag definitivt skulle rekommendera",
-    "mustTrySubtitle": "Jag har ätit tjeckisk mat hela mitt liv, och det här är rätterna som verkligen sticker ut för mig. Om du är nyfiken på autentiska tjeckiska smaker, skulle det här vara mina toppval att prova.",
-    "restaurantsTitle": "Platser som jag och min familj gillar",
-    "karelHighlyRecommends": "Karel rekommenderar STARKT"
-  },
   "restaurant": {
     "reviews": "recensioner",
     "backToGuide": "Tillbaka till restaurangguide",
@@ -75,7 +73,7 @@
     "viewAllRestaurants": "Visa alla restauranger",
     "categories": {
       "restaurant": "🍽️ Restaurang",
-      "pub": "🍺 Pub", 
+      "pub": "🍺 Pub",
       "bistro": "🥪 Bistro",
       "cafe": "☕ Café"
     }
@@ -83,7 +81,7 @@
   "categories": {
     "sweet": "Söt",
     "mainDish": "Huvudrätt",
-    "soup": "Soppa", 
+    "soup": "Soppa",
     "snack": "Snacks",
     "beer": "🍺 Öl",
     "drink": "🥤 Dryck",
@@ -92,5 +90,33 @@
   },
   "labels": {
     "whereToGet": "Var man kan få det:"
+  },
+  "restaurants": {
+    "lokal-dlouha": {
+      "description": "Historiskt den första och bokstavligen längsta Lokál – serverar traditionell tjeckisk pubmat från 12 öltankar",
+      "cuisine": "Traditionell tjeckisk pub",
+      "recommended": {
+        "svickova": "Klassisk tjeckisk oxfilé i gräddsås med brödknyten",
+        "gulas": "Traditionell oxgulasch med brödknyten",
+        "smazeny-syr": "Stekt ost med tartarsås och potatis",
+        "beer": "Färsk öl från 12 olika tankar - prova Pilsner Urquell"
+      },
+      "about": "Lokál Dlouhááá är den ursprungliga platsen för Prags älskade Lokál-restaurangkedja. Med sina 69,78 meter långa är den bokstavligen den längsta Lokál och serverar cirka 1 300 gäster dagligen. Denna livliga tjeckiska pub är känd för sin autentiska atmosfär och exceptionella ölservering från 12 tankar.",
+      "specialties": [
+        "Historisk betydelse: Den första Lokál-restaurangen som startade kedjan",
+        "Ölparadis: 12 olika öltankar som serverar den färskaste fatölen i Prag",
+        "Autentisk atmosfär: Traditionell tjeckisk pubmiljö med gemensamma bord",
+        "Centralt läge: Mitt i hjärtat av Prags gamla stad på Dlouhá-gatan",
+        "Lokal favorit: Populär hos både turister och Pragbor"
+      ],
+      "perfectFor": [
+        "Uppleva autentisk tjeckisk pubkultur",
+        "Bästa fatölen i Prag",
+        "Traditionell tjeckisk comfort food",
+        "Gruppmiddag och umgänge",
+        "Centrala Prag-läget för sightseeing"
+      ],
+      "whyVisit": "Lokál Dlouhááá representerar essensen av tjeckisk pubkultur. Restaurangens engagemang för att servera den färskaste ölen från flera tankar, kombinerat med rejäl traditionell mat, gör det till en viktig Prag-matupplevelse. Den livliga atmosfären och gemensamma sittplatser skapar den perfekta miljön för att träffa lokalbefolkning och andra resenärer."
+    }
   }
 }
