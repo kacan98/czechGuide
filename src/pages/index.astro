@@ -64,10 +64,10 @@ const meta = {
           </p>
           <div class="flex flex-wrap justify-center gap-4">
             <a
-              href="#restaurants"
-              class="rounded-lg bg-red-600 px-8 py-3 text-white transition hover:bg-red-700"
+              href="/dishes"
+              class="rounded-lg bg-amber-600 px-8 py-3 text-white transition hover:bg-amber-700"
             >
-              My Favorite Spots
+              What to Order
             </a>
             <a
               href="#must-try"
@@ -76,17 +76,27 @@ const meta = {
               My Personal Recommendations
             </a>
             <a
-              href="/dishes"
-              class="rounded-lg bg-amber-600 px-8 py-3 text-white transition hover:bg-amber-700"
+              href="#restaurants"
+              class="rounded-lg bg-red-600 px-8 py-3 text-white transition hover:bg-red-700"
             >
-              What to Order
+              My Favorite Spots
             </a>
-            <a
-              href="#map"
-              class="rounded-lg border-2 border-gray-900 bg-white px-8 py-3 text-gray-900 transition hover:bg-gray-100"
-            >
-              Where Everything Is
-            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Map Section -->
+      <section id="map" class="bg-gray-50 px-4 py-20">
+        <div class="mx-auto max-w-6xl">
+          <h2 class="mb-12 text-center text-4xl font-bold">
+            Map of Mentioned Places
+          </h2>
+          <div class="rounded-xl bg-white p-4 shadow-lg">
+            <Map
+              restaurants={restaurants}
+              attractions={attractions}
+              client:only="vue"
+            />
           </div>
         </div>
       </section>
@@ -241,22 +251,6 @@ const meta = {
                 </div>
               ))
             }
-          </div>
-        </div>
-      </section>
-
-      <!-- Map Section -->
-      <section id="map" class="bg-gray-50 px-4 py-20">
-        <div class="mx-auto max-w-6xl">
-          <h2 class="mb-12 text-center text-4xl font-bold">
-            Map of Mentioned Places
-          </h2>
-          <div class="rounded-xl bg-white p-4 shadow-lg">
-            <Map
-              restaurants={restaurants}
-              attractions={attractions}
-              client:only="vue"
-            />
           </div>
         </div>
       </section>

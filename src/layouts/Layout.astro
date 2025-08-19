@@ -89,18 +89,15 @@ const description =
           </a>
 
           <div class="hidden items-center gap-8 md:flex">
-            <a
-              href="/#restaurants"
-              class="font-medium transition hover:text-primary">My Favorite Spots</a
+            <a href="/dishes" class="font-medium transition hover:text-primary"
+              >What to Order</a
             >
             <a href="/#must-try" class="font-medium transition hover:text-primary"
               >My Recommendations</a
             >
-            <a href="/dishes" class="font-medium transition hover:text-primary"
-              >What to Order</a
-            >
-            <a href="/#map" class="font-medium transition hover:text-primary"
-              >Where Everything Is</a
+            <a
+              href="/#restaurants"
+              class="font-medium transition hover:text-primary">My Favorite Spots</a
             >
           </div>
 
@@ -113,8 +110,8 @@ const description =
       
       <!-- Mobile menu panel -->
       <div id="mobile-menu" class="hidden fixed inset-0 z-[10000] md:hidden">
-        <div class="fixed inset-0 bg-black/50" id="mobile-menu-backdrop"></div>
-        <div class="fixed right-0 top-0 h-full w-64 bg-white shadow-xl">
+        <div class="fixed inset-0 bg-black/50 z-[10000]" id="mobile-menu-backdrop"></div>
+        <div class="fixed right-0 top-0 h-full w-64 bg-white shadow-xl z-[10001]">
           <div class="flex items-center justify-between p-4 border-b">
             <span class="font-heading text-xl font-bold">Menu</span>
             <button id="mobile-menu-close" class="p-2">
@@ -122,10 +119,9 @@ const description =
             </button>
           </div>
           <nav class="p-4 space-y-4">
-            <a href="/#restaurants" class="block font-medium py-2 transition hover:text-primary">My Favorite Spots</a>
-            <a href="/#must-try" class="block font-medium py-2 transition hover:text-primary">My Personal Recommendations</a>
             <a href="/dishes" class="block font-medium py-2 transition hover:text-primary">What to Order</a>
-            <a href="/#map" class="block font-medium py-2 transition hover:text-primary">Where Everything Is</a>
+            <a href="/#must-try" class="block font-medium py-2 transition hover:text-primary">My Personal Recommendations</a>
+            <a href="/#restaurants" class="block font-medium py-2 transition hover:text-primary">My Favorite Spots</a>
           </nav>
         </div>
       </div>
