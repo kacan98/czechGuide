@@ -1,10 +1,51 @@
 ---
-import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "@/config/languages";
-
-// Detect browser language preference
-const acceptLanguage = Astro.request.headers.get('accept-language') || '';
-const browserLang = acceptLanguage.split(',')[0]?.split('-')[0]?.toLowerCase();
-
-// Redirect to preferred language
-return Astro.redirect(`/${SUPPORTED_LOCALES.includes(browserLang as any) ? browserLang : DEFAULT_LOCALE}/`);
+// Root index page for language detection and redirect
 ---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecting...</title>
+</head>
+<body>
+  <script>
+    // Client-side language detection and redirect
+    const supportedLocales = ['en', 'sv'];
+    const defaultLocale = 'en';
+    
+    // Get browser language preferences
+    const languages = [
+      navigator.language,
+      ...(navigator.languages || [])
+    ].filter(Boolean);
+    
+    // Find first supported language
+    let targetLang = defaultLocale;
+    for (const lang of languages) {
+      const langCode = lang.split('-')[0].toLowerCase();
+      if (supportedLocales.includes(langCode)) {
+        targetLang = langCode;
+        break;
+      }
+    }
+    
+    // Redirect immediately
+    const redirectUrl = targetLang === 'en' ? '/' : `/${targetLang}/`;
+    window.location.replace(redirectUrl);
+  </script>
+  
+  <!-- Fallback for users with JavaScript disabled -->
+  <noscript>
+    <meta http-equiv="refresh" content="0; url=/">
+  </noscript>
+  
+  <div style="display: flex; align-items: center; justify-content: center; height: 100vh; font-family: Arial, sans-serif;">
+    <div style="text-align: center;">
+      <div style="font-size: 2em; margin-bottom: 20px;">🌍</div>
+      <p>Loading...</p>
+    </div>
+  </div>
+</body>
+</html>
