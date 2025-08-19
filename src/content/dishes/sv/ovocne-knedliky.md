@@ -1,6 +1,6 @@
 ---
 name: Ovocné knedlíky
-category: sladký
+category: sweet
 description: Fruktbullar med plommon eller aprikoser, toppade med smör, socker och keso
 image: /ovocne-knedliky.jpg
 whyTry: Dessa söta dumplings fyllda med färsk frukt är den perfekta sommardesserten. Kontrasten mellan den mjuka potatisdegen, saftiga fruktcentret och krämiga toppings skapar ren tröstmatsmagi.

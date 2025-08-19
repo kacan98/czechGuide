@@ -1,6 +1,6 @@
 ---
 name: Věneček
-category: sladký
+category: sweet
 order: 6
 description: Ringformad choux-kräm fylld med grädde och toppat med choklad- eller karamellglasyr
 image: /venecek.jpg

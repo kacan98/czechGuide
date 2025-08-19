@@ -1,6 +1,6 @@
 ---
 name: Svíčková na smetaně  
-category: hlavní jídla
+category: main-dishes
 KarelMustTry: true
 description: The national dish - beef sirloin in cream sauce with bread dumplings, cranberries, and whipped cream
 image: /svickova.jpg

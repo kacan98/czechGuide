@@ -1,6 +1,6 @@
 ---
 name: Smažený sýr
-category: hlavní jídla
+category: main-dishes
 description: Deep-fried cheese served with tartar sauce and potatoes - crispy outside, melty inside
 image: /smazeny-syr.jpg
 whyTry: This is Czech pub food at its finest. A thick slab of cheese, breaded and fried until golden, served with tartar sauce and potatoes or fries. It's indulgent, simple, and exactly what you want after a few beers.

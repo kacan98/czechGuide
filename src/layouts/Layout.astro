@@ -82,7 +82,7 @@ const description =
     >
       <nav class="content-grid py-4">
         <div class="flex items-center justify-between">
-          <a href={getLocalizedUrl("", lang)} class="group flex items-center gap-3">
+          <a href={`/${lang}/`} class="group flex items-center gap-3">
             <div
               class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary transition group-hover:bg-primary/90"
             >
@@ -94,14 +94,14 @@ const description =
           </a>
 
           <div class="hidden items-center gap-8 md:flex">
-            <a href={getLocalizedUrl("dishes", lang)} class="font-medium transition hover:text-primary"
+            <a href={`/${lang}/dishes`} class="font-medium transition hover:text-primary"
               >{t("buttons.whatToOrder")}</a
             >
-            <a href={`${getLocalizedUrl("", lang)}#must-try`} class="font-medium transition hover:text-primary"
+            <a href={`/${lang}/#must-try`} class="font-medium transition hover:text-primary"
               >{t("buttons.myRecommendations")}</a
             >
             <a
-              href={`${getLocalizedUrl("", lang)}#restaurants`}
+              href={`/${lang}/#restaurants`}
               class="font-medium transition hover:text-primary">{t("buttons.myFavoriteSpots")}</a
             >
             <LanguageSelector currentPath={Astro.url.pathname} client:load />
@@ -126,9 +126,9 @@ const description =
           </button>
         </div>
         <nav class="p-4 space-y-4">
-          <a href={getLocalizedUrl("dishes", lang)} class="block font-medium py-2 transition hover:text-primary">{t("buttons.whatToOrder")}</a>
-          <a href={`${getLocalizedUrl("", lang)}#must-try`} class="block font-medium py-2 transition hover:text-primary">{t("buttons.myRecommendations")}</a>
-          <a href={`${getLocalizedUrl("", lang)}#restaurants`} class="block font-medium py-2 transition hover:text-primary">{t("buttons.myFavoriteSpots")}</a>
+          <a href={`/${lang}/dishes`} class="block font-medium py-2 transition hover:text-primary">{t("buttons.whatToOrder")}</a>
+          <a href={`/${lang}/#must-try`} class="block font-medium py-2 transition hover:text-primary">{t("buttons.myRecommendations")}</a>
+          <a href={`/${lang}/#restaurants`} class="block font-medium py-2 transition hover:text-primary">{t("buttons.myFavoriteSpots")}</a>
           <div class="pt-4 border-t border-gray-200">
             <LanguageSelector currentPath={Astro.url.pathname} client:load />
           </div>
@@ -201,7 +201,7 @@ const description =
                 >
               </li>
               <li>
-                <a href="/#map" class="transition hover:text-white"
+                <a href={`${getLocalizedUrl("", lang)}#map`} class="transition hover:text-white"
                   >{t("footer.pragueAttractions")}</a
                 >
               </li>
@@ -212,13 +212,13 @@ const description =
             <h4 class="font-heading mb-4 text-lg">{t("footer.karelFavorites")}</h4>
             <ul class="space-y-2 text-sm text-dark-foreground/80">
               <li>
-                <a href={`${getLocalizedUrl("dishes", lang)}#polivky`} class="transition hover:text-white"
+                <a href={`${getLocalizedUrl("dishes", lang)}#soups`} class="transition hover:text-white"
                   >{t("footer.kulajda")}</a
                 >
               </li>
               <li>
                 <a
-                  href={`${getLocalizedUrl("dishes", lang)}#hlavni-jidla`}
+                  href={`${getLocalizedUrl("dishes", lang)}#main-dishes`}
                   class="transition hover:text-white"
                   >{t("footer.svickova")}</a
                 >

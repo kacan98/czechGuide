@@ -1,6 +1,6 @@
 ---
 name: Smažený sýr
-category: hlavní jídla
+category: main-dishes
 description: Friterad ost serverad med tartarsås och potatis - krispig utanpå, smältig inuti
 image: /smazeny-syr.jpg
 whyTry: Det här är tjeckisk pubmat när den är som bäst. En tjock skiva ost, panerad och stekt tills den är gyllene, serverad med tartarsås och potatis eller pommes. Den är njutningsfull, enkel och precis vad du vill ha efter några öl.

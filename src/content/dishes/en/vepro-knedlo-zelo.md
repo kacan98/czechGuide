@@ -1,6 +1,6 @@
 ---
 name: Vepřo knedlo zelo
-category: hlavní jídla
+category: main-dishes
 KarelMustTry: true
 description: The classic Czech trilogy - roasted pork, bread dumplings, and sauerkraut
 image: /vepro-knedlo-zelo-flickr.jpg

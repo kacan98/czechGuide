@@ -1,6 +1,6 @@
 ---
 name: Svíčková na smetaně  
-category: hlavní jídla
+category: main-dishes
 KarelMustTry: true
 description: Nationalrätten - nötfilé i gräddsås med brödklimp, tranbär och vispgrädde
 image: /svickova.jpg

@@ -2,7 +2,7 @@
   "nav": {
     "restaurants": "Restauranger",
     "map": "Karta",
-    "dishes": "Traditionell mat"
+    "dishes": "Tjeckiska rätter"
   },
   "hero": {
     "title": "Prag matguide",
@@ -48,8 +48,29 @@
     "copyright": "Karel Čančara © {year}"
   },
   "site": {
-    "title": "Karels Tjeckien-guide",
-    "tagline": "En kort guide med några platser jag skulle rekommendera att besöka i Prag."
+    "title": "Karels Prag-guide",
+    "tagline": "En kort guide med några platser jag skulle rekommendera att besöka i Prag.",
+    "description": "Traditionella rätter, gatukök och drycker som definierar det tjeckiska köket - vad de är, varför de är speciella och vad folk verkligen tycker"
+  },
+  "dishes": {
+    "title": "Tjeckisk mat- & dryckguide", 
+    "description": "Allt du behöver veta om det tjeckiska köket - från traditionella rätter till lokala drycker, vad du ska beställa och var du hittar de bästa versionerna",
+    "backToDishes": "← Tillbaka till tjeckisk matguide",
+    "navigation": {
+      "sweet": "🍰 Sötsaker",
+      "mainDish": "🍖 Huvudrätter",
+      "soup": "🍲 Soppor", 
+      "snack": "🥪 Snacks",
+      "drinks": "🍺 Drycker & öl"
+    },
+    "categories": {
+      "sladký": "Söta rätter",
+      "hlavní jídla": "Huvudrätter",
+      "polívky": "Soppor", 
+      "snacks": "Snacks & gatukök",
+      "drinks": "Viktiga tjeckiska drycker"
+    },
+    "visitRestaurant": "Besök restaurang →"
   },
   "buttons": {
     "whatToOrder": "Alla rätter",

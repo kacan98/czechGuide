@@ -1,6 +1,6 @@
 ---
 name: Ovocné knedlíky
-category: sladký
+category: sweet
 description: Fruit dumplings with plums or apricots, topped with butter, sugar, and cottage cheese
 image: /ovocne-knedliky.jpg
 whyTry: These sweet dumplings filled with fresh fruit are the perfect summer dessert. The contrast between the soft potato dough, juicy fruit center, and creamy toppings creates pure comfort food magic.

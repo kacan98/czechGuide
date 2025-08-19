@@ -38,7 +38,7 @@ const dishes = defineCollection({
   type: 'content',
   schema: z.object({
     name: z.string(),
-    category: z.enum(['sladký', 'hlavní jídla', 'polívky', 'snacks']),
+    category: z.enum(['sweet', 'main-dishes', 'soups', 'snacks']),
     order: z.number().optional(),
     KarelMustTry: z.boolean().optional(),
     description: z.string(),

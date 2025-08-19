@@ -1,6 +1,6 @@
 ---
 name: Kachna
-category: hlavní jídla
+category: main-dishes
 KarelMustTry: true
 description: Roasted duck with apples, bread dumplings, and red cabbage - a festive Czech classic
 image: /kachna.jpg

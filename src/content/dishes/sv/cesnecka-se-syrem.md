@@ -1,6 +1,6 @@
 ---
 name: Česnečka se sýrem
-category: polívky
+category: soups
 order: 3
 description: Rik vitlökssoppa med smält ost och brödkrutonger
 image: /cesnecka-se-syrem.jpg

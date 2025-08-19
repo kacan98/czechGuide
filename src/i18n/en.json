@@ -2,7 +2,7 @@
   "nav": {
     "restaurants": "Restaurants",
     "map": "Map",
-    "dishes": "Traditional Dishes"
+    "dishes": "Czech Dishes"
   },
   "hero": {
     "title": "Prague Food Guide",
@@ -44,8 +44,29 @@
     "copyright": "Karel Čančara © {year}"
   },
   "site": {
-    "title": "Karel's Czechia Guide",
-    "tagline": "A short guide with some places I'd recommend to visit in Prague."
+    "title": "Karel's Prague Guide",
+    "tagline": "A short guide with some places I'd recommend to visit in Prague.",
+    "description": "Traditional dishes, street food, and drinks that define Czech cuisine - what they are, why they're special, and what people really think"
+  },
+  "dishes": {
+    "title": "Czech Food & Drinks Guide",
+    "description": "Everything you need to know about Czech cuisine - from traditional dishes to local drinks, what to order and where to find the best versions",
+    "backToDishes": "← Back to Czech Food Guide",
+    "navigation": {
+      "sweet": "🍰 Sweet Treats",
+      "mainDish": "🍖 Main Dishes", 
+      "soup": "🍲 Soups",
+      "snack": "🥪 Snacks",
+      "drinks": "🍺 Drinks & Beers"
+    },
+    "categories": {
+      "sladký": "Sweet Dishes",
+      "hlavní jídla": "Main Dishes", 
+      "polívky": "Soups",
+      "snacks": "Snacks & Street Food",
+      "drinks": "Essential Czech Drinks"
+    },
+    "visitRestaurant": "Visit Restaurant →"
   },
   "buttons": {
     "whatToOrder": "All Dishes",

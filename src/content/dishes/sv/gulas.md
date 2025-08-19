@@ -1,6 +1,6 @@
 ---
 name: Guláš s knedlíky
-category: hlavní jídla
+category: main-dishes
 KarelMustTry: true
 description: Traditionell tjeckisk nötgulasch med mjuka brödklimp
 image: /gulas-flickr.jpg

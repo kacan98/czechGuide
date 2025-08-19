@@ -1,6 +1,6 @@
 ---
 name: Buchtičky s krémem
-category: sladký
+category: sweet
 description: Traditionella tjeckiska ångkokta bullar serverade med vaniljkräm - överraskande serverad som huvudrätt
 image: /buchticky-s-kremem.jpg
 whyTry: Dessa fluffiga ångkokta bullar med vaniljkrämsås är den ultimata tjeckiska tröstmaten. De är som små kuddar av lycka som skapar ren nostalgi.

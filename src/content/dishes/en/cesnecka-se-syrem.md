@@ -1,6 +1,6 @@
 ---
 name: Česnečka se sýrem
-category: polívky
+category: soups
 order: 3
 description: Rich garlic soup with melted cheese and bread croutons
 image: /cesnecka-se-syrem.jpg

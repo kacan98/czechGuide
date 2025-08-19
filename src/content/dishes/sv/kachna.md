@@ -1,6 +1,6 @@
 ---
 name: Kachna
-category: hlavní jídla
+category: main-dishes
 KarelMustTry: true
 description: Stekt anka med äpplen, brödklimp och rödkål - en festlig tjeckisk klassiker
 image: /kachna.jpg

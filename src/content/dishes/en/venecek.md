@@ -1,6 +1,6 @@
 ---
 name: Věneček
-category: sladký
+category: sweet
 order: 6
 description: Ring-shaped choux pastry filled with cream and topped with chocolate or caramel glaze
 image: /venecek.jpg

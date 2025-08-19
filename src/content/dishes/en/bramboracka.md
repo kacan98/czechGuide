@@ -1,6 +1,6 @@
 ---
 name: Bramboračka
-category: polívky
+category: soups
 order: 2
 description: Hearty potato soup with mushrooms and marjoram - the ultimate comfort soup
 image: /bramboracka.jpg

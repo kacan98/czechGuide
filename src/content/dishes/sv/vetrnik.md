@@ -1,6 +1,6 @@
 ---
 name: Větrník
-category: sladký
+category: sweet
 order: 5
 description: Lätt bakverk fyllt med grädde och toppad med pudrat socker
 image: /vetrnik.jpg

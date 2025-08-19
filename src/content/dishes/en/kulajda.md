@@ -1,6 +1,6 @@
 ---
 name: Kulajda
-category: polívky
+category: soups
 order: -1
 KarelMustTry: true
 description: Creamy potato soup with mushrooms, dill, and poached egg

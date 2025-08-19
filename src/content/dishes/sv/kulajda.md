@@ -1,6 +1,6 @@
 ---
 name: Kulajda
-category: polívky
+category: soups
 order: -1
 KarelMustTry: true
 description: Krämig potatissoppa med svamp, dill och pocherat ägg

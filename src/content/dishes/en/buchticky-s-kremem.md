@@ -1,6 +1,6 @@
 ---
 name: Buchtičky s krémem
-category: sladký
+category: sweet
 description: Traditional Czech steamed buns served with vanilla custard cream - surprisingly served as a main course
 image: /buchticky-s-kremem.jpg
 whyTry: These fluffy steamed buns with vanilla cream sauce are the ultimate Czech comfort food. They're like little pillows of happiness that create pure nostalgia.

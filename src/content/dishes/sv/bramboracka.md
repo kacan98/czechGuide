@@ -1,6 +1,6 @@
 ---
 name: Bramboračka
-category: polívky
+category: soups
 order: 2
 description: Mättande potatissoppa med svamp och mejram - den ultimata tröstmaten
 image: /bramboracka.jpg

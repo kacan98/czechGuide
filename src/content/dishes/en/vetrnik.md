@@ -1,6 +1,6 @@
 ---
 name: Větrník
-category: sladký
+category: sweet
 order: 5
 description: Light pastry filled with cream and topped with powdered sugar
 image: /vetrnik.jpg

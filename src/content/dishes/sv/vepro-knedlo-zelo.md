@@ -1,6 +1,6 @@
 ---
 name: Vepřo knedlo zelo
-category: hlavní jídla
+category: main-dishes
 KarelMustTry: true
 description: Den klassiska tjeckiska trilogin - stekt fläsk, brödklimp och surkål
 image: /vepro-knedlo-zelo-flickr.jpg
