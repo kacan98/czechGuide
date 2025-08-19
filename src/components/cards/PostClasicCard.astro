@@ -1,7 +1,9 @@
 ---
 import Picture from "@components/media/Picture.astro"; 
-import { SITE_LANG } from "astro:env/server";
 import { getLangFromUrl } from "@util/translate";
+
+// Default site language
+const SITE_LANG = "en";
 const lang = getLangFromUrl(Astro.url);
 
 const { full_slug, thumbnail, title, intro, accent } = Astro.props;

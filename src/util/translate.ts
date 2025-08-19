@@ -1,10 +1,13 @@
-import { SITE_LANG, CURRENCY, LOCALE } from "astro:env/server";
-
 import en from "@/i18n/en.json";
 import de from "@/i18n/de.json";
 import es from "@/i18n/es.json";
 import nl from "@/i18n/nl.json";
 import fr from "@/i18n/fr.json";
+
+// Default values for internationalization
+const SITE_LANG = "en";
+const CURRENCY = "USD";
+const LOCALE = "en-US";
 
 const translations: Record<string, Locale> = {
   en,
