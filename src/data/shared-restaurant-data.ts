@@ -39,7 +39,7 @@ export const sharedRestaurantData = {
       lng: 14.391864583778151
     },
     hours: 'Daily 10:00-24:00',
-    website: 'https://www.pivoucernyvol.cz/',
+    website: 'https://www.facebook.com/hostinecucernehovola/',
     phone: '+420 220 513 481',
     googleMapsUrl: 'https://maps.google.com/?q=U+Černého+Vola+Loretánské+náměstí+Prague',
     googleRating: 4.4,
@@ -55,7 +55,7 @@ export const sharedRestaurantData = {
       lng: 14.40802336213921
     },
     hours: 'Daily 10:00-22:00',
-    website: 'https://www.werichovavila.cz/',
+    website: 'https://ivetafabesova.cz/category/2',
     phone: '+420 257 320 188',
     googleMapsUrl: 'https://maps.google.com/?q=Werichova+Vila+Ostrovní+Prague',
     googleRating: 4.5,
