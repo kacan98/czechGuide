@@ -107,25 +107,25 @@ const description =
           </button>
         </div>
       </nav>
-      
-      <!-- Mobile menu panel -->
-      <div id="mobile-menu" class="hidden fixed inset-0 z-[10000] md:hidden">
-        <div class="fixed inset-0 bg-black/50 z-[10000]" id="mobile-menu-backdrop"></div>
-        <div class="fixed right-0 top-0 h-full w-64 bg-white shadow-xl z-[10001]">
-          <div class="flex items-center justify-between p-4 border-b">
-            <span class="font-heading text-xl font-bold">Menu</span>
-            <button id="mobile-menu-close" class="p-2">
-              <Icon name="close" class="h-6 w-6" />
-            </button>
-          </div>
-          <nav class="p-4 space-y-4">
-            <a href="/dishes" class="block font-medium py-2 transition hover:text-primary">What to Order</a>
-            <a href="/#must-try" class="block font-medium py-2 transition hover:text-primary">My Personal Recommendations</a>
-            <a href="/#restaurants" class="block font-medium py-2 transition hover:text-primary">My Favorite Spots</a>
-          </nav>
-        </div>
-      </div>
     </header>
+
+    <!-- Mobile menu panel (outside header to avoid z-index stacking issues) -->
+    <div id="mobile-menu" class="hidden fixed inset-0 z-[99999] md:hidden" style="z-index: 99999 !important;">
+      <div class="fixed inset-0 bg-black/50" id="mobile-menu-backdrop" style="z-index: 99998 !important;"></div>
+      <div class="fixed right-0 top-0 h-full w-64 bg-white shadow-xl" style="z-index: 99999 !important;">
+        <div class="flex items-center justify-between p-4 border-b">
+          <span class="font-heading text-xl font-bold">Menu</span>
+          <button id="mobile-menu-close" class="p-2">
+            <Icon name="close" class="h-6 w-6" />
+          </button>
+        </div>
+        <nav class="p-4 space-y-4">
+          <a href="/dishes" class="block font-medium py-2 transition hover:text-primary">What to Order</a>
+          <a href="/#must-try" class="block font-medium py-2 transition hover:text-primary">My Personal Recommendations</a>
+          <a href="/#restaurants" class="block font-medium py-2 transition hover:text-primary">My Favorite Spots</a>
+        </nav>
+      </div>
+    </div>
 
     <!-- Main Content -->
     <main>
