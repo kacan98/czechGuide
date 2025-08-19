@@ -5,11 +5,6 @@ import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "@/config/languages";
 const acceptLanguage = Astro.request.headers.get('accept-language') || '';
 const browserLang = acceptLanguage.split(',')[0]?.split('-')[0]?.toLowerCase();
 
-// Check if browser language is supported
-const preferredLang = SUPPORTED_LOCALES.includes(browserLang as any) 
-  ? browserLang 
-  : DEFAULT_LOCALE;
-
 // Redirect to preferred language
-return Astro.redirect(`/${preferredLang}/`);
+return Astro.redirect(`/${SUPPORTED_LOCALES.includes(browserLang as any) ? browserLang : DEFAULT_LOCALE}/`);
 ---

@@ -152,12 +152,12 @@ const meta = {
                       <span
                         class={`rounded-full px-2 py-1 text-xs font-medium ${
                           // Handle dishes
-                          isDish(item) && item.data.category === "sladký"
+                          isDish(item) && item.data.category === "sweet"
                             ? "bg-amber-100 text-amber-600"
                             : isDish(item) &&
-                                item.data.category === "hlavní jídla"
+                                item.data.category === "main-dishes"
                               ? "bg-red-100 text-red-600"
-                              : isDish(item) && item.data.category === "polívky"
+                              : isDish(item) && item.data.category === "soups"
                                 ? "bg-yellow-100 text-yellow-600"
                                 : isDish(item) &&
                                     item.data.category === "snacks"
@@ -175,12 +175,12 @@ const meta = {
                       >
                         {
                           // Handle dishes
-                          isDish(item) && item.data.category === "sladký"
+                          isDish(item) && item.data.category === "sweet"
                             ? t("categories.sweet")
                             : isDish(item) &&
-                                item.data.category === "hlavní jídla"
+                                item.data.category === "main-dishes"
                               ? t("categories.mainDish")
-                              : isDish(item) && item.data.category === "polívky"
+                              : isDish(item) && item.data.category === "soups"
                                 ? t("categories.soup")
                                 : isDish(item) &&
                                     item.data.category === "snacks"

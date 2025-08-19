@@ -382,22 +382,24 @@ const meta = {
     // Back to top button visibility
     const backToTopButton = document.getElementById('backToTop');
     
-    function toggleBackToTopButton() {
-      if (window.scrollY > 300) {
-        backToTopButton.classList.remove('opacity-0', 'pointer-events-none');
-        backToTopButton.classList.add('opacity-100');
-      } else {
-        backToTopButton.classList.add('opacity-0', 'pointer-events-none');
-        backToTopButton.classList.remove('opacity-100');
+    if (backToTopButton) {
+      function toggleBackToTopButton() {
+        if (window.scrollY > 300) {
+          backToTopButton?.classList.remove('opacity-0', 'pointer-events-none');
+          backToTopButton?.classList.add('opacity-100');
+        } else {
+          backToTopButton?.classList.add('opacity-0', 'pointer-events-none');
+          backToTopButton?.classList.remove('opacity-100');
+        }
       }
+      
+      // Add click event listener to back to top button
+      backToTopButton.addEventListener('click', scrollToTop);
+      
+      // Check scroll position on page load and scroll
+      toggleBackToTopButton();
+      window.addEventListener('scroll', toggleBackToTopButton);
     }
-    
-    // Add click event listener to back to top button
-    backToTopButton.addEventListener('click', scrollToTop);
-    
-    // Check scroll position on page load and scroll
-    toggleBackToTopButton();
-    window.addEventListener('scroll', toggleBackToTopButton);
     // Check if device is mobile
     const isMobile = window.matchMedia('(max-width: 768px)').matches || 
                      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
