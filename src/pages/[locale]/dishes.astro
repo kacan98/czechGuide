@@ -1,8 +1,8 @@
 ---
+import { SUPPORTED_LOCALES } from "@/config/languages";
+import { getLangFromUrl } from "@/util/translate";
 import Layout from "@layouts/Layout.astro";
 import { getCollection, type CollectionEntry } from 'astro:content';
-import { useTranslations, getLangFromUrl, getLocalizedUrl } from "@/util/translate";
-import { SUPPORTED_LOCALES } from "@/config/languages";
 
 // Define static paths for all supported locales
 export async function getStaticPaths() {
@@ -13,7 +13,6 @@ export async function getStaticPaths() {
 
 // Get current language from URL
 const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
 
 // Type aliases for better readability
 type DishEntry = CollectionEntry<'dishes'>;
