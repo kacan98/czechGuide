@@ -107,11 +107,33 @@ const restaurantData = {
   priceRange: sharedData?.priceRange || restaurant?.data.priceRange
 };
 
+// Helper function to merge restaurant data with shared data
+const getRestaurantWithSharedData = (restaurant: RestaurantEntry) => {
+  const sharedDataKey = restaurant.data.sharedData as RestaurantId;
+  const sharedData = sharedDataKey ? sharedRestaurantData[sharedDataKey] : null;
+  
+  return {
+    ...restaurant,
+    mergedData: {
+      name: restaurant.data.name,
+      description: restaurant.data.description,
+      cuisine: restaurant.data.cuisine,
+      address: sharedData?.address || restaurant.data.address,
+      location: sharedData?.location || restaurant.data.location,
+      image: sharedData?.image || restaurant.data.image,
+      category: sharedData?.category || restaurant.data.category,
+      priceRange: sharedData?.priceRange || restaurant.data.priceRange,
+      googleRating: sharedData?.googleRating || restaurant.data.googleRating,
+      googleReviews: sharedData?.googleReviews || restaurant.data.googleReviews
+    }
+  };
+};
+
 // Filter restaurants by current language and exclude current restaurant
 const languageRestaurants = allRestaurants.filter((restaurant: RestaurantEntry) => restaurant.id.startsWith(`${lang}/`));
-const otherRestaurants = languageRestaurants.filter(
-  (r: RestaurantEntry) => r.slug !== restaurant?.slug
-);
+const otherRestaurants = languageRestaurants
+  .filter((r: RestaurantEntry) => r.slug !== restaurant?.slug)
+  .map(getRestaurantWithSharedData);
 
 // Handle case where restaurant doesn't exist for current language
 if (!restaurant) {
@@ -302,45 +324,47 @@ const meta = {
         </h2>
         <div class="mb-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {
-            otherRestaurants.map((otherRestaurant: RestaurantEntry) => (
+            otherRestaurants.map((otherRestaurant: any) => (
               <div class="overflow-hidden rounded-xl bg-white shadow-lg transition hover:shadow-xl">
                 <div class="relative h-48 bg-gray-300">
-                  {otherRestaurant.data.image && (
+                  {otherRestaurant.mergedData.image && (
                     <img
-                      src={otherRestaurant.data.image}
-                      alt={otherRestaurant.data.name}
+                      src={otherRestaurant.mergedData.image}
+                      alt={otherRestaurant.mergedData.name}
                       class="h-full w-full object-cover"
                     />
                   )}
                 </div>
                 <div class="p-6">
                   <div class="mb-3 flex items-center gap-2">
-                    <span
-                      class={`rounded-full px-2 py-1 text-xs font-medium ${
-                        otherRestaurant.data.category === "restaurant"
-                          ? "bg-red-100 text-red-600"
-                          : otherRestaurant.data.category === "pub"
-                            ? "bg-orange-100 text-orange-600"
-                            : otherRestaurant.data.category === "bistro"
-                              ? "bg-amber-100 text-amber-600"
-                              : "bg-green-100 text-green-600"
-                      }`}
-                    >
-                      {t(`restaurant.categories.${otherRestaurant.data.category}`)}
-                    </span>
+                    {otherRestaurant.mergedData.category && (
+                      <span
+                        class={`rounded-full px-2 py-1 text-xs font-medium ${
+                          otherRestaurant.mergedData.category === "restaurant"
+                            ? "bg-red-100 text-red-600"
+                            : otherRestaurant.mergedData.category === "pub"
+                              ? "bg-orange-100 text-orange-600"
+                              : otherRestaurant.mergedData.category === "bistro"
+                                ? "bg-amber-100 text-amber-600"
+                                : "bg-green-100 text-green-600"
+                        }`}
+                      >
+                        {t(`restaurant.categories.${otherRestaurant.mergedData.category}`)}
+                      </span>
+                    )}
                     <span class="text-xs text-gray-500">
-                      {otherRestaurant.data.priceRange}
+                      {otherRestaurant.mergedData.priceRange}
                     </span>
                   </div>
                   <h3 class="mb-2 text-xl font-bold">
-                    {otherRestaurant.data.name}
+                    {otherRestaurant.mergedData.name}
                   </h3>
                   <p class="mb-4 text-gray-600">
-                    {otherRestaurant.data.description}
+                    {otherRestaurant.mergedData.description}
                   </p>
                   <div class="flex items-center justify-between">
                     <span class="text-sm text-gray-500">
-                      {otherRestaurant.data.cuisine}
+                      {otherRestaurant.mergedData.cuisine}
                     </span>
                     <a
                       href={getLocalizedUrl(`restaurant/${otherRestaurant.slug.replace(/^(en|sv)\//, '')}`, lang)}
