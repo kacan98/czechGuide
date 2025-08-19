@@ -56,6 +56,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { SUPPORTED_LOCALES, DEFAULT_LOCALE, LANGUAGE_NAMES, LANGUAGE_FLAGS } from '@/config/languages'
 
 interface Props {
   currentPath?: string
@@ -66,12 +67,13 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const isOpen = ref(false)
-const currentLanguage = ref('en')
+const currentLanguage = ref(DEFAULT_LOCALE)
 
-const languages = [
-  { code: 'en', name: 'English', flag: '/flag-gb.svg' },
-  { code: 'sv', name: 'Svenska', flag: '/flag-sv.svg' },
-]
+const languages = SUPPORTED_LOCALES.map(code => ({
+  code,
+  name: LANGUAGE_NAMES[code],
+  flag: LANGUAGE_FLAGS[code]
+}))
 
 const currentLanguageData = computed(() => {
   return languages.find(lang => lang.code === currentLanguage.value) || languages[0]
@@ -98,23 +100,15 @@ const getLanguageUrl = (langCode: string) => {
   const pathSegments = currentPath.split('/').filter(segment => segment)
   
   // Remove current language from path if it exists
-  const languages = ['en', 'sv']
-  if (pathSegments.length > 0 && languages.includes(pathSegments[0])) {
+  if (pathSegments.length > 0 && SUPPORTED_LOCALES.includes(pathSegments[0] as any)) {
     pathSegments.shift()
   }
   
   // Reconstruct path
   const remainingPath = pathSegments.join('/')
   
-  // For English (default), don't add language prefix
-  if (langCode === 'en') {
-    const path = remainingPath ? `/${remainingPath}` : '/'
-    // Add hash only if we're on client side
-    const hash = typeof window !== 'undefined' ? window.location.hash : ''
-    return path + hash
-  }
-  
-  // For other languages, add language prefix
+  // For default locale, add language prefix (since prefixDefaultLocale is true now)
+  // All languages now use the same URL structure with prefix
   const path = remainingPath ? `/${langCode}/${remainingPath}` : `/${langCode}/`
   // Add hash only if we're on client side
   const hash = typeof window !== 'undefined' ? window.location.hash : ''
@@ -135,23 +129,21 @@ const detectCurrentLanguage = () => {
   
   const pathSegments = window.location.pathname.split('/').filter(segment => segment)
   const possibleLang = pathSegments[0]
-  const languages = ['en', 'sv']
   
-  if (languages.includes(possibleLang)) {
+  if (SUPPORTED_LOCALES.includes(possibleLang as any)) {
     currentLanguage.value = possibleLang
   } else {
-    currentLanguage.value = 'en'
+    currentLanguage.value = DEFAULT_LOCALE
   }
 }
 
 // Detect browser language preference
 const detectBrowserLanguage = () => {
-  if (typeof window === 'undefined') return 'en'
+  if (typeof window === 'undefined') return DEFAULT_LOCALE
   
   const browserLang = navigator.language.slice(0, 2)
-  const supportedLanguages = ['en', 'sv']
   
-  return supportedLanguages.includes(browserLang) ? browserLang : 'en'
+  return SUPPORTED_LOCALES.includes(browserLang as any) ? browserLang : DEFAULT_LOCALE
 }
 
 onMounted(() => {
@@ -159,9 +151,9 @@ onMounted(() => {
   document.addEventListener('click', handleClickOutside)
   
   // If on homepage and no language detected, check browser preference
-  if (window.location.pathname === '/' && currentLanguage.value === 'en') {
+  if (window.location.pathname === '/' && currentLanguage.value === DEFAULT_LOCALE) {
     const preferredLang = detectBrowserLanguage()
-    if (preferredLang !== 'en') {
+    if (preferredLang !== DEFAULT_LOCALE) {
       // Check if user has already been redirected (to avoid infinite redirects)
       const hasBeenRedirected = sessionStorage.getItem('language-detected')
       if (!hasBeenRedirected) {

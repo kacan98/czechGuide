@@ -2,6 +2,14 @@
 import Layout from "@layouts/Layout.astro";
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { useTranslations, getLangFromUrl, getLocalizedUrl } from "@/util/translate";
+import { SUPPORTED_LOCALES } from "@/config/languages";
+
+// Define static paths for all supported locales
+export async function getStaticPaths() {
+  return SUPPORTED_LOCALES.map(locale => ({
+    params: { locale }
+  }));
+}
 
 // Get current language from URL
 const lang = getLangFromUrl(Astro.url);
@@ -65,22 +73,22 @@ const sortedDrinks: DrinkEntry[] = sortDrinksByOrder(allDrinks);
 
 // Category order and names - change this array to reorder categories
 const categoryOrder = [
-  { key: 'polívky', name: t('categories.soup') + 'or' },
-  { key: 'hlavní jídla', name: t('categories.mainDish') + 'es' },
-  { key: 'sladký', name: t('categories.sweet') + ' rätter' },
-  { key: 'snacks', name: t('categories.snack') + 's & gatumad' }
+  { key: 'polívky', name: 'Soups' },
+  { key: 'hlavní jídla', name: 'Main Dishes' },
+  { key: 'sladký', name: 'Sweet Dishes' },
+  { key: 'snacks', name: 'Snacks & Street Food' }
 ];
 
 const categoryNames: Record<string, string> = {
-  'sladký': t('categories.sweet') + ' rätter',
-  'hlavní jídla': t('categories.mainDish') + 'es', 
-  'polívky': t('categories.soup') + 'or',
-  'snacks': t('categories.snack') + 's & gatumad'
+  'sladký': 'Sweet Dishes',
+  'hlavní jídla': 'Main Dishes', 
+  'polívky': 'Soups',
+  'snacks': 'Snacks & Street Food'
 };
 
 const meta = {
-  title: t("site.title"),
-  description: "Komplett guide till autentisk tjeckisk mat - traditionella rätter, gatumad och drycker du måste prova i Prag",
+  title: "Karel's Czech Guide",
+  description: "Complete guide to authentic Czech cuisine - traditional dishes, street food, and drinks you must try in Prague",
 };
 ---
 
@@ -100,7 +108,7 @@ const meta = {
           )
         ))}
         <a href="#drinks" class="whitespace-nowrap text-sm font-medium text-gray-600 hover:text-red-600 transition">
-          Drycker
+          Drinks
         </a>
       </div>
     </div>
@@ -110,8 +118,8 @@ const meta = {
     <!-- Back Navigation -->
     <div class="bg-gray-50 py-4">
       <div class="max-w-6xl mx-auto px-4">
-        <a href={getLocalizedUrl("", lang)} class="text-red-600 hover:text-red-700 font-medium">
-          ← Tillbaka till tjeckisk matguide
+        <a href="/" class="text-red-600 hover:text-red-700 font-medium">
+          ← Back to Czech Food Guide
         </a>
       </div>
     </div>
@@ -120,10 +128,10 @@ const meta = {
     <section class="py-16">
       <div class="max-w-4xl mx-auto px-4 text-center">
         <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-          {t("site.title")}
+          Karel's Czechia Guide
         </h1>
         <p class="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto">
-          Traditionella rätter, gatumad och drycker som definierar tjeckisk mat - vad de är, varför de är speciella och vad folk verkligen tycker
+          Traditional dishes, street food, and drinks that define Czech cuisine - what they are, why they're special, and what people really think
         </p>
       </div>
     </section>
@@ -156,7 +164,7 @@ const meta = {
                       <div class="flex items-center gap-2 mb-4">
                         {dish.data.KarelMustTry && (
                           <span class="text-sm font-bold px-3 py-1 rounded-full text-purple-600 bg-purple-100 border border-purple-200">
-                            {t("sections.karelHighlyRecommends")}
+                            Karel HIGHLY recommends
                           </span>
                         )}
                         <span class={`text-sm font-medium px-3 py-1 rounded-full ${
@@ -187,14 +195,14 @@ const meta = {
                       {dish.data.whereToGet && (
                         <div class="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
                           <p class="text-sm text-blue-800 mb-2">
-                            <strong>{t("labels.whereToGet")}</strong> {dish.data.whereToGet}
+                            <strong>Where to get it:</strong> {dish.data.whereToGet}
                           </p>
                           {dish.data.restaurantLink && (
                             <a 
                               href={dish.data.restaurantLink}
                               class="inline-block text-sm bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-700 transition"
                             >
-                              Besök restaurang →
+                              Visit Restaurant →
                             </a>
                           )}
                         </div>
@@ -212,7 +220,7 @@ const meta = {
     <!-- Drinks Section -->
     <section id="drinks" class="py-16 bg-gray-50">
       <div class="max-w-6xl mx-auto px-4">
-        <h2 class="text-4xl font-bold text-center mb-12 text-red-600">Viktiga tjeckiska drycker</h2>
+        <h2 class="text-4xl font-bold text-center mb-12 text-red-600">Essential Czech Drinks</h2>
         
         <div class="space-y-12">
           {sortedDrinks.map((drink, index) => (
@@ -234,7 +242,7 @@ const meta = {
                   <div class="flex items-center gap-2 mb-4">
                     {drink.data.KarelMustTry && (
                       <span class="text-sm font-bold px-3 py-1 rounded-full text-purple-600 bg-purple-100 border border-purple-200">
-                        {t("sections.karelHighlyRecommends")}
+                        Karel HIGHLY recommends
                       </span>
                     )}
                     <span class={`text-sm font-medium px-3 py-1 rounded-full ${
@@ -243,10 +251,10 @@ const meta = {
                       drink.data.type === 'spirit' ? 'text-orange-600 bg-orange-100' :
                       'text-red-600 bg-red-100'
                     }`}>
-                      {drink.data.type === 'beer' ? t("categories.beer") :
-                       drink.data.type === 'soda' ? t("categories.drink") :
-                       drink.data.type === 'spirit' ? t("categories.spirit") :
-                       t("categories.wine")}
+                      {drink.data.type === 'beer' ? '🍺 Beer' :
+                       drink.data.type === 'soda' ? '🥤 Soda' :
+                       drink.data.type === 'spirit' ? '🥃 Spirit' :
+                       '🍷 Wine'}
                     </span>
                   </div>
                   <h3 class="text-3xl font-bold text-gray-900 mb-2">
@@ -268,7 +276,7 @@ const meta = {
                   {drink.data.whereToGet && (
                     <div class="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
                       <p class="text-sm text-blue-800">
-                        <strong>{t("labels.whereToGet")}</strong> {drink.data.whereToGet}
+                        <strong>Where to get it:</strong> {drink.data.whereToGet}
                       </p>
                     </div>
                   )}

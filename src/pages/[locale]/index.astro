@@ -4,8 +4,16 @@ import Layout from "@layouts/Layout.astro";
 import Map from "@components/Map.vue";
 import { getCollection, type CollectionEntry } from "astro:content";
 import { useTranslations, getLangFromUrl, getLocalizedUrl } from "@/util/translate";
-import { sharedRestaurantData } from "@/data/shared-restaurant-data";
-import { sharedAttractionData } from "@/data/shared-attraction-data";
+import { sharedRestaurantData, type RestaurantId } from "@/data/shared-restaurant-data";
+import { sharedAttractionData, type AttractionId } from "@/data/shared-attraction-data";
+import { SUPPORTED_LOCALES } from "@/config/languages";
+
+// Define static paths for all supported locales
+export async function getStaticPaths() {
+  return SUPPORTED_LOCALES.map(locale => ({
+    params: { locale }
+  }));
+}
 
 // Get current language from URL
 const lang = getLangFromUrl(Astro.url);
@@ -224,38 +232,102 @@ const meta = {
 
           <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {
-              restaurants.map((restaurant) => (
-                <div class="overflow-hidden rounded-xl bg-white shadow-lg transition hover:shadow-xl">
-                  <div class="relative h-48 bg-gray-300">
-                    {restaurant.data.image && (
-                      <img
-                        src={restaurant.data.image}
-                        alt={restaurant.data.name}
-                        class="h-full w-full object-cover"
-                      />
-                    )}
-                  </div>
-                  <div class="p-6">
-                    <h3 class="mb-2 text-xl font-bold">
-                      {restaurant.data.name}
-                    </h3>
-                    <p class="mb-4 text-gray-600">
-                      {restaurant.data.description}
-                    </p>
-                    <div class="flex items-center justify-between">
-                      <span class="text-lg font-semibold text-amber-600">
-                        {restaurant.data.priceRange}
-                      </span>
-                      <a
-                        href={getLocalizedUrl(`restaurant/${restaurant.slug.replace('sv/', '')}`, lang)}
-                        class="font-medium text-red-600 hover:text-red-700"
-                      >
-                        {t("buttons.viewDetails")}
-                      </a>
+              restaurants.map((restaurant) => {
+                // Get shared data for this restaurant  
+                const sharedDataKey = restaurant.data.sharedData as RestaurantId;
+                const sharedData = sharedDataKey ? sharedRestaurantData[sharedDataKey] : null;
+                
+                // Merge data like on the detail page
+                const restaurantData = {
+                  ...restaurant.data,
+                  image: sharedData?.image || restaurant.data.image,
+                  priceRange: sharedData?.priceRange || restaurant.data.priceRange
+                };
+                
+                return (
+                  <div class="overflow-hidden rounded-xl bg-white shadow-lg transition hover:shadow-xl">
+                    <div class="relative h-48 bg-gray-300">
+                      {restaurantData.image && (
+                        <img
+                          src={restaurantData.image}
+                          alt={restaurant.data.name}
+                          class="h-full w-full object-cover"
+                        />
+                      )}
+                    </div>
+                    <div class="p-6">
+                      <h3 class="mb-2 text-xl font-bold">
+                        {restaurant.data.name}
+                      </h3>
+                      <p class="mb-4 text-gray-600">
+                        {restaurant.data.description}
+                      </p>
+                      <div class="flex items-center justify-between">
+                        <span class="text-lg font-semibold text-amber-600">
+                          {restaurantData.priceRange}
+                        </span>
+                        <a
+                          href={getLocalizedUrl(`restaurant/${restaurant.slug.replace(/^(en|sv)\//, '')}`, lang)}
+                          class="font-medium text-red-600 hover:text-red-700"
+                        >
+                          {t("buttons.viewDetails")}
+                        </a>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))
+                );
+              })
+            }
+          </div>
+        </div>
+      </section>
+
+      <!-- Attractions Section -->
+      <section id="attractions" class="bg-gray-50 px-4 py-20">
+        <div class="mx-auto max-w-6xl">
+          <h2 class="mb-12 text-center text-4xl font-bold">
+            {t("footer.pragueAttractions").replace("🏛️ ", "")}
+          </h2>
+
+          <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+            {
+              attractions.map((attraction) => {
+                // Get shared data for this attraction
+                const sharedDataKey = attraction.data.sharedData as AttractionId;
+                const sharedData = sharedDataKey ? sharedAttractionData[sharedDataKey] : null;
+                
+                // Merge data like on detail pages
+                const attractionData = {
+                  ...attraction.data,
+                  image: sharedData?.image || attraction.data.image,
+                  entryFee: sharedData?.entryFee || attraction.data.entryFee
+                };
+                
+                return (
+                  <div class="overflow-hidden rounded-xl bg-white shadow-lg transition hover:shadow-xl">
+                    <div class="relative h-32 bg-gray-300">
+                      {attractionData.image && (
+                        <img
+                          src={attractionData.image}
+                          alt={attraction.data.name}
+                          class="h-full w-full object-cover"
+                        />
+                      )}
+                    </div>
+                    <div class="p-4">
+                      <h3 class="mb-2 text-lg font-bold">
+                        {attraction.data.name}
+                      </h3>
+                      <p class="mb-2 text-sm text-gray-600">
+                        {attraction.data.description}
+                      </p>
+                      <p class="text-xs text-green-600 font-medium">
+                        {attractionData.entryFee}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })
             }
           </div>
         </div>
@@ -272,7 +344,7 @@ const meta = {
           const restaurant = (event as CustomEvent).detail;
           if (restaurant?.slug) {
             const cleanSlug = restaurant.slug.replace(/^(en|sv)\//, '');
-            window.location.href = `/sv/restaurant/${cleanSlug}`;
+            window.location.href = `/restaurant/${cleanSlug}`;
           }
         });
       }
