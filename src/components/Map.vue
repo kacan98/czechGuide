@@ -3,6 +3,7 @@
     <!-- Filter Controls -->
     <div class="mb-4 flex justify-center gap-2 flex-wrap">
       <button 
+        v-if="getRestaurantsByCategory('restaurant').length > 0"
         @click="toggleCategory('restaurant')"
         :class="[
           'px-3 py-2 rounded-lg text-sm font-medium transition',
@@ -13,6 +14,7 @@
         🍽️ Full Restaurants ({{ getRestaurantsByCategory('restaurant').length }})
       </button>
       <button 
+        v-if="getRestaurantsByCategory('pub').length > 0"
         @click="toggleCategory('pub')"
         :class="[
           'px-3 py-2 rounded-lg text-sm font-medium transition',
@@ -23,6 +25,7 @@
         🍺 Pubs & Beer ({{ getRestaurantsByCategory('pub').length }})
       </button>
       <button 
+        v-if="getRestaurantsByCategory('bistro').length > 0"
         @click="toggleCategory('bistro')"
         :class="[
           'px-3 py-2 rounded-lg text-sm font-medium transition',
@@ -33,6 +36,7 @@
         🥪 Bistros & Snacks ({{ getRestaurantsByCategory('bistro').length }})
       </button>
       <button 
+        v-if="getRestaurantsByCategory('cafe').length > 0"
         @click="toggleCategory('cafe')"
         :class="[
           'px-3 py-2 rounded-lg text-sm font-medium transition',
@@ -43,6 +47,7 @@
         ☕ Cafés ({{ getRestaurantsByCategory('cafe').length }})
       </button>
       <button 
+        v-if="attractions.length > 0"
         @click="toggleAttractions"
         :class="[
           'px-3 py-2 rounded-lg text-sm font-medium transition',
@@ -87,29 +92,7 @@ const activeFilter = ref(null)
 
 // Helper function to get restaurants by category
 const getRestaurantsByCategory = (category) => {
-  console.log('=== DEBUGGING RESTAURANT FILTERING ===')
-  console.log('Filtering restaurants for category:', category)
-  console.log('Total restaurants received:', props.restaurants?.length)
-  
-  // Try multiple approaches to access category
-  props.restaurants?.forEach((r, index) => {
-    console.log(`Restaurant ${index} - ${r.data?.name}:`)
-    console.log('  r.data?.category:', r.data?.category)
-    console.log('  r.data.category:', r.data.category)
-    console.log('  category in r.data:', 'category' in (r.data || {}))
-    console.log('  r.data keys:', Object.keys(r.data || {}))
-    console.log('  r.data values:', Object.values(r.data || {}))
-    
-    // Check if category exists anywhere in the object
-    const dataStr = JSON.stringify(r.data)
-    console.log('  contains "pub":', dataStr.includes('"pub"'))
-    console.log('  contains "restaurant":', dataStr.includes('"restaurant"'))
-  })
-  
-  const filtered = props.restaurants.filter(r => r.data?.category === category)
-  console.log('Filtered results for', category, ':', filtered.length)
-  console.log('=== END DEBUGGING ===')
-  return filtered
+  return props.restaurants.filter(r => r.data?.category === category)
 }
 
 onMounted(async () => {
@@ -125,10 +108,8 @@ onMounted(async () => {
       addAttractionMarkers()
     }
     getUserLocation()
-    // Auto-zoom to fit all markers
-    setTimeout(() => {
-      fitMapToMarkers()
-    }, 500)
+    // Auto-zoom to fit all markers immediately
+    fitMapToMarkers()
   }
 })
 
@@ -176,6 +157,11 @@ const updateMarkerVisibility = () => {
       map.removeLayer(marker)
     }
   })
+  
+  // Re-fit map to visible markers
+  setTimeout(() => {
+    fitMapToMarkers()
+  }, 100)
 }
 
 const fitMapToMarkers = () => {
@@ -184,10 +170,16 @@ const fitMapToMarkers = () => {
   const allMarkers = [...restaurantMarkers, ...attractionMarkers]
   if (allMarkers.length === 0) return
   
-  const group = new L.featureGroup(allMarkers)
-  map.fitBounds(group.getBounds(), {
-    padding: [20, 20],
-    maxZoom: 15
+  // Collect all marker positions
+  const bounds = L.latLngBounds([])
+  allMarkers.forEach(marker => {
+    bounds.extend(marker.getLatLng())
+  })
+  
+  // Fit bounds with proper padding to ensure all markers are visible
+  map.fitBounds(bounds, {
+    padding: [50, 50],
+    maxZoom: 14
   })
 }
 
@@ -301,10 +293,15 @@ const addRestaurantMarkers = () => {
         <div class="text-center">
           <h3 class="font-bold text-lg text-gray-900 mb-1">${restaurant.data.name}</h3>
           <p class="text-sm text-gray-600 mb-2">${restaurant.data.cuisine}</p>
-          <p class="text-xs text-gray-500 mb-3">${restaurant.data.address}</p>
-          <button class="visit-restaurant ${buttonColor} text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition" data-slug="${restaurant.slug}">
-            ${buttonText} →
-          </button>
+          <p class="text-xs text-gray-500 mb-2 cursor-pointer hover:text-blue-600 underline" onclick="window.open('https://maps.google.com/?q=${encodeURIComponent(restaurant.data.address)}', '_blank')">${restaurant.data.address}</p>
+          <div class="flex flex-col gap-2">
+            <button class="navigate-btn bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition" onclick="window.open('https://maps.google.com/?q=${encodeURIComponent(restaurant.data.address)}', '_blank')">
+              📍 Navigate Here
+            </button>
+            <button class="visit-restaurant ${buttonColor} text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition" data-slug="${restaurant.slug}">
+              ${buttonText} →
+            </button>
+          </div>
         </div>
       `
       
@@ -366,11 +363,16 @@ const addAttractionMarkers = () => {
         <div class="text-center">
           <h3 class="font-bold text-lg text-gray-900 mb-1">${attraction.data.name}</h3>
           <p class="text-sm text-gray-600 mb-2">${attraction.data.type}</p>
-          <p class="text-xs text-gray-500 mb-3">${attraction.data.address}</p>
+          <p class="text-xs text-gray-500 mb-2 cursor-pointer hover:text-blue-600 underline" onclick="window.open('https://maps.google.com/?q=${encodeURIComponent(attraction.data.address)}', '_blank')">${attraction.data.address}</p>
           ${attraction.data.entryFee ? `<p class="text-xs text-gray-500 mb-2">Entry: ${attraction.data.entryFee}</p>` : ''}
-          <button class="visit-attraction bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition" data-website="${attraction.data.website || ''}">
-            Learn More
-          </button>
+          <div class="flex flex-col gap-2">
+            <button class="navigate-btn bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition" onclick="window.open('https://maps.google.com/?q=${encodeURIComponent(attraction.data.address)}', '_blank')">
+              📍 Navigate Here
+            </button>
+            <button class="visit-attraction bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition" data-website="${attraction.data.website || ''}">
+              Learn More
+            </button>
+          </div>
         </div>
       `
       

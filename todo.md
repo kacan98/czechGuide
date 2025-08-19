@@ -1,44 +1,50 @@
-- restaurant page
-    - remove the about and whatever details section. Noone cares
-- home page
-    - it should be possible to go to "recommended dishes" or to the map
-    - fix the "Tradisitonal dishes" to say "Recommended dishes" and lead to a nice and simple food guide with my favorite dishes
-- add restaurants
-    - antastiska kakor och kafé i centrum: https://www.werichovavila.cz 
-    - https://lokal-dlouha.ambi.cz/cz/
-    - pivo u černého vola: https://www.pivoucernyvol.cz/
-    - explain why these places are worth visiting
-- add non-restaurant things to visit
+- add attractions that are not yest included:
     - Trip: Hrad -> Nerudovou ulicí dolû na Karlův most, Orloj, Petřín… dobrý je taky Nový svět, Židovský hřbitov…. 
-    - Karlštejn 
-- add a general food guide with pictures with my favorite dishes
-    - sladký
-        - buchtičky s krémem
-        - makový koláč
-        - trdelník
-        - ovocné knedlíky
-        - švestkové knedlíky
-            - s mákem
-            - s tvarohem
-    - hlavní jídla
-        - svíčková
-        - guláš
-        - vepřo knedlo zelo
-        - kachna
-        - bramboračka
-        - česnečka se sýrem
-    - polívky
-        - bramboračka
-        - houbová polévka
-        - česnečka
-    - snacks
-        - bramborák
-        - smažený sýr
-        - tatranka
-        - fidorka
-- fix the map. It should ALWAYS focus on Prague
-- add swedish
-- map on main page
-    - add filtering so that either restaurants or places to visit can be visible
-    - make it zoom out exactly so that all places are visible
+    - Karlštejn
+# ✅ To-Do List
+
+## Header
+- [ ] **Main Header**  
+  - Increase height to `100vh`.  
+  - Ensure enough spacing for proper layout.  
+
+- [ ] **Top-Right Button**  
+  - Fix non-working button in the header.  
+  - Test across desktop and mobile.  
+
+---
+
+## Navigation
+- [ ] **Top Navigation Buttons**  
+  - Order buttons the same as homepage sections.  
+  - Verify consistency on all screen sizes.  
+
+- [ ] **Section Navigation (Mobile)**  
+  - Make sticky on mobile.  
+  - Prevent disappearing when scrolling.  
+
+---
+
+## Map
+- [ ] **Pin Centering**  
+  - Ensure map always centers on pins.  
+  - Fix issue where user has to manually look for pins.  
+
+- [ ] **Pin Interaction**  
+  - Clicking a pin should start navigation.  
+  - Clicking an address should also start navigation.  
+
+- [ ] **Category Sorting Above Map**  
+  - Do not display categories that have `0` members.  
+  - Only show categories with active members.  
+
+---
+
+## Content
+- [ ] **Opening Hours**  
+  - Remove all opening hours from UI.  
+
+- [ ] **Food List Galleries**  
+  - Disable galleries opening on phones.  
+  - Keep functionality for desktop/tablet. 
 

@@ -77,9 +77,9 @@ const meta = {
 
 <Layout meta={meta}>
   <!-- Sticky Navigation -->
-  <nav class="sticky top-16 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200 py-4">
+  <nav class="sticky top-[72px] md:top-16 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200 py-4">
     <div class="max-w-6xl mx-auto px-4">
-      <div class="flex gap-6 overflow-x-auto">
+      <div class="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide">
         {categoryOrder.map(({ key: category, name: categoryName }) => (
           dishesByCategory[category]?.length > 0 && (
             <a 
@@ -320,6 +320,10 @@ const meta = {
   let currentImageIndex = 0;
 
   document.addEventListener('DOMContentLoaded', function() {
+    // Check if device is mobile
+    const isMobile = window.matchMedia('(max-width: 768px)').matches || 
+                     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
     // Collect all dish and drink data
     const dishImages = document.querySelectorAll('.dish-image');
     const drinkImages = document.querySelectorAll('.drink-image');
@@ -339,21 +343,34 @@ const meta = {
     // Combine all image data
     allDishes = [...dishData, ...drinkData];
 
-    // Add click listeners to all dish images
-    dishImages.forEach((img, index) => {
-      img.addEventListener('click', function() {
-        currentImageIndex = index;
-        openImageModal();
+    // Only add click listeners if NOT on mobile
+    if (!isMobile) {
+      // Add click listeners to all dish images
+      dishImages.forEach((img, index) => {
+        img.addEventListener('click', function() {
+          currentImageIndex = index;
+          openImageModal();
+        });
       });
-    });
-    
-    // Add click listeners to all drink images
-    drinkImages.forEach((img, index) => {
-      img.addEventListener('click', function() {
-        currentImageIndex = dishData.length + index; // Offset by dish count
-        openImageModal();
+      
+      // Add click listeners to all drink images
+      drinkImages.forEach((img, index) => {
+        img.addEventListener('click', function() {
+          currentImageIndex = dishData.length + index; // Offset by dish count
+          openImageModal();
+        });
       });
-    });
+    } else {
+      // Remove cursor pointer on mobile to indicate images are not clickable
+      dishImages.forEach(img => {
+        img.classList.remove('cursor-pointer');
+        img.classList.remove('hover:opacity-90');
+      });
+      drinkImages.forEach(img => {
+        img.classList.remove('cursor-pointer');
+        img.classList.remove('hover:opacity-90');
+      });
+    }
   });
 
   function openImageModal() {
@@ -430,5 +447,14 @@ const meta = {
 <style>
   html {
     scroll-behavior: smooth;
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 </style>
