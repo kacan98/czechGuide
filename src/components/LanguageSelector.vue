@@ -69,7 +69,7 @@ const isOpen = ref(false)
 const currentLanguage = ref('en')
 
 const languages = [
-  { code: 'en', name: 'English', flag: '/flag-us.svg' },
+  { code: 'en', name: 'English', flag: '/flag-gb.svg' },
   { code: 'sv', name: 'Svenska', flag: '/flag-sv.svg' },
 ]
 

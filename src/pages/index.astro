@@ -56,30 +56,34 @@ const meta = {
       <!-- Hero Section -->
       <section
         class="relative flex h-screen items-center justify-center px-4 text-center"
+        style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/63/Prague_old_town_square_panorama.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;"
       >
-        <div class="mx-auto max-w-4xl">
-          <h1 class="mb-6 text-5xl font-bold text-gray-900 md:text-7xl">
+        <!-- Dark overlay for text readability -->
+        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+        
+        <div class="relative z-10 mx-auto max-w-4xl">
+          <h1 class="mb-6 text-5xl font-bold text-white md:text-7xl drop-shadow-2xl">
             {t("hero.title")}
           </h1>
-          <p class="mb-8 text-xl text-gray-600 md:text-2xl">
+          <p class="mb-8 text-xl text-white md:text-2xl drop-shadow-lg">
             {t("site.tagline")}
           </p>
           <div class="flex flex-wrap justify-center gap-4">
             <a
-              href="/dishes"
-              class="rounded-lg bg-amber-600 px-8 py-3 text-white transition hover:bg-amber-700"
+              href={getLocalizedUrl("dishes", lang)}
+              class="rounded-lg bg-amber-600 px-8 py-3 text-white transition hover:bg-amber-700 shadow-lg backdrop-blur-sm"
             >
               {t("buttons.whatToOrder")}
             </a>
             <a
               href="#must-try"
-              class="rounded-lg bg-purple-600 px-8 py-3 text-white transition hover:bg-purple-700"
+              class="rounded-lg bg-purple-600 px-8 py-3 text-white transition hover:bg-purple-700 shadow-lg backdrop-blur-sm"
             >
               {t("buttons.myRecommendations")}
             </a>
             <a
               href="#restaurants"
-              class="rounded-lg bg-red-600 px-8 py-3 text-white transition hover:bg-red-700"
+              class="rounded-lg bg-red-600 px-8 py-3 text-white transition hover:bg-red-700 shadow-lg backdrop-blur-sm"
             >
               {t("buttons.myFavoriteSpots")}
             </a>
