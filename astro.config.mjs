@@ -7,6 +7,9 @@ import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
+  site: process.env.VERCEL_URL 
+    ? `https://${process.env.VERCEL_URL}` 
+    : 'http://localhost:4321',
   i18n: {
     defaultLocale: "en",
     locales: ["en", "sv"],
