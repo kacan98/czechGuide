@@ -1,5 +1,4 @@
 import { sharedRestaurantData, type RestaurantId } from "@/data/shared-restaurant-data";
-import { sharedAttractionData, type AttractionId } from "@/data/shared-attraction-data";
 import type { CollectionEntry } from "astro:content";
 
 type RestaurantEntry = CollectionEntry<"restaurants">;
