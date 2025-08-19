@@ -9,15 +9,14 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   // For production: set SITE_URL env variable in Vercel dashboard
   // For preview/dev: uses the deployment URL
-  site: process.env.SITE_URL || 
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined),
+  site: "https://czech-guide.vercel.app",
   i18n: {
     defaultLocale: "en",
     locales: ["en", "sv"],
     routing: {
       prefixDefaultLocale: true,
-      strategy: "pathname"
-    }
+      strategy: "pathname",
+    },
   },
   integrations: [
     tailwind({
@@ -42,7 +41,5 @@ export default defineConfig({
       https: true,
     },
   },
-  experimental: {
-    
-  },
+  experimental: {},
 });
