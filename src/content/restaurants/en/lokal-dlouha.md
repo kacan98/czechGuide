@@ -2,19 +2,8 @@
 name: Lokál Dlouhááá
 description: Historically the first and literally longest Lokál – serves traditional Czech pub fare from 12 beer tanks
 cuisine: Traditional Czech Pub
-category: restaurant
-priceRange: $$
-address: Dlouhá 33, Prague 1
-location:
-  lat: 50.0892
-  lng: 14.4251
-hours: Mon-Sat 11:00-24:00, Sun 11:00-22:00
-website: https://lokal-dlouha.ambi.cz/cz/
-phone: "+420 734 283 874"
-googleMapsUrl: https://maps.google.com/?q=Lokál+Dlouhááá+Dlouhá+33+Prague
-googleRating: 4.3
-googleReviews: 2847
-image: /lokal-dlouha.jpg
+sharedData: lokal-dlouha
+lang: en
 recommended:
   - name: Svíčková na smetaně
     description: Classic Czech beef sirloin in cream sauce with bread dumplings

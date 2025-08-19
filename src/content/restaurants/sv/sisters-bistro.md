@@ -2,19 +2,7 @@
 name: Sisters Bistro
 description: Modern tjeckisk bistro specialiserad på chlebíčky - traditionella smörgåsar med kreativa toppings
 cuisine: Tjeckisk bistro
-category: bistro
-priceRange: $
-address: Dlouhá 39, Prague 1
-location:
-  lat: 50.0914
-  lng: 14.4257
-hours: Mån-Fre 8:00-18:00, Lör 9:00-15:00
-website: https://www.sistersbistro.cz
-phone: "775 991 975"
-googleMapsUrl: https://maps.google.com/?q=Sisters+Bistro+Dlouhá+39+Prague
-googleRating: 4.5
-googleReviews: 369
-image: /sisters-bistro.jpg
+sharedData: sisters-bistro
 lang: sv
 recommended:
   - name: Hermelínový s brusinkami (Hermelín med tranbär)

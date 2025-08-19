@@ -80,6 +80,14 @@ const props = defineProps({
   lang: {
     type: String,
     default: 'en'
+  },
+  sharedRestaurantData: {
+    type: Object,
+    default: () => ({})
+  },
+  sharedAttractionData: {
+    type: Object,
+    default: () => ({})
   }
 })
 
@@ -315,14 +323,17 @@ const addRestaurantMarkers = () => {
       const buttonText = getButtonText(restaurant.data.category)
       const buttonColor = categoryColor.replace('bg-', 'bg-').replace('600', '600')
       
-      // Create popup content
+      // Get shared data for this restaurant
+      const sharedData = props.sharedRestaurantData[restaurant.data.sharedData] || restaurant.data;
+      
+      // Create popup content with image
       const popupContent = `
         <div class="text-center">
-          <h3 class="font-bold text-lg text-gray-900 mb-1">${restaurant.data.name}</h3>
-          <p class="text-sm text-gray-600 mb-2">${restaurant.data.cuisine}</p>
-          <p class="text-xs text-gray-500 mb-2 cursor-pointer hover:text-blue-600 underline" onclick="window.open('https://maps.google.com/?q=${encodeURIComponent(restaurant.data.address)}', '_blank')">${restaurant.data.address}</p>
+          ${sharedData.image ? `<img src="${sharedData.image}" alt="${restaurant.data.name}" class="w-full h-16 object-cover rounded mb-2"/>` : ''}
+          <h3 class="font-bold text-lg text-gray-900">${restaurant.data.name}</h3>
+          <p class="text-sm text-gray-600 mb-3 capitalize">${restaurant.data.cuisine}</p>
           <div class="flex flex-col gap-2">
-            <button class="navigate-btn bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition" onclick="window.open('https://maps.google.com/?q=${encodeURIComponent(restaurant.data.address)}', '_blank')">
+            <button class="navigate-btn bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition" onclick="window.open('${sharedData.googleMapsUrl || `https://maps.google.com/?q=${encodeURIComponent(sharedData.address)}`}', '_blank')">
               📍 Navigate Here
             </button>
             <button class="visit-restaurant ${buttonColor} text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition" data-slug="${restaurant.slug}">
@@ -346,7 +357,11 @@ const addRestaurantMarkers = () => {
         if (visitButton) {
           visitButton.addEventListener('click', () => {
             const slug = visitButton.getAttribute('data-slug')
-            window.location.href = `/restaurant/${slug}/`
+            const cleanSlug = slug.replace(/^(en|sv)\//, '')
+            // Check if we're on a Swedish page
+            const isSwedish = window.location.pathname.startsWith('/sv/')
+            const url = isSwedish ? `/sv/restaurant/${cleanSlug}` : `/restaurant/${cleanSlug}`
+            window.location.href = url
           })
         }
       })
@@ -366,9 +381,12 @@ const addAttractionMarkers = () => {
   attractionMarkers = []
   
   props.attractions.forEach(attraction => {
-    if (attraction.data?.location?.lat && attraction.data?.location?.lng) {
+    // Get shared data for this attraction
+    const sharedData = props.sharedAttractionData[attraction.data.sharedData] || attraction.data;
+    
+    if (sharedData?.location?.lat && sharedData?.location?.lng) {
       // Create attraction marker with different icon
-      const marker = L.marker([attraction.data.location.lat, attraction.data.location.lng], {
+      const marker = L.marker([sharedData.location.lat, sharedData.location.lng], {
         icon: L.divIcon({
           className: 'attraction-marker',
           html: `
@@ -385,18 +403,18 @@ const addAttractionMarkers = () => {
         })
       }).addTo(map)
       
-      // Create popup content for attractions
+      // Create popup content for attractions with image
       const popupContent = `
         <div class="text-center">
-          <h3 class="font-bold text-lg text-gray-900 mb-1">${attraction.data.name}</h3>
-          <p class="text-sm text-gray-600 mb-2">${attraction.data.type}</p>
-          <p class="text-xs text-gray-500 mb-2 cursor-pointer hover:text-blue-600 underline" onclick="window.open('https://maps.google.com/?q=${encodeURIComponent(attraction.data.address)}', '_blank')">${attraction.data.address}</p>
-          ${attraction.data.entryFee ? `<p class="text-xs text-gray-500 mb-2">Entry: ${attraction.data.entryFee}</p>` : ''}
+          ${sharedData.image ? `<img src="${sharedData.image}" alt="${attraction.data.name}" class="w-full h-16 object-cover rounded mb-2"/>` : ''}
+          <h3 class="font-bold text-lg text-gray-900">${attraction.data.name}</h3>
+          <p class="text-sm text-gray-600 mb-3 capitalize">${attraction.data.type || sharedData.category}</p>
+          ${sharedData.entryFee ? `<p class="text-xs text-gray-500 mb-3">Entry: ${sharedData.entryFee}</p>` : ''}
           <div class="flex flex-col gap-2">
-            <button class="navigate-btn bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition" onclick="window.open('https://maps.google.com/?q=${encodeURIComponent(attraction.data.address)}', '_blank')">
+            <button class="navigate-btn bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition" onclick="window.open('${sharedData.googleMapsUrl || `https://maps.google.com/?q=${encodeURIComponent(sharedData.address)}`}', '_blank')">
               📍 Navigate Here
             </button>
-            <button class="visit-attraction bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition" data-website="${attraction.data.website || ''}">
+            <button class="visit-attraction bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition" data-website="${sharedData.website || ''}">
               Learn More
             </button>
           </div>

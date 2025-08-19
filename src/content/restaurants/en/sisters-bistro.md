@@ -2,19 +2,8 @@
 name: Sisters Bistro
 description: Modern Czech bistro specializing in chlebíčky - traditional open-faced sandwiches with creative toppings
 cuisine: Czech Bistro
-category: bistro
-priceRange: $
-address: Dlouhá 39, Prague 1
-location:
-  lat: 50.0914
-  lng: 14.4257
-hours: Mon-Fri 8:00-18:00, Sat 9:00-15:00
-website: https://www.sistersbistro.cz
-phone: "775 991 975"
-googleMapsUrl: https://maps.google.com/?q=Sisters+Bistro+Dlouhá+39+Prague
-googleRating: 4.5
-googleReviews: 369
-image: /sisters-bistro.jpg
+sharedData: sisters-bistro
+lang: en
 recommended:
   - name: Hermelínový s brusinkami (Hermelín with Cranberries)
     description: Czech hermelín cheese with sweet cranberries

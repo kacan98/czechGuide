@@ -4,6 +4,8 @@ import Layout from "@layouts/Layout.astro";
 import Map from "@components/Map.vue";
 import { getCollection, type CollectionEntry } from "astro:content";
 import { useTranslations, getLangFromUrl, getLocalizedUrl } from "@/util/translate";
+import { sharedRestaurantData } from "@/data/shared-restaurant-data";
+import { sharedAttractionData } from "@/data/shared-attraction-data";
 
 // Get current language from URL
 const lang = getLangFromUrl(Astro.url);
@@ -98,6 +100,8 @@ const meta = {
             <Map
               restaurants={restaurants}
               attractions={attractions}
+              sharedRestaurantData={sharedRestaurantData}
+              sharedAttractionData={sharedAttractionData}
               lang={lang}
               client:only="vue"
             />
@@ -243,7 +247,7 @@ const meta = {
                         {restaurant.data.priceRange}
                       </span>
                       <a
-                        href={getLocalizedUrl(`restaurant/${restaurant.slug}`, lang)}
+                        href={getLocalizedUrl(`restaurant/${restaurant.slug.replace('en/', '')}`, lang)}
                         class="font-medium text-red-600 hover:text-red-700"
                       >
                         {t("buttons.viewDetails")}
@@ -267,7 +271,8 @@ const meta = {
         map.addEventListener("restaurant-selected", (event) => {
           const restaurant = (event as CustomEvent).detail;
           if (restaurant?.slug) {
-            window.location.href = `/restaurant/${restaurant.slug}`;
+            const cleanSlug = restaurant.slug.replace(/^(en|sv)\//, '');
+            window.location.href = `/restaurant/${cleanSlug}`;
           }
         });
       }

@@ -2,19 +2,7 @@
 name: Lokál Dlouhááá
 description: Historiskt den första och bokstavligen längsta Lokál – serverar traditionell tjeckisk pubmat från 12 öltankar
 cuisine: Traditionell tjeckisk pub
-category: restaurant
-priceRange: $$
-address: Dlouhá 33, Prague 1
-location:
-  lat: 50.0892
-  lng: 14.4251
-hours: Mån-Lör 11:00-24:00, Sön 11:00-22:00
-website: https://lokal-dlouha.ambi.cz/cz/
-phone: "+420 734 283 874"
-googleMapsUrl: https://maps.google.com/?q=Lokál+Dlouhááá+Dlouhá+33+Prague
-googleRating: 4.3
-googleReviews: 2847
-image: /lokal-dlouha.jpg
+sharedData: lokal-dlouha
 lang: sv
 recommended:
   - name: Svíčková na smetaně

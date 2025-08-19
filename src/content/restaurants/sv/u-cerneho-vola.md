@@ -2,18 +2,7 @@
 name: U Černého Vola
 description: Autentisk Prag-öl-hall från 1965 som serverar Velkopopovický Kozel-öl nära Pragslottet
 cuisine: Traditionell tjeckisk pub
-category: pub
-priceRange: $
-address: Loretánské náměstí 107/1, Prague 1
-location:
-  lat: 50.08925
-  lng: 14.39150
-hours: Dagligen 10:00-22:00
-phone: "+420 220 513 481"
-googleMapsUrl: https://maps.google.com/?q=U+Černého+Vola+Loretánské+náměstí+Prague
-googleRating: 4.2
-googleReviews: 1247
-image: /u-cerneho-vola.jpg
+sharedData: u-cerneho-vola
 lang: sv
 recommended:
   - name: Velkopopovický Kozel fatöl

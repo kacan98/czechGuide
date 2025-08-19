@@ -60,6 +60,26 @@
     "restaurantsTitle": "Places that me and my family like",
     "karelHighlyRecommends": "Karel HIGHLY recommends"
   },
+  "restaurant": {
+    "reviews": "reviews",
+    "backToGuide": "Back to Restaurant Guide",
+    "navigateGoogleMaps": "Navigate with Google Maps",
+    "visitWebsite": "Visit Website",
+    "contactLocation": "Contact & Location",
+    "address": "Address:",
+    "phone": "Phone:",
+    "location": "Location",
+    "recommendedDishes": "Recommended Dishes",
+    "otherRestaurants": "Other Restaurants to Try",
+    "visit": "Visit",
+    "viewAllRestaurants": "View All Restaurants",
+    "categories": {
+      "restaurant": "🍽️ Restaurant",
+      "pub": "🍺 Pub", 
+      "bistro": "🥪 Bistro",
+      "cafe": "☕ Café"
+    }
+  },
   "categories": {
     "sweet": "Sweet",
     "mainDish": "Main Dish", 

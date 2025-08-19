@@ -4,37 +4,119 @@ import Layout from "@layouts/Layout.astro";
 import Map from "@components/Map.vue";
 import { getCollection, type CollectionEntry } from "astro:content";
 import { useTranslations, getLangFromUrl, getLocalizedUrl } from "@/util/translate";
+import { sharedRestaurantData, type RestaurantId } from "@/data/shared-restaurant-data";
 
 export async function getStaticPaths() {
-  // Get Swedish restaurants only
-  const allRestaurants = await getCollection("restaurants");
-  const restaurants = allRestaurants.filter(({ id }) => id.startsWith("sv/"));
+  const restaurants = await getCollection("restaurants");
+  const restaurantPairs = new globalThis.Map();
   
-  return restaurants.map((restaurant) => ({
-    params: { slug: restaurant.slug },
-    props: { restaurant, allRestaurants: restaurants },
-  }));
+  // Group restaurants by their clean slug (e.g., "lokal-dlouha")
+  restaurants.forEach((restaurant) => {
+    const cleanSlug = restaurant.slug.replace(/^(en|sv)\//, '');
+    if (!restaurantPairs.has(cleanSlug)) {
+      restaurantPairs.set(cleanSlug, { en: null, sv: null });
+    }
+    const lang = restaurant.id.startsWith('sv/') ? 'sv' : 'en';
+    restaurantPairs.get(cleanSlug)[lang] = restaurant;
+  });
+  
+  // Create paths for both languages
+  const paths = [];
+  Array.from(restaurantPairs.entries()).forEach(([cleanSlug, versions]) => {
+    // English path: /restaurant/u-cerneho-vola
+    paths.push({
+      params: { rest: `restaurant/${cleanSlug}` },
+      props: { 
+        enRestaurant: versions.en,
+        svRestaurant: versions.sv,
+        allRestaurants: restaurants
+      },
+    });
+    
+    // Swedish path: /sv/restaurant/u-cerneho-vola
+    paths.push({
+      params: { rest: `sv/restaurant/${cleanSlug}` },
+      props: { 
+        enRestaurant: versions.en,
+        svRestaurant: versions.sv,
+        allRestaurants: restaurants
+      },
+    });
+  });
+  
+  return paths;
 }
 
 type Props = {
-  restaurant: CollectionEntry<"restaurants">;
+  enRestaurant: CollectionEntry<"restaurants"> | null;
+  svRestaurant: CollectionEntry<"restaurants"> | null;
   allRestaurants: CollectionEntry<"restaurants">[];
 };
 
-const { restaurant, allRestaurants } = Astro.props;
+const { enRestaurant, svRestaurant, allRestaurants } = Astro.props;
+
+// Get the rest parameter and check if it's a restaurant route
+const restPath = Astro.params.rest as string;
+const isRestaurantRoute = restPath.includes('restaurant/');
+
+// If not a restaurant route, return 404
+if (!isRestaurantRoute) {
+  return new Response(null, {
+    status: 404,
+    statusText: 'Not Found'
+  });
+}
 
 // Get current language from URL
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-// Filter out the current restaurant to show other restaurants
-const otherRestaurants = allRestaurants.filter(
-  (r) => r.slug !== restaurant.slug
+// Select the correct restaurant based on current language
+const restaurant = lang === 'sv' ? svRestaurant : enRestaurant;
+
+// Create unified data object by merging shared data with restaurant data
+const sharedDataKey = restaurant?.data.sharedData as RestaurantId;
+const sharedData = sharedDataKey ? sharedRestaurantData[sharedDataKey] : {};
+
+// Merge shared data (technical details) with restaurant data (translatable content)
+const restaurantData = {
+  // Restaurant-specific translatable data
+  name: restaurant?.data.name,
+  description: restaurant?.data.description,
+  cuisine: restaurant?.data.cuisine,
+  recommended: restaurant?.data.recommended,
+  
+  // Technical data from shared source, with fallbacks to restaurant data
+  address: sharedData.address || restaurant?.data.address,
+  location: sharedData.location || restaurant?.data.location,
+  hours: sharedData.hours || restaurant?.data.hours,
+  website: sharedData.website || restaurant?.data.website,
+  phone: sharedData.phone || restaurant?.data.phone,
+  googleMapsUrl: sharedData.googleMapsUrl || restaurant?.data.googleMapsUrl,
+  googleRating: sharedData.googleRating || restaurant?.data.googleRating,
+  googleReviews: sharedData.googleReviews || restaurant?.data.googleReviews,
+  image: sharedData.image || restaurant?.data.image,
+  category: sharedData.category || restaurant?.data.category,
+  priceRange: sharedData.priceRange || restaurant?.data.priceRange
+};
+
+// Filter restaurants by current language and exclude current restaurant
+const languageRestaurants = allRestaurants.filter(({ id }) => id.startsWith(`${lang}/`));
+const otherRestaurants = languageRestaurants.filter(
+  (r) => r.slug !== restaurant?.slug
 );
 
+// Handle case where restaurant doesn't exist for current language
+if (!restaurant) {
+  return new Response(null, {
+    status: 404,
+    statusText: 'Restaurant not found for this language'
+  });
+}
+
 const meta = {
-  title: `${restaurant.data.name} - ${t("site.title")}`,
-  description: restaurant.data.description,
+  title: `${restaurantData.name} - ${t("site.title")}`,
+  description: restaurantData.description,
 };
 ---
 
@@ -44,7 +126,7 @@ const meta = {
     <div class="bg-gray-50 py-4">
       <div class="mx-auto max-w-4xl px-4">
         <a href={getLocalizedUrl("", lang)} class="font-medium text-red-600 hover:text-red-700">
-          ← Tillbaka till restaurangguide
+          ← {t("restaurant.backToGuide")}
         </a>
       </div>
     </div>
@@ -55,26 +137,26 @@ const meta = {
         <!-- Action Buttons at Top -->
         <div class="mb-8 flex justify-center gap-4">
           {
-            restaurant.data.googleMapsUrl && (
+            restaurantData.googleMapsUrl && (
               <a
-                href={restaurant.data.googleMapsUrl}
+                href={restaurantData.googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 class="rounded-lg bg-red-600 px-6 py-3 text-white transition hover:bg-red-700"
               >
-                📍 Navigera med Google Maps
+                📍 {t("restaurant.navigateGoogleMaps")}
               </a>
             )
           }
           {
-            restaurant.data.website && (
+            restaurantData.website && (
               <a
-                href={restaurant.data.website}
+                href={restaurantData.website}
                 target="_blank"
                 rel="noopener noreferrer"
                 class="rounded-lg border-2 border-gray-900 bg-white px-6 py-3 text-gray-900 transition hover:bg-gray-100"
               >
-                🌐 Besök webbplats
+                🌐 {t("restaurant.visitWebsite")}
               </a>
             )
           }
@@ -83,27 +165,29 @@ const meta = {
         <div class="grid items-center gap-8 md:grid-cols-2">
           <div>
             <h1 class="mb-4 text-4xl font-bold text-gray-900 md:text-5xl">
-              {restaurant.data.name}
+              {restaurantData.name}
             </h1>
             <p class="mb-6 text-xl text-gray-600">
-              {restaurant.data.description}
+              {restaurantData.description}
             </p>
             <div class="mb-6 flex flex-wrap gap-4">
               <span
                 class="rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-amber-800"
               >
-                {restaurant.data.cuisine}
+                {restaurantData.cuisine}
               </span>
-              <span
-                class="rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800"
-              >
-                {restaurant.data.priceRange}
-              </span>
+              {restaurantData.priceRange && (
+                <span
+                  class="rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800"
+                >
+                  {restaurantData.priceRange}
+                </span>
+              )}
               {
-                restaurant.data.googleRating && (
+                restaurantData.googleRating && (
                   <span class="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800">
-                    ⭐ {restaurant.data.googleRating} (
-                    {restaurant.data.googleReviews} recensioner)
+                    ⭐ {restaurantData.googleRating} (
+                    {restaurantData.googleReviews} {t("restaurant.reviews")})
                   </span>
                 )
               }
@@ -111,11 +195,11 @@ const meta = {
           </div>
 
           {
-            restaurant.data.image && (
+            restaurantData.image && (
               <div class="overflow-hidden rounded-xl shadow-lg">
                 <img
-                  src={restaurant.data.image}
-                  alt={restaurant.data.name}
+                  src={restaurantData.image}
+                  alt={restaurantData.name}
                   class="h-64 w-full object-cover"
                 />
               </div>
@@ -131,30 +215,30 @@ const meta = {
         <div class="grid gap-8 md:grid-cols-3">
           <!-- Contact Info -->
           <div class="rounded-lg bg-white p-6 shadow-md">
-            <h3 class="mb-4 text-lg font-bold">Kontakt & plats</h3>
+            <h3 class="mb-4 text-lg font-bold">{t("restaurant.contactLocation")}</h3>
             <div class="space-y-3">
               <div>
-                <span class="font-medium text-gray-700">Adress:</span>
-                <p class="text-gray-600">{restaurant.data.address}</p>
+                <span class="font-medium text-gray-700">{t("restaurant.address")}</span>
+                <p class="text-gray-600">{restaurantData.address}</p>
               </div>
               {
-                restaurant.data.phone && (
+                restaurantData.phone && (
                   <div>
-                    <span class="font-medium text-gray-700">Telefon:</span>
-                    <p class="text-gray-600">{restaurant.data.phone}</p>
+                    <span class="font-medium text-gray-700">{t("restaurant.phone")}</span>
+                    <p class="text-gray-600">{restaurantData.phone}</p>
                   </div>
                 )
               }
               {
-                restaurant.data.website && (
+                restaurantData.website && (
                   <div>
                     <a
-                      href={restaurant.data.website}
+                      href={restaurantData.website}
                       target="_blank"
                       rel="noopener noreferrer"
                       class="inline-flex items-center text-red-600 hover:text-red-700"
                     >
-                      Besök webbplats →
+                      {t("restaurant.visitWebsite")} →
                     </a>
                   </div>
                 )
@@ -164,9 +248,9 @@ const meta = {
 
           <!-- Map -->
           <div class="rounded-lg bg-white p-6 shadow-md md:col-span-2">
-            <h3 class="mb-4 text-lg font-bold">Plats</h3>
+            <h3 class="mb-4 text-lg font-bold">{t("restaurant.location")}</h3>
             <div class="h-96 overflow-hidden rounded-lg">
-              <Map restaurants={[restaurant]} lang={lang} client:only="vue" />
+              <Map restaurants={[restaurant]} sharedRestaurantData={sharedRestaurantData} sharedAttractionData={{}} lang={lang} client:only="vue" />
             </div>
           </div>
         </div>
@@ -175,14 +259,14 @@ const meta = {
 
     <!-- Recommended Dishes -->
     {
-      restaurant.data.recommended && restaurant.data.recommended.length > 0 && (
+      restaurantData.recommended && restaurantData.recommended.length > 0 && (
         <section class="py-12">
           <div class="mx-auto max-w-4xl px-4">
             <h2 class="mb-12 text-center text-3xl font-bold">
-              Rekommenderade rätter
+              {t("restaurant.recommendedDishes")}
             </h2>
             <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {restaurant.data.recommended.map((dish) => (
+              {restaurantData.recommended.map((dish) => (
                 <div class="overflow-hidden rounded-lg bg-white shadow-md">
                   {dish.image && (
                     <img
@@ -207,7 +291,7 @@ const meta = {
     <section class="bg-gray-50 py-12">
       <div class="mx-auto max-w-6xl px-4">
         <h2 class="mb-12 text-center text-3xl font-bold">
-          Andra restauranger att prova
+          {t("restaurant.otherRestaurants")}
         </h2>
         <div class="mb-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {
@@ -235,13 +319,7 @@ const meta = {
                               : "bg-green-100 text-green-600"
                       }`}
                     >
-                      {otherRestaurant.data.category === "restaurant"
-                        ? "🍽️ Restaurang"
-                        : otherRestaurant.data.category === "pub"
-                          ? "🍺 Pub"
-                          : otherRestaurant.data.category === "bistro"
-                            ? "🥪 Bistro"
-                            : "☕ Café"}
+                      {t(`restaurant.categories.${otherRestaurant.data.category}`)}
                     </span>
                     <span class="text-xs text-gray-500">
                       {otherRestaurant.data.priceRange}
@@ -258,10 +336,10 @@ const meta = {
                       {otherRestaurant.data.cuisine}
                     </span>
                     <a
-                      href={getLocalizedUrl(`restaurant/${otherRestaurant.slug}`, lang)}
+                      href={getLocalizedUrl(`restaurant/${otherRestaurant.slug.replace(/^(en|sv)\//, '')}`, lang)}
                       class="text-sm font-medium text-red-600 hover:text-red-700"
                     >
-                      Besök →
+                      {t("restaurant.visit")} →
                     </a>
                   </div>
                 </div>
@@ -276,7 +354,7 @@ const meta = {
             href={getLocalizedUrl("", lang)}
             class="rounded-lg bg-gray-600 px-6 py-3 text-white transition hover:bg-gray-700"
           >
-            ← Visa alla restauranger
+            ← {t("restaurant.viewAllRestaurants")}
           </a>
         </div>
       </div>

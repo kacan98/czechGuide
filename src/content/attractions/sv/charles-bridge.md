@@ -1,15 +1,9 @@
 ---
 name: Charles Bridge
 description: Medeltida stenbro som förbinder Gamla stan och Mindre stan, känd för sina barocka statyer och gatuartister
-type: bridge
-location:
-  lat: 50.0865
-  lng: 14.4114
-address: "Charles Bridge, Prag 1, Tjeckien"
-image: "/charles-bridge.jpg"
+sharedData: charles-bridge
+lang: sv
 visitDuration: "1-2 timmar"
-entryFee: "Gratis"
-website: "https://en.wikipedia.org/wiki/Charles_Bridge"
 highlights:
   - "30 barocka statyer längs bron"
   - "Gatuartister och musiker"

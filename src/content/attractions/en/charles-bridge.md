@@ -1,15 +1,9 @@
 ---
 name: Charles Bridge
 description: Medieval stone bridge connecting Old Town and Lesser Town, famous for its baroque statues and street artists
-type: bridge
-location:
-  lat: 50.0865
-  lng: 14.4114
-address: "Charles Bridge, Prague 1, Czech Republic"
-image: "/charles-bridge.jpg"
+sharedData: charles-bridge
+lang: en
 visitDuration: "1-2 hours"
-entryFee: "Free"
-website: "https://en.wikipedia.org/wiki/Charles_Bridge"
 highlights:
   - "30 baroque statues along the bridge"
   - "Street artists and musicians"

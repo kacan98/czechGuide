@@ -60,6 +60,26 @@
     "restaurantsTitle": "Platser som jag och min familj gillar",
     "karelHighlyRecommends": "Karel rekommenderar STARKT"
   },
+  "restaurant": {
+    "reviews": "recensioner",
+    "backToGuide": "Tillbaka till restaurangguide",
+    "navigateGoogleMaps": "Navigera med Google Maps",
+    "visitWebsite": "Besök webbplats",
+    "contactLocation": "Kontakt & plats",
+    "address": "Adress:",
+    "phone": "Telefon:",
+    "location": "Plats",
+    "recommendedDishes": "Rekommenderade rätter",
+    "otherRestaurants": "Andra restauranger att prova",
+    "visit": "Besök",
+    "viewAllRestaurants": "Visa alla restauranger",
+    "categories": {
+      "restaurant": "🍽️ Restaurang",
+      "pub": "🍺 Pub", 
+      "bistro": "🥪 Bistro",
+      "cafe": "☕ Café"
+    }
+  },
   "categories": {
     "sweet": "Söt",
     "mainDish": "Huvudrätt",

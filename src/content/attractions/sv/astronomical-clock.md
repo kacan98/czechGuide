@@ -1,16 +1,9 @@
 ---
 name: Astronomical Clock
 description: Medeltida astronomiska klocka på Gamla stadens torg, känd för sin timvisa animerade föreställning
-type: square
-location:
-  lat: 50.0870
-  lng: 14.4207
-address: "Gamla stadens torg, Prag 1, Tjeckien"
-image: "/astronomical-clock.jpg"
+sharedData: astronomical-clock
+lang: sv
 visitDuration: "30 minuter"
-entryFee: "Gratis (visning), Torn: 250 CZK"
-openingHours: "Timvis föreställning 9:00-23:00"
-website: "https://www.prague.eu/en/object/places/93/astronomical-clock-orloj"
 highlights:
   - "Timvis procession av de tolv apostlarna"
   - "Medeltida astronomiska urtavla"

@@ -2,15 +2,7 @@
 name: Werichova vila na Kampě
 description: Kulturcentrum med kafé i historisk villa på Kampa-ön, erbjuder kaffe, lätta måltider och kulturevenemang
 cuisine: Kafé & Kultur
-category: cafe
-priceRange: $$
-address: "Kampa Island 469, Prague 1"
-location:
-  lat: 50.0857
-  lng: 14.4068
-hours: "Tis-Sön 10:00-18:00, Mån stängt"
-website: "https://www.werichovavila.cz"
-image: "/werichova-vila.jpg"
+sharedData: werichova-vila
 lang: sv
 ---
 
