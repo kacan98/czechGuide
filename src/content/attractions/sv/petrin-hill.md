@@ -6,7 +6,7 @@ location:
   lat: 50.0839
   lng: 14.3975
 address: "Petřín Hill, Prag 1, Tjeckien"
-image: "https://upload.wikimedia.org/wikipedia/commons/4/44/Petrin_Tower_Prague.jpg"
+image: "/petrin-hill.jpg"
 visitDuration: "2-3 timmar"
 entryFee: "Torn: 150 CZK vuxna, Kulle: Gratis"
 openingHours: "Torn: Dagligen 10:00-22:00 (sommar), 10:00-20:00 (vinter)"

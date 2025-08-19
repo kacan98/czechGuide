@@ -14,7 +14,7 @@ phone: "+420 734 283 874"
 googleMapsUrl: https://maps.google.com/?q=Lokál+Dlouhááá+Dlouhá+33+Prague
 googleRating: 4.3
 googleReviews: 2847
-image: https://pct-wp-prod.storage.googleapis.com/2024/03/13101503/7-5.jpg
+image: /lokal-dlouha.jpg
 lang: sv
 recommended:
   - name: Svíčková na smetaně

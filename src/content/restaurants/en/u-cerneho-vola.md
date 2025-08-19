@@ -13,7 +13,7 @@ phone: "+420 220 513 481"
 googleMapsUrl: https://maps.google.com/?q=U+Černého+Vola+Loretánské+náměstí+Prague
 googleRating: 4.2
 googleReviews: 1247
-image: https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/d7/e3/ba/great-pub.jpg?w=900&h=500&s=1
+image: /u-cerneho-vola.jpg
 recommended:
   - name: Velkopopovický Kozel Draft Beer
     description: Excellent Czech beer on tap - one of the few places serving this brand

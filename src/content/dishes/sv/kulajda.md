@@ -4,7 +4,7 @@ category: polívky
 order: -1
 KarelMustTry: true
 description: Krämig potatissoppa med svamp, dill och pocherat ägg
-image: https://upload.wikimedia.org/wikipedia/commons/0/0d/Kulajda-Suppe.JPG
+image: /kulajda.jpg
 whyTry: Denna särpräglade sydbohemiska soppa kombinerar krämig potatis med svamp, dill och ett pocherat ägg som flyter på toppen. Dillen ger den en unik fräsch smak som skiljer den från andra tjeckiska soppor.
 quote: "Dillen gör så stor skillnad! Och ägget på toppen är som en liten överraskning."
 author: Soppälskare

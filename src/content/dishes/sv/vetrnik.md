@@ -3,7 +3,7 @@ name: Větrník
 category: sladký
 order: 5
 description: Lätt bakverk fyllt med grädde och toppad med pudrat socker
-image: https://upload.wikimedia.org/wikipedia/commons/0/06/Vetrnik_zakusek.jpg
+image: /vetrnik.jpg
 whyTry: Ett klassiskt tjeckiskt bakverk med ett delikat, luftigt choux-skal fyllt med söt grädde. Lätt och inte för tungt, perfekt till kaffe. Finns i de flesta tjeckiska bagerier och kaféer.
 quote: "Så lätt och krämigt! Det perfekta söta godiset som inte får en att känna sig för mätt."
 author: Bakverksentusiast

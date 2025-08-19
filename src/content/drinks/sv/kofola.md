@@ -4,7 +4,7 @@ type: soda
 order: 2
 KarelMustTry: true
 description: Kommunist-era cola-alternativ gjort med örtextrakt och naturligt koffein
-image: https://upload.wikimedia.org/wikipedia/commons/8/85/Sklenice_Kofola.jpg
+image: /kofola.jpg
 whyTry: Skapad på 1960-talet i Tjeckoslovakien som ett kommunistiskt alternativ till Coca-Cola, som var förbjuden. Gjord med naturligt koffein från kaffebönor och 14 örtextrakt. Den blev en symbol för tjeckisk identitet och överlevde kommunismens fall för att bli en älskad nationaldryck.
 quote: "Det är som att dricka flytande nostalgi - smakar som cola men med denna unika örtsmak du inte kan få någon annanstans."
 author: Tjeckisk inföding

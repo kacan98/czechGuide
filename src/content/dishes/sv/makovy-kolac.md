@@ -2,7 +2,7 @@
 name: Makový koláč
 category: sladký
 description: Rik vallmofröskaka - en älskad tjeckisk dessert med distinkt nötig smak
-image: https://vikendovepeceni.cz/wp-content/uploads/2015/08/IMG_5937.jpg
+image: /makovy-kolac.jpg
 whyTry: Denna traditionella kaka visar upp tjeckernas kärlek för vallmofrön med sin rika, nötiga smak och täta, fuktiga konsistens.
 quote: "Vallmofrösmaken är så unik och läcker - inget som de intetsägande kakorna hemma!"
 author: Dessertälskare

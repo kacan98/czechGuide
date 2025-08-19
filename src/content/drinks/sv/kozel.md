@@ -3,7 +3,7 @@ name: Velkopopovický Kozel
 type: beer
 order: 3
 description: Mjuk, maltig tjeckisk öl med den berömda getmaskoten
-image: https://upload.wikimedia.org/wikipedia/commons/8/83/Kozelek.jpg
+image: /kozel.jpg
 whyTry: Getölen! Mjuk, maltig och mindre humlad än Pilsner. Perfekt för dem som tycker att andra tjeckiska öl är för beska. Getmaskoten finns överallt i tjeckiska pubar.
 quote: "Mjukare än förväntat, och jag älskar getloggan överallt!"
 author: Pubkrypare

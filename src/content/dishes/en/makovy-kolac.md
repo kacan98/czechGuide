@@ -2,7 +2,7 @@
 name: Makový koláč
 category: sladký
 description: Rich poppy seed cake - a beloved Czech dessert with distinctive nutty flavor
-image: https://vikendovepeceni.cz/wp-content/uploads/2015/08/IMG_5937.jpg
+image: /makovy-kolac.jpg
 whyTry: This traditional cake showcases the Czech love for poppy seeds with its rich, nutty flavor and dense, moist texture.
 quote: "The poppy seed flavor is so unique and delicious - nothing like the bland cakes back home!"
 author: Dessert lover

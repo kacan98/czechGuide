@@ -3,7 +3,7 @@ name: Větrník
 category: sladký
 order: 5
 description: Light pastry filled with cream and topped with powdered sugar
-image: https://upload.wikimedia.org/wikipedia/commons/0/06/Vetrnik_zakusek.jpg
+image: /vetrnik.jpg
 whyTry: A classic Czech pastry with a delicate, airy choux pastry shell filled with sweet cream. Light and not too heavy, perfect with coffee. Found in most Czech bakeries and cafés.
 quote: "So light and creamy! The perfect sweet treat that doesn't make you feel too full."
 author: Pastry enthusiast

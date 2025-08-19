@@ -3,7 +3,7 @@ name: Vepřo knedlo zelo
 category: hlavní jídla
 KarelMustTry: true
 description: The classic Czech trilogy - roasted pork, bread dumplings, and sauerkraut
-image: https://live.staticflickr.com/3908/14482291555_b8a2d733ff_b.jpg
+image: /vepro-knedlo-zelo-flickr.jpg
 whyTry: The holy trinity of Czech cuisine representing everything traditional Czech food stands for. Tender roasted pork, fluffy bread dumplings to soak up the juices, and tangy sauerkraut. Each component perfectly balances the others.
 quote: "This is what my Czech grandmother would have made if I had one. So traditional and filling - I couldn't move for an hour!"
 author: Food enthusiast

@@ -3,7 +3,7 @@ name: Velkopopovický Kozel
 type: beer
 order: 3
 description: Smooth, malty Czech beer with the famous goat mascot
-image: https://upload.wikimedia.org/wikipedia/commons/8/83/Kozelek.jpg
+image: /kozel.jpg
 whyTry: The goat beer! Smooth, malty, and less hoppy than Pilsner. Perfect for those who find other Czech beers too bitter. The goat mascot is everywhere in Czech pubs.
 quote: "Smoother than expected, and I love the goat logo everywhere!"
 author: Pub crawler

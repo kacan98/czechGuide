@@ -3,7 +3,7 @@ name: Věneček
 category: sladký
 order: 6
 description: Ringformad choux-kräm fylld med grädde och toppat med choklad- eller karamellglasyr
-image: https://upload.wikimedia.org/wikipedia/commons/9/9b/Venecek.jpg
+image: /venecek.jpg
 whyTry: Ett elegant tjeckiskt bakverk format som en krona (věneček betyder "liten krans"). Gjort av choux-deg, fyllt med grädde och vackert glaserat. En stapelvara i tjeckiska konditorier och perfekt för speciella tillfällen.
 quote: "Vacker presentation och smakar ännu bättre än det ser ut. Glasyren tillför den perfekta sötman!"
 author: Dessertälskare

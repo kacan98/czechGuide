@@ -3,7 +3,7 @@ name: Česnečka se sýrem
 category: polívky
 order: 3
 description: Rik vitlökssoppa med smält ost och brödkrutonger
-image: https://upload.wikimedia.org/wikipedia/commons/6/6b/Cesnecka%2C_Poznan.jpg
+image: /cesnecka-se-syrem.jpg
 whyTry: Denna mättande vitlökssoppa toppat med smält ost och krutonger är det perfekta botemedlet för kalla Pragnätter eller bakfylla. Den starka vitlökssmaken balanseras av krämig ost, vilket skapar en djupt tillfredsställande skål tröst.
 quote: "Otrolig vitlökssmak utan att vara överväldigande. Den smälta osten på toppen får det att kännas som en varm kram!"
 author: Soppentusiast

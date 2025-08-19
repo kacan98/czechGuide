@@ -6,7 +6,7 @@ location:
   lat: 50.0870
   lng: 14.4207
 address: "Old Town Square, Prague 1, Czech Republic"
-image: "https://upload.wikimedia.org/wikipedia/commons/e/ec/Prague_Astronomical_Clock.jpg"
+image: "/astronomical-clock.jpg"
 visitDuration: "30 minutes"
 entryFee: "Free (viewing), Tower: 250 CZK"
 openingHours: "Hourly show 9:00-23:00"

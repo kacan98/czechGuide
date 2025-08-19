@@ -10,7 +10,7 @@ location:
   lng: 14.4068
 hours: "Tis-Sön 10:00-18:00, Mån stängt"
 website: "https://www.werichovavila.cz"
-image: "https://www.salekumeni.cz/wp-content/uploads/2021/08/zakusky-Werichova-vila.jpg"
+image: "/werichova-vila.jpg"
 lang: sv
 ---
 

@@ -6,7 +6,7 @@ location:
   lat: 50.0865
   lng: 14.4114
 address: "Charles Bridge, Prag 1, Tjeckien"
-image: "https://upload.wikimedia.org/wikipedia/commons/8/85/Prague_-_Charles_Bridge_-_Karluv_most.jpg"
+image: "/charles-bridge.jpg"
 visitDuration: "1-2 timmar"
 entryFee: "Gratis"
 website: "https://en.wikipedia.org/wiki/Charles_Bridge"

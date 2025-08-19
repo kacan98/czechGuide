@@ -3,7 +3,7 @@ name: Bramboračka
 category: polívky
 order: 2
 description: Mättande potatissoppa med svamp och mejram - den ultimata tröstmaten
-image: https://upload.wikimedia.org/wikipedia/commons/e/ea/S%C3%A4chsische_Kartoffelsuppe%2C_Alte_Apotheke%2C_Altk%C3%B6tzschenbroda.jpg
+image: /bramboracka.jpg
 whyTry: Den ultimata tröstande soppan gjord med potatis, svamp och mejram. Tjock, krämig och värmande - perfekt för Prags kalla vintrar. Serveras ofta med surdegsbröd och ibland flyter det en korv i den.
 quote: "Som en varm kram i en skål. Perfekt efter att ha promenerat runt i Prag i kylan!"
 author: Vinterbesökare

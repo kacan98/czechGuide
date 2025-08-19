@@ -3,7 +3,7 @@ name: Bramboračka
 category: polívky
 order: 2
 description: Hearty potato soup with mushrooms and marjoram - the ultimate comfort soup
-image: https://upload.wikimedia.org/wikipedia/commons/e/ea/S%C3%A4chsische_Kartoffelsuppe%2C_Alte_Apotheke%2C_Altk%C3%B6tzschenbroda.jpg
+image: /bramboracka.jpg
 whyTry: The ultimate comfort soup made with potatoes, mushrooms, and marjoram. Thick, creamy, and warming - perfect for Prague's cold winters. Often served with crusty bread and sometimes a sausage floating in it.
 quote: "Like a warm hug in a bowl. Perfect after walking around Prague in the cold!"
 author: Winter visitor

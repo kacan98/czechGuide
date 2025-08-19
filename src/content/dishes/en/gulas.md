@@ -2,7 +2,7 @@
 name: Guláš
 category: hlavní jídla
 description: Hearty beef stew with onions and paprika, served with bread dumplings
-image: https://live.staticflickr.com/2432/3647615216_1f95e4dd3c_b.jpg
+image: /gulas-flickr.jpg
 whyTry: Rich beef stew with tender chunks of meat, onions, and paprika, served with bread dumplings. It's the kind of dish that sticks to your ribs and warms you from the inside. Perfect pub food that pairs beautifully with Czech beer.
 quote: "So much more complex than I expected! The paprika gives it this amazing depth of flavor."
 author: Stew enthusiast

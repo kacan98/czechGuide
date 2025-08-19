@@ -6,7 +6,7 @@ location:
   lat: 50.0870
   lng: 14.4207
 address: "Gamla stadens torg, Prag 1, Tjeckien"
-image: "https://upload.wikimedia.org/wikipedia/commons/e/ec/Prague_Astronomical_Clock.jpg"
+image: "/astronomical-clock.jpg"
 visitDuration: "30 minuter"
 entryFee: "Gratis (visning), Torn: 250 CZK"
 openingHours: "Timvis föreställning 9:00-23:00"
