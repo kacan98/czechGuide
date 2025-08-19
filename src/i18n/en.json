@@ -48,9 +48,9 @@
     "tagline": "A short guide with some places I'd recommend to visit in Prague."
   },
   "buttons": {
-    "whatToOrder": "What to Order",
-    "myRecommendations": "My Personal Recommendations",
-    "myFavoriteSpots": "My Favorite Spots",
+    "whatToOrder": "All Dishes",
+    "myRecommendations": "Top Picks",
+    "myFavoriteSpots": "Restaurants",
     "showMeEverything": "Show me everything you recommend, Karel →",
     "viewDetails": "View Details →"
   },

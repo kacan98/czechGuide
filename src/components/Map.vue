@@ -11,7 +11,7 @@
           activeFilter === null ? 'bg-red-100 text-red-700 border border-red-300' : 'bg-gray-200 text-gray-500'
         ]"
       >
-        🍽️ Full Restaurants ({{ getRestaurantsByCategory('restaurant').length }})
+        {{ t('restaurant') }} ({{ getRestaurantsByCategory('restaurant').length }})
       </button>
       <button 
         v-if="getRestaurantsByCategory('pub').length > 0"
@@ -22,7 +22,7 @@
           activeFilter === null ? 'bg-orange-100 text-orange-700 border border-orange-300' : 'bg-gray-200 text-gray-500'
         ]"
       >
-        🍺 Pubs & Beer ({{ getRestaurantsByCategory('pub').length }})
+        {{ t('pub') }} ({{ getRestaurantsByCategory('pub').length }})
       </button>
       <button 
         v-if="getRestaurantsByCategory('bistro').length > 0"
@@ -33,7 +33,7 @@
           activeFilter === null ? 'bg-amber-100 text-amber-700 border border-amber-300' : 'bg-gray-200 text-gray-500'
         ]"
       >
-        🥪 Bistros & Snacks ({{ getRestaurantsByCategory('bistro').length }})
+        {{ t('bistro') }} ({{ getRestaurantsByCategory('bistro').length }})
       </button>
       <button 
         v-if="getRestaurantsByCategory('cafe').length > 0"
@@ -44,7 +44,7 @@
           activeFilter === null ? 'bg-green-100 text-green-700 border border-green-300' : 'bg-gray-200 text-gray-500'
         ]"
       >
-        ☕ Cafés ({{ getRestaurantsByCategory('cafe').length }})
+        {{ t('cafe') }} ({{ getRestaurantsByCategory('cafe').length }})
       </button>
       <button 
         v-if="attractions.length > 0"
@@ -55,7 +55,7 @@
           activeFilter === null ? 'bg-blue-100 text-blue-700 border border-blue-300' : 'bg-gray-200 text-gray-500'
         ]"
       >
-        🏛️ Places to See ({{ attractions.length }})
+        {{ t('attractions') }} ({{ attractions.length }})
       </button>
     </div>
     <div ref="mapContainer" class="w-full h-[600px] rounded-lg shadow-lg"></div>
@@ -76,6 +76,10 @@ const props = defineProps({
   attractions: {
     type: Array,
     default: () => []
+  },
+  lang: {
+    type: String,
+    default: 'en'
   }
 })
 
@@ -89,6 +93,29 @@ let attractionMarkers = []
 
 // Filter state - track which filter is active (null means all active)
 const activeFilter = ref(null)
+
+// Translations for map filters
+const translations = {
+  en: {
+    restaurant: '🍽️ Full Restaurants',
+    pub: '🍺 Pubs & Beer',
+    bistro: '🥪 Bistros & Snacks',
+    cafe: '☕ Cafés',
+    attractions: '🏛️ Places to See'
+  },
+  sv: {
+    restaurant: '🍽️ Fullständiga restauranger',
+    pub: '🍺 Pubar & öl',
+    bistro: '🥪 Bistrots & snacks',
+    cafe: '☕ Kaféer',
+    attractions: '🏛️ Platser att se'
+  }
+}
+
+// Translation helper function
+const t = (key) => {
+  return translations[props.lang]?.[key] || translations.en[key] || key
+}
 
 // Helper function to get restaurants by category
 const getRestaurantsByCategory = (category) => {
